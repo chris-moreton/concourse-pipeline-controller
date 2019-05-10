@@ -6,14 +6,12 @@ image_resource:
   source:
     repository: netsensia
     tag: python27
-inputs:
-  - name: source-code
 run:
   path: sh
-  dir: source-code
   args:
     - -exc
     - |
       pip install pyyaml
       apt-get update && apt-get -y install openssh-client
-      python tasks/bin/init-pipelines.py ../../repositories.yml
+      cd devops/tasks/bin
+      python init-pipelines.py repositories.yml

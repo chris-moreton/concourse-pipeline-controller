@@ -13,4 +13,4 @@ jobs:
       - get: source-code
         trigger: true
       - task: init-pipelines
-        file: source-code/devops/tasks/init-pipelines.yml
+        file: devops/tasks/init-pipelines.yml
