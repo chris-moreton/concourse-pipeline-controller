@@ -7,7 +7,7 @@ image_resource:
     repository: netsensia
     tag: python27
 inputs:
-   - name: source-code
+  - name: source-code
 run:
   path: sh
   dir: source-code
