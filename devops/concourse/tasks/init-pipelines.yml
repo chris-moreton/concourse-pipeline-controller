@@ -10,7 +10,7 @@ inputs:
    - name: source-code
 run:
   path: sh
-  dir: images
+  dir: source-code
   args:
     - -exc
     - |
