@@ -2,9 +2,9 @@ resources:
   - name: source-code
     type: git
     source:
-      uri: git@github.com:chris-moreton/concourse-repository-initialiser
+      uri: git@github.com:chris-moreton/concourse-pipeline-initialiser
       branch: master
-      private_key: ((directorrzone-api/GITHUB_DEPLOY_KEY.private_key))
+      private_key: ((pipeline-initialiser/GITHUB_DEPLOY_KEY.private_key))
       password: ((NETSENSIA_GITHUB_API_TOKEN))
 jobs:
   - name: init-pipeline
