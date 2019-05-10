@@ -1,0 +1,6 @@
+FROM ubuntu:xenial
+MAINTAINER "Chris Moreton <chris@netsensia.com>"
+
+RUN apt-get update && apt-get install -y wget unzip curl python python-pip
+RUN pip install pyyaml
+RUN pip install --upgrade pip

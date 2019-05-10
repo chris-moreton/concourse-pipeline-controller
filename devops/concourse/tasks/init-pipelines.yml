@@ -1,0 +1,17 @@
+outputs:
+  - name: images
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: ubuntu
+    tag: xenial
+run:
+  path: sh
+  dir: images
+  args:
+    - -exc
+    - |
+      pip install pyyaml
+      apt-get update && apt-get -y install openssh-client
+      python tasks/bin/init-pipelines.py ../../repositories.yml

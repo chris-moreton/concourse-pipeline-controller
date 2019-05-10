@@ -1,0 +1,16 @@
+resources:
+  - name: source-code
+    type: git
+    source:
+      uri: git@github.com:chris-moreton/concourse-repository-initialiser
+      branch: master
+      private_key: ((directorrzone-api/GITHUB_DEPLOY_KEY.private_key))
+      password: ((NETSENSIA_GITHUB_API_TOKEN))
+jobs:
+  - name: init-pipeline
+    public: false
+    plan:
+      - get: source-code
+        trigger: true
+      - task: init-pipelines
+        file: source-code/tasks/init-pipelines.yml
