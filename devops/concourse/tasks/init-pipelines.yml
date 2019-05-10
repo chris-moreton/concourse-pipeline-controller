@@ -6,6 +6,8 @@ image_resource:
   source:
     repository: ubuntu
     tag: xenial
+inputs:
+   - name: source-code
 run:
   path: sh
   dir: images
