@@ -1,16 +1,18 @@
 resources:
-  - name: source-code
-    type: git
-    source:
-      uri: git@github.com:chris-moreton/concourse-pipeline-initialiser
-      branch: master
-      private_key: ((pipeline-initialiser/GITHUB_DEPLOY_KEY.private_key))
-      password: ((NETSENSIA_GITHUB_API_TOKEN))
+- name: source-code
+  type: git
+  source:
+    uri: git@github.com:chris-moreton/concourse-pipeline-initialiser
+    branch: master
+    private_key: ((pipeline-initialiser/GITHUB_DEPLOY_KEY.private_key))
+    password: ((NETSENSIA_GITHUB_API_TOKEN))
 jobs:
-  - name: init-pipelines
-    public: false
-    plan:
-      - get: source-code
-        trigger: true
-      - task: init-pipelines
-        file: devops/tasks/init-pipelines.yml
+- name: init-pipelines
+  public: false
+  plan:
+  - get: source-code
+    trigger: true
+  - inputs:
+    - name: source-code
+  - task: init-pipelines
+    file: source-code/devops/tasks/init-pipelines.yml
