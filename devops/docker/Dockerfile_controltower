@@ -1,0 +1,11 @@
+FROM ubuntu:xenial
+MAINTAINER "Chris Moreton <chris@netsensia.com>"
+
+RUN apt-get update
+RUN apt-get -y install wget
+RUN wget https://github.com/EngineerBetter/control-tower/releases/download/0.4.0/control-tower-linux-amd64
+RUN chmod +x control-tower-linux-amd64
+RUN mv control-tower-linux-amd64 /usr/local/bin/control-tower
+RUN wget https://github.com/cloudfoundry-incubator/credhub-cli/releases/download/2.4.0/credhub-linux-2.4.0.tgz
+RUN tar -zxvf credhub-linux-2.4.0.tgz
+RUN mv credhub /usr/local/bin

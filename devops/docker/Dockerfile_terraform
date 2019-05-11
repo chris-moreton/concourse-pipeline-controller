@@ -1,0 +1,11 @@
+FROM ubuntu:xenial
+MAINTAINER "Chris Moreton <chris@netsensia.com>"
+
+RUN apt-get update && apt-get install -y wget unzip curl
+RUN wget https://releases.hashicorp.com/terraform/0.11.13/terraform_0.11.13_linux_amd64.zip
+RUN unzip terraform_0.11.13_linux_amd64.zip
+RUN mv terraform /usr/local/bin/
+RUN bash -c "$(curl -fsSL https://raw.github.com/orange-cloudfoundry/terraform-provider-credhub/master/bin/install.sh)"
+RUN mkdir -p ~/.terraform.d/plugins/linux_amd64
+RUN wget -O ~/.terraform.d/plugins/linux_amd64/terraform-provider-cloudfoundry https://github.com/mevansam/terraform-provider-cf/releases/download/0.9.9/terraform-provider-cf_linux_amd64
+RUN chmod +x ~/.terraform.d/plugins/linux_amd64/terraform-provider-cloudfoundry
