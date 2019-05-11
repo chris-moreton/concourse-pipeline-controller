@@ -16,5 +16,5 @@ run:
     - |
       pip install pyyaml
       apt-get update && apt-get -y install openssh-client
-      cd devops/tasks/bin
+      cd devops/concourse/tasks/bin
       python init-pipelines.py repositories.yml
