@@ -8,11 +8,17 @@ resources:
     private_key: ((pipeline-initialiser/GITHUB_DEPLOY_KEY.private_key))
     password: ((NETSENSIA_GITHUB_API_TOKEN))
 
+- name: resource-app
+  type: git
+  source:
+    uri: https://github.com/cloudfoundry-community/simple-go-web-app.git
+
 jobs:
-- name: init-pipelines
-  public: false
+- name: job-test-app
+  public: true
   plan:
   - get: source-code
+  - get: resource-app
     trigger: true
-  - task: init-pipelines
-    file: source-code/devops/concourse/tasks/init-pipelines.yml
+  - task: web-app-tests
+    file: source-code/devops/tasks/init-pipelines.yml
