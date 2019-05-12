@@ -5,7 +5,7 @@ resources:
   source:
     uri: git@github.com:chris-moreton/concourse-pipeline-initialiser
     branch: master
-    private_key: ((pipeline-initialiser/GITHUB_DEPLOY_KEY.private_key))
+    private_key: ((GITHUB_DEPLOY_KEY.private_key))
     password: ((NETSENSIA_GITHUB_API_TOKEN))
 
 jobs:
@@ -17,6 +17,6 @@ jobs:
   - task: init-pipelines
     file: source-code/devops/concourse/tasks/init-pipelines.yml
     params:
-      AWS_ACCESS_KEY_ID: ((concourse/AWS_ACCESS_KEY_ID))
-      AWS_SECRET_ACCESS_KEY: ((concourse/AWS_SECRET_ACCESS_KEY))
-      CONCOURSE_NETSENSIA_PASSWORD: ((concourse/CONCOURSE_NETSENSIA_PASSWORD))
+      AWS_ACCESS_KEY_ID: ((AWS_ACCESS_KEY_ID))
+      AWS_SECRET_ACCESS_KEY: ((AWS_SECRET_ACCESS_KEY))
+      CONCOURSE_NETSENSIA_PASSWORD: ((CONCOURSE_NETSENSIA_PASSWORD))
