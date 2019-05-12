@@ -14,8 +14,7 @@ fly --target netsensia-concourse login --insecure --concourse-url https://concou
 echo "Logging into CredHub..."
 eval "$(control-tower info --iaas aws --env --region eu-west-2 netsensia-concourse)"
 
-credhub get -q -n $DEPLOY_KEY_CREDHUB_LOCATION -k private_key | sed -e 's/\(KEY-----\)\s/\1\n/g; s/\s\(-----END\)/\n\1/g' | sed -e '2s/\s\+/\n/g' > ~/.ssh/deploy_key_tmp
-chmod 600 ~/.ssh/deploy_key_tmp
-ssh-add ~/.ssh/deploy_key_tmp
+credhub get -q -n $DEPLOY_KEY_CREDHUB_LOCATION -k private_key | sed -e 's/\(KEY-----\)\s/\1\n/g; s/\s\(-----END\)/\n\1/g' | sed -e '2s/\s\+/\n/g' > ~/.ssh/id_rsa
+chmod 600 ~/.ssh/id_rsa
 git clone $1
 
