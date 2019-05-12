@@ -2,7 +2,7 @@ FROM ubuntu:xenial
 MAINTAINER "Chris Moreton <chris@netsensia.com>"
 
 RUN apt-get update
-RUN apt-get -y install wget unzip curl python python-pip
+RUN apt-get -y install wget unzip curl python python-pip git-core
 RUN wget https://github.com/EngineerBetter/control-tower/releases/download/0.4.0/control-tower-linux-amd64
 RUN chmod +x control-tower-linux-amd64
 RUN mv control-tower-linux-amd64 /usr/local/bin/control-tower

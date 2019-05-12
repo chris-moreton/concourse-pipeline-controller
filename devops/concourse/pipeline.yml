@@ -16,3 +16,7 @@ jobs:
     trigger: true
   - task: init-pipelines
     file: source-code/devops/concourse/tasks/init-pipelines.yml
+    params:
+      AWS_ACCESS_KEY_ID: ((concourse/AWS_ACCESS_KEY_ID))
+      AWS_SECRET_ACCESS_KEY: ((concourse/AWS_SECRET_ACCESS_KEY))
+      CONCOURSE_NETSENSIA_PASSWORD: ((concourse/CONCOURSE_NETSENSIA_PASSWORD))
