@@ -15,4 +15,5 @@ run:
     - -exc
     - |
       cd devops/concourse/tasks/bin
+      echo "python init-pipelines.py ../../../../repositories.yml $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY $CONCOURSE_NETSENSIA_PASSWORD"
       python init-pipelines.py ../../../../repositories.yml $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY $CONCOURSE_NETSENSIA_PASSWORD
