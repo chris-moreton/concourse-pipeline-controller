@@ -21,3 +21,4 @@ RUN chmod +x ~/.terraform.d/plugins/linux_amd64/terraform-provider-cloudfoundry
 
 # Manually installed "fly" CLI for Concourse
 # https://concourse.netsensia.com/api/v1/cli?arch=amd64&platform=linux
+# mkdir /root/.ssh
