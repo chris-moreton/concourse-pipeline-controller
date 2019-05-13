@@ -12,8 +12,6 @@ for repo in yaml_file["repos"]:
     f = open("deploy.key","w")
     f.write(repo["deploy_key_credhub_location"])
     os.system("sh " + dir + "/clone.sh " + repo["name"] + " " + repo["deploy_key_credhub_location"] + " " + repo["pipeline_name"])
-    if os.path.isfile(repo["pipeline_name"] + "/devops/concourse/pipeline.yml"):
-        os.system("sh " + dir + "/init-pipeline.sh " + repo["pipeline_name"])
 
 print "Putting in S3"
 
