@@ -15,6 +15,8 @@ for repo in yaml_file["repos"]:
     if os.path.isfile(repo["pipeline_name"] + "/devops/concourse/pipeline.yml"):
         os.system("sh " + dir + "/init-pipeline.sh " + repo["pipeline_name"])
 
+print "Putting in S3"
+
 s3 = boto3.resource('s3')
 data = open('clone.sh')
 s3.Bucket('pipeline-initialiser').put_object(Key='clone.sh', Body=data)
