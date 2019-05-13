@@ -2,9 +2,6 @@
 GITHUB_REPO=$1
 DEPLOY_KEY_CREDHUB_LOCATION=$2
 
-echo "Loading environment from .env file"
-source .env
-
 echo "Logging into Concourse..."
 fly --target netsensia-concourse login --insecure --concourse-url https://concourse.netsensia.com -u admin -p $CONCOURSE_NETSENSIA_PASSWORD
 
