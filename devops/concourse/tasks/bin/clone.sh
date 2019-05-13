@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin bash
 GITHUB_REPO=$1
 DEPLOY_KEY_CREDHUB_LOCATION=$2
 
