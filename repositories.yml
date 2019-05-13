@@ -1,5 +1,7 @@
 repos:
-  - name: git@github.com:chris-moreton/directorzone-api
+  - uri: git@github.com:chris-moreton/directorzone-api
+    pipeline_name: directorzone-api
     deploy_key_credhub_location: /concourse/main/directorzone-api/GITHUB_DEPLOY_KEY
-  - name: git@github.com:chris-moreton/directorzone-frontend
+  - uri: git@github.com:chris-moreton/directorzone-frontend
+    pipeline_name: directorzone-frontend
     deploy_key_credhub_location: /concourse/main/directorzone-frontend/GITHUB_DEPLOY_KEY
