@@ -17,6 +17,19 @@ for repo in yaml_file["repos"]:
 
 print "Putting in S3"
 
-s3 = boto3.resource('s3')
-data = open('clone.sh')
-s3.Bucket('pipeline-initialiser').put_object(Key='clone.sh', Body=data)
+s3 = boto3.client('s3')
+
+try:
+    s3.download_file('pipeline-initialiser', 'repositories.yml', 'repositories.yml')
+    state_file = open("repositories.yml")
+    state_yaml_file = yaml.safe_load(state_file)
+except:
+    print "Unable to download repository state file"
+    state_yaml_file = yaml_file
+
+stream = file("repositories.yml", "w")
+yaml.dump(state_yaml_file, stream)
+
+with open("repositories.yml", "rb") as f:
+    s3.upload_fileobj(f, "pipeline-initialiser", "repositories.yml")
+
