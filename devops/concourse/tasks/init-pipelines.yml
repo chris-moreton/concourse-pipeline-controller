@@ -15,5 +15,6 @@ run:
     - -exc
     - |
       pip install boto3
+      pip install gitpython
       cd devops/concourse/tasks/bin
-      python init-pipelines.py ../../../../repositories.yml
+      python init-pipelines.py
