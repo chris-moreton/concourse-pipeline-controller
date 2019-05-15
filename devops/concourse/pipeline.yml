@@ -1,8 +1,4 @@
 ---
-resource_types:
-- name: time
-  source:
-    repository: concourse/time-resource
 resources:
 - name: source-code
   type: git
