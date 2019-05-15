@@ -33,7 +33,7 @@ for repo in yaml_file["repos"]:
 
     print("Getting deploy key from CredHub...")
 
-    if (os.environ['PYCHARM_HOSTED'] == "1"):
+    if ('PYCHARM_HOSTED' in os.environ.keys() and os.environ['PYCHARM_HOSTED'] == "1"):
         deploy_key_file = "/tmp/id_rsa"
     else:
         deploy_key_file = "~/.ssh/id_rsa"

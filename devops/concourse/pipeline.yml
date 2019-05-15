@@ -7,14 +7,14 @@ resources:
     branch: master
     private_key: ((GITHUB_DEPLOY_KEY.private_key))
     password: ((NETSENSIA_GITHUB_API_TOKEN))
-- name: 1m
+- name: trigger-interval
   type: time
-  source: {interval: 1m}
+  source: {interval: 5m}
 jobs:
 - name: init-pipelines
   public: false
   plan:
-  - get: 1m
+  - get: trigger-interval
     trigger: true
   - get: source-code
   - task: init-pipelines
