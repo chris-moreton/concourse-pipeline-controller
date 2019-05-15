@@ -58,6 +58,8 @@ for repo in yaml_file["repos"]:
     if (repo["pipeline_name"] in state_repos.keys()):
         previous_head_revision = state_repos[repo["pipeline_name"]]
 
+    print("Current = " + current_head_revision)
+    print("Previous = " + previous_head_revision)
     if current_head_revision == previous_head_revision:
         print("We've done this one before...")
     else:
@@ -79,6 +81,7 @@ for repo in yaml_file["repos"]:
 stream = open(tmp_file, "w")
 yaml.dump(yaml_file, stream)
 
+print("Saving state")
 with open(tmp_file, "rb") as f:
     s3.upload_fileobj(f, "pipeline-initialiser", "repositories.yml")
 
