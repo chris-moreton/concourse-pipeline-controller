@@ -8,15 +8,50 @@ This allows developers working on the specified Git repositories to manage the p
 
 It also enforeces a consistency of pipeline configuration across projects.
 
-If you wish to set this up on your own Concourse server, following the instructions starting in [prerequisites.md](docs/prerequisites.md).
+## Prerequisites and How to Get Them
 
-## Configure the pipeline
+To use the opinionated pipeline initialiser, you will need:
+
+* A Concourse Server
+* A CredHub Server
+* The Fly CLI
+* The CredHub CLI
+
+### Setup Concourse and CredHub
+
+I recommend using [Control Tower](https://github.com/EngineerBetter/control-tower) to setup Concourse and CredHub.
+
+### Setting the Pipeline Initialiser pipeline itself
+
+To bootstrap the pipeline initialiser, you need to run:
+
+    CONCOURSE_SERVER=https://concourse.example.com CONCOURSE_ADMIN_PASSWORD=[YOUR_PASSWORD_HERE] sh devops/concourse/init-me.sh
+  
+### Setting credentials
+
+Set the following CredHub secrets
+
+    /concourse/main/pipeline-initialiser/AWS_SECRET_ACCESS_KEY
+    /concourse/main/pipeline-initialiser/AWS_ACCESS_KEY_ID
+    /concourse/main/pipeline-initialiser/CONCOURSE_ADMIN_PASSWORD
+    
+### Add Repositories to be Scanned
 
 To cause a repository to be included in the scans, update the repositories.yml file and create a pull request. Once the pull request
 is merged into master, your project will be scanned for new commits. When a new commit is found, the pipeline configuration will first
 be updated with any new changes and then the ***build*** job from the pipeline will be triggered.
 
-## Configure your project
+    repos:
+    - deploy_key_credhub_location: /concourse/main/directorzone-api/GITHUB_DEPLOY_KEY
+      pipeline_name: directorzone-api
+      uri: git@github.com:chris-moreton/directorzone-api
+    - deploy_key_credhub_location: /concourse/main/directorzone-frontend/GITHUB_DEPLOY_KEY
+      pipeline_name: directorzone-frontend
+      uri: git@github.com:chris-moreton/directorzone-frontend
+      
+For each repository, you will need to add the correct deploy key to the CredHub location specified in the **deploy_key_credhub_location** field.
+      
+## Configure the Pipeline in your Projects
 
 ## Building Infrastructure
 
