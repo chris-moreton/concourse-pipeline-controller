@@ -11,4 +11,3 @@ repos:
 - deploy_key_credhub_location: /concourse/main/tennisform-vue-widget/GITHUB_DEPLOY_KEY
   pipeline_name: tennisform-vue-widget
   uri: git@github.com:chris-moreton/tennisform-vue-widget
-  

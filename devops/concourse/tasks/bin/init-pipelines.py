@@ -94,7 +94,7 @@ for repo in yaml_file["repos"]:
     if current_head_revision == previous_head_revision:
         print("We've done this one before...")
     else:
-        InitialisePipeline('pipeline.yml', repo["pipeline_nmame"])
+        InitialisePipeline('pipeline.yml', repo["pipeline_name"])
         InitialisePipeline('pipeline-shared-infra.yml', repo["pipeline_name"] + "-shared-infra")
 
     repo["head_revision"] = current_head_revision
