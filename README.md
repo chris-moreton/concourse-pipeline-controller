@@ -25,7 +25,8 @@ I recommend using [Control Tower](https://github.com/EngineerBetter/control-towe
 
 To bootstrap the pipeline initialiser, you need to run:
 
-    CONCOURSE_SERVER=https://concourse.example.com CONCOURSE_ADMIN_PASSWORD=[YOUR_PASSWORD_HERE] sh devops/concourse/init-me.sh
+    cd devops/concourse/
+    CONCOURSE_SERVER=https://concourse.example.com CONCOURSE_ADMIN_PASSWORD=[YOUR_PASSWORD_HERE] ./init-me.sh
   
 ### Setting credentials
 
