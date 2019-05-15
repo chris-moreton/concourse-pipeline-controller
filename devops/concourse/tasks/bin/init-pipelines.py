@@ -45,8 +45,6 @@ for repo in yaml_file["repos"]:
     sed = "sed -e 's/\(KEY-----\)\s/\\1\\n/g; s/\s\(-----END\)/\\n\\1/g' | sed -e '2s/\s\+/\\n/g'"
     os.system("credhub get -q -n " + repo["deploy_key_credhub_location"] + " -k private_key | " + sed + " > " + deploy_key_file)
     os.system("chmod 600 ~/.ssh/id_rsa")
-    os.system("cat " + deploy_key_file)
-    sys.exit()
 
     os.system("ssh -o \"StrictHostKeyChecking=no\" git@github.com")
     os.system("rm -rf /tmp/" + repo["pipeline_name"])
