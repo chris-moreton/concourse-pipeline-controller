@@ -46,6 +46,23 @@ yaml_file = GetRepos()
 state_yaml_file = GetState(yaml_file)
 state_repos = GetStateRepoRevisions(state_yaml_file)
 
+
+def InitialisePipeline(filename, pipeline_name):
+    print("Looking for " + filename + "...")
+    pipeline_config = "/tmp/" + pipeline_name + "/devops/concourse/" + filename
+    if os.path.isfile(pipeline_config):
+        print("Updating pipeline " + pipeline_name + "...")
+        os.system(
+            "fly --target netsensia-concourse set-pipeline --non-interactive -c " + pipeline_config + " -p " + pipeline_name
+        )
+        print("Unpausing pipeline...")
+        os.system("fly --target netsensia-concourse unpause-pipeline -p " + pipeline_name)
+        print("Triggering build job...")
+        os.system("fly --target netsensia-concourse trigger-job -j " + pipeline_name + "/build")
+    else:
+        print("No pipeline.yml found.")
+
+
 for repo in yaml_file["repos"]:
 
     print("Getting deploy key from CredHub...")
@@ -77,18 +94,8 @@ for repo in yaml_file["repos"]:
     if current_head_revision == previous_head_revision:
         print("We've done this one before...")
     else:
-        print("Looking for a pipeline.yml...")
-        pipeline_config = "/tmp/" + repo["pipeline_name"] + "/devops/concourse/pipeline.yml"
-        if os.path.isfile(pipeline_config):
-            print("Updating pipeline...")
-            os.system("fly --target netsensia-concourse set-pipeline --non-interactive -c " + pipeline_config + " -p " + repo["pipeline_name"])
-            print("Unpausing pipeline...")
-            os.system("fly --target netsensia-concourse unpause-pipeline -p " + repo["pipeline_name"])
-            print("Triggering build job...")
-            os.system("fly --target netsensia-concourse trigger-job -j " + repo["pipeline_name"] + "/build")
-        else:
-            print("No pipeline.yml found.")
-            sys.exit(1)
+        InitialisePipeline('pipeline.yml', repo["pipeline_nmame"])
+        InitialisePipeline('pipeline-shared-infra.yml', repo["pipeline_name"] + "-shared-infra")
 
     repo["head_revision"] = current_head_revision
 
