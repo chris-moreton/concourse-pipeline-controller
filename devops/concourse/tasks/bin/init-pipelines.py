@@ -25,12 +25,12 @@ except:
     print ("Unable to download repository state file")
     state_yaml_file = yaml_file
 
-print("Logging into Concourse...")
-os.system("fly --target netsensia-concourse login --insecure --concourse-url https://concourse.netsensia.com -u admin -p " + os.environ["CONCOURSE_NETSENSIA_PASSWORD"])
-print("Syncing...")
-os.system("fly --target netsensia-concourse sync")
-print("Logging into CredHub...")
-os.system("eval \"$(control-tower info --iaas aws --env --region eu-west-2 netsensia-concourse)\"")
+# print("Logging into Concourse...")
+# os.system("fly --target netsensia-concourse login --insecure --concourse-url https://concourse.netsensia.com -u admin -p " + os.environ["CONCOURSE_NETSENSIA_PASSWORD"])
+# print("Syncing...")
+# os.system("fly --target netsensia-concourse sync")
+# print("Logging into CredHub...")
+# os.system("eval \"$(control-tower info --iaas aws --env --region eu-west-2 netsensia-concourse)\"")
 
 for repo in yaml_file["repos"]:
 
@@ -39,12 +39,14 @@ for repo in yaml_file["repos"]:
     if ('PYCHARM_HOSTED' in os.environ.keys() and os.environ['PYCHARM_HOSTED'] == "1"):
         deploy_key_file = "/tmp/id_rsa"
     else:
-        deploy_key_file = "~/.ssh/id_rsa"
+        deploy_key_file = "/root/.ssh/id_rsa"
 
     print("Overwriting deploy key at " + deploy_key_file)
     sed = "sed -e 's/\(KEY-----\)\s/\\1\\n/g; s/\s\(-----END\)/\\n\\1/g' | sed -e '2s/\s\+/\\n/g'"
     os.system("credhub get -q -n " + repo["deploy_key_credhub_location"] + " -k private_key | " + sed + " > " + deploy_key_file)
     os.system("chmod 600 ~/.ssh/id_rsa")
+    os.system("cat " + deploy_key_file)
+    sys.exit()
 
     os.system("ssh -o \"StrictHostKeyChecking=no\" git@github.com")
     os.system("rm -rf /tmp/" + repo["pipeline_name"])
