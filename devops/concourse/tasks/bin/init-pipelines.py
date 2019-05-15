@@ -1,36 +1,50 @@
-import yaml
-import os
-from io import open
 import sys
-import boto3
 import git
+import yaml
+import boto3
+import os
 
-repo_yml_filename = "repositories.yml"
+def GetState(yaml_file):
+    s3 = boto3.client('s3')
+    tmp_file_location = "/tmp/temp.yml"
+    try:
+        s3.download_file('pipeline-initialiser', 'repositories.yml', tmp_file_location)
+        state_file = open(tmp_file_location)
+        state_yaml_file = yaml.safe_load(state_file)
+    except:
+        print("Unable to download repository state file")
+        state_yaml_file = yaml_file
+    return state_yaml_file
 
-os.system("cp ../../../../" + repo_yml_filename + " .")
+def GetRepos():
+    repo_yml_filename = "repositories.yml"
+    os.system("cp ../../../../" + repo_yml_filename + " .")
+    f = open(repo_yml_filename)
+    yaml_file = yaml.safe_load(f)
+    return yaml_file
 
-f = open(repo_yml_filename)
 
-yaml_file = yaml.safe_load(f)
+def GetStateRepoRevisions(state_yaml_file):
+    state_repos = {}
+    for state_repo in state_yaml_file["repos"]:
+        previous_head_revision = ""
+        if ("head_revision" in state_repo.keys()):
+            previous_head_revision = state_repo["head_revision"]
+        state_repos[state_repo["pipeline_name"]] = previous_head_revision
+    return state_repos
 
-s3 = boto3.client('s3')
+def SaveState(yaml_file):
+    s3 = boto3.client('s3')
+    tmp_file_location = "/tmp/temp.yml"
+    stream = open(tmp_file_location, "w")
+    yaml.dump(yaml_file, stream)
+    print("Saving state")
+    with open(tmp_file_location, "rb") as f:
+        s3.upload_fileobj(f, "pipeline-initialiser", "repositories.yml")
 
-tmp_file = "/tmp/temp.yml"
-
-try:
-    s3.download_file('pipeline-initialiser', 'repositories.yml', tmp_file)
-    state_file = open(tmp_file)
-    state_yaml_file = yaml.safe_load(state_file)
-except:
-    print ("Unable to download repository state file")
-    state_yaml_file = yaml_file
-
-state_repos = {}
-for state_repo in state_yaml_file["repos"]:
-    previous_head_revision = ""
-    if ("head_revision" in state_repo.keys()):
-        previous_head_revision = state_repo["head_revision"]
-    state_repos[state_repo["pipeline_name"]] = previous_head_revision
+yaml_file = GetRepos()
+state_yaml_file = GetState(yaml_file)
+state_repos = GetStateRepoRevisions(state_yaml_file)
 
 for repo in yaml_file["repos"]:
 
@@ -78,11 +92,5 @@ for repo in yaml_file["repos"]:
 
     repo["head_revision"] = current_head_revision
 
-stream = open(tmp_file, "w")
-yaml.dump(yaml_file, stream)
+SaveState(yaml_file)
 
-print("Saving state")
-with open(tmp_file, "rb") as f:
-    s3.upload_fileobj(f, "pipeline-initialiser", "repositories.yml")
-
-os.system("rm  " + repo_yml_filename)
