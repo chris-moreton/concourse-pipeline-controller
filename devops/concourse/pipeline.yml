@@ -1,4 +1,8 @@
 ---
+resource_types:
+- name: time
+  source:
+    repository: concourse/time-resource
 resources:
 - name: source-code
   type: git
@@ -7,13 +11,16 @@ resources:
     branch: master
     private_key: ((GITHUB_DEPLOY_KEY.private_key))
     password: ((NETSENSIA_GITHUB_API_TOKEN))
-
+- name: 1m
+  type: time
+  source: {interval: 1m}
 jobs:
 - name: init-pipelines
   public: false
   plan:
-  - get: source-code
+  - get: 1m
     trigger: true
+  - get: source-code
   - task: init-pipelines
     file: source-code/devops/concourse/tasks/init-pipelines.yml
     params:
