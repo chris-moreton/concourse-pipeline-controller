@@ -25,6 +25,13 @@ except:
     print ("Unable to download repository state file")
     state_yaml_file = yaml_file
 
+state_repos = {}
+for state_repo in state_yaml_file["repos"]:
+    previous_head_revision = ""
+    if ("head_revision" in state_repo.keys()):
+        previous_head_revision = state_repo["head_revision"]
+    state_repos[state_repo["pipeline_name"]] = previous_head_revision
+
 for repo in yaml_file["repos"]:
 
     print("Getting deploy key from CredHub...")
@@ -46,22 +53,26 @@ for repo in yaml_file["repos"]:
     repo_object = git.Repo("/tmp/" + repo["pipeline_name"])
     current_head_revision = repo_object.head.commit.name_rev.split()[0]
 
-    if "head_revision" in repo.keys():
-        if current_head_revision == repo["head_revision"]:
-            print("We've done this one before...")
+    previous_head_revision = ""
+
+    if (repo["pipeline_name"] in state_repos.keys()):
+        previous_head_revision = state_repos[repo["pipeline_name"]]
+
+    if current_head_revision == previous_head_revision:
+        print("We've done this one before...")
+    else:
+        print("Looking for a pipeline.yml...")
+        pipeline_config = "/tmp/" + repo["pipeline_name"] + "/devops/concourse/pipeline.yml"
+        if os.path.isfile(pipeline_config):
+            print("Updating pipeline...")
+            os.system("fly --target netsensia-concourse set-pipeline --non-interactive -c " + pipeline_config + " -p " + repo["pipeline_name"])
+            print("Unpausing pipeline...")
+            os.system("fly --target netsensia-concourse unpause-pipeline -p " + repo["pipeline_name"])
+            print("Triggering build job...")
+            os.system("fly --target netsensia-concourse trigger-job -j " + repo["pipeline_name"] + "/build")
         else:
-            print("Looking for a pipeline.yml...")
-            pipeline_config = "/tmp/" + repo["pipeline_name"] + "/devops/concourse/pipeline.yml"
-            if os.path.isfile(pipeline_config):
-                print("Updating pipeline...")
-                os.system("fly --target netsensia-concourse set-pipeline --non-interactive -c " + pipeline_config + " -p " + repo["pipeline_name"])
-                print("Unpausing pipeline...")
-                os.system("fly --target netsensia-concourse unpause-pipeline -p " + repo["pipeline_name"])
-                print("Triggering build job...")
-                os.system("fly --target netsensia-concourse trigger-job -j " + repo["pipeline_name"] + "/build")
-            else:
-                print("No pipeline.yml found.")
-                sys.exit(1)
+            print("No pipeline.yml found.")
+            sys.exit(1)
 
     repo["head_revision"] = current_head_revision
 
