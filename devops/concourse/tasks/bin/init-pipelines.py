@@ -25,12 +25,12 @@ except:
     print ("Unable to download repository state file")
     state_yaml_file = yaml_file
 
-# print("Logging into Concourse...")
-# os.system("fly --target netsensia-concourse login --insecure --concourse-url https://concourse.netsensia.com -u admin -p " + os.environ["CONCOURSE_NETSENSIA_PASSWORD"])
-# print("Syncing...")
-# os.system("fly --target netsensia-concourse sync")
-# print("Logging into CredHub...")
-# os.system("eval \"$(control-tower info --iaas aws --env --region eu-west-2 netsensia-concourse)\"")
+print("Logging into Concourse...")
+os.system("fly --target netsensia-concourse login --insecure --concourse-url https://concourse.netsensia.com -u admin -p " + os.environ["CONCOURSE_NETSENSIA_PASSWORD"])
+print("Syncing...")
+os.system("fly --target netsensia-concourse sync")
+print("Logging into CredHub...")
+os.system("eval \"$(control-tower info --iaas aws --env --region eu-west-2 netsensia-concourse)\"")
 
 for repo in yaml_file["repos"]:
 
