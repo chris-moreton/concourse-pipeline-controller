@@ -47,7 +47,7 @@ for repo in yaml_file["repos"]:
     current_head_revision = repo_object.head.commit.name_rev.split()[0]
 
     if "head_revision" in repo.keys():
-        if current_head_revision == repo["pipeline_name"]:
+        if current_head_revision == repo["head_revision"]:
             print("We've done this one before...")
         else:
             print("Looking for a pipeline.yml...")
