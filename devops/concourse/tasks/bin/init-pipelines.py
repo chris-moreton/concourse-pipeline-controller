@@ -47,9 +47,9 @@ state_yaml_file = GetState(yaml_file)
 state_repos = GetStateRepoRevisions(state_yaml_file)
 
 
-def InitialisePipeline(filename, pipeline_name):
+def InitialisePipeline(filename, directory_name, pipeline_name):
     print("Looking for " + filename + "...")
-    pipeline_config = "/tmp/" + pipeline_name + "/devops/concourse/" + filename
+    pipeline_config = "/tmp/" + directory_name + "/devops/concourse/" + filename
     if os.path.isfile(pipeline_config):
         print("Updating pipeline " + pipeline_name + "...")
         os.system(
@@ -60,7 +60,7 @@ def InitialisePipeline(filename, pipeline_name):
         print("Triggering build job...")
         os.system("fly --target netsensia-concourse trigger-job -j " + pipeline_name + "/build")
     else:
-        print("No pipeline.yml found.")
+        print("No " + filename + " found.")
 
 
 for repo in yaml_file["repos"]:
@@ -94,8 +94,8 @@ for repo in yaml_file["repos"]:
     if current_head_revision == previous_head_revision:
         print("We've done this one before...")
     else:
-        InitialisePipeline('pipeline.yml', repo["pipeline_name"])
-        InitialisePipeline('pipeline-shared-infra.yml', repo["pipeline_name"] + "-shared-infra")
+        InitialisePipeline('pipeline.yml', repo["pipeline_name"], repo["pipeline_name"])
+        InitialisePipeline('pipeline-shared-infra.yml', repo["pipeline_name"], repo["pipeline_name"] + "-shared-infra")
 
     repo["head_revision"] = current_head_revision
 
