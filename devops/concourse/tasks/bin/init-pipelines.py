@@ -6,6 +6,9 @@ import boto3
 import git
 
 repo_yml_filename = "repositories.yml"
+
+os.system("cp ../../../../" + repo_yml_filename + " .")
+
 f = open(repo_yml_filename)
 
 yaml_file = yaml.safe_load(f)
@@ -75,3 +78,4 @@ yaml.dump(yaml_file, stream)
 with open(tmp_file, "rb") as f:
     s3.upload_fileobj(f, "pipeline-initialiser", "repositories.yml")
 
+os.system("rm  " + repo_yml_filename)
