@@ -19,6 +19,6 @@ run:
       echo "Syncing..."
       fly --target netsensia-concourse sync
       echo "Logging into CredHub..."
-      eval "$(control-tower info --iaas aws --env --region eu-west-2 netsensia-concourse)" &>/dev/null
+      eval "$(control-tower info --iaas aws --env --region eu-west-2 netsensia-concourse)"
       cd devops/concourse/tasks/bin
       python3 init-pipelines.py
