@@ -12,7 +12,7 @@ run:
   path: sh
   dir: source-code
   args:
-    - -exc
+    - -ec
     - |
       echo "Logging into Concourse..."
       fly --target netsensia-concourse login --insecure --concourse-url https://concourse.netsensia.com -u admin -p $CONCOURSE_NETSENSIA_PASSWORD
