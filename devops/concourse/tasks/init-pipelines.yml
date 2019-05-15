@@ -14,5 +14,11 @@ run:
   args:
     - -exc
     - |
+      echo("Logging into Concourse...")
+      fly --target netsensia-concourse login --insecure --concourse-url https://concourse.netsensia.com -u admin -p $CONCOURSE_NETSENSIA_PASSWORD
+      echo("Syncing...")
+      fly --target netsensia-concourse sync
+      echo("Logging into CredHub...")
+      eval "$(control-tower info --iaas aws --env --region eu-west-2 netsensia-concourse)"
       cd devops/concourse/tasks/bin
       python3 init-pipelines.py
