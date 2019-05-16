@@ -14,7 +14,7 @@ It also enforces a consistency of pipeline configuration across projects.
 
 ## Setting up Your Own Instance of This Controller
 
-If you already have this controller running with a Concourse instance, you should jump straight to the [Add Repositories](#setup_pipeline_controller) section.
+If you already have this controller running with a Concourse instance, you should jump straight to the [Using the Controller](#setup_pipeline_controller) section.
 
 ### Prerequisites and How to Get Them
 
@@ -47,7 +47,10 @@ Set the following CredHub secrets
 The AWS key should be for the same user that was used to create the Concourse environment with Control Tower.
     
 <a name="setup_pipeline_controller"/>
-### Add Repositories to be Scanned
+
+## Using the Controller
+
+## Add Repositories to be Scanned
 
 To cause a repository to be included in the scans, update the repositories.yml file and create a pull request.
 
