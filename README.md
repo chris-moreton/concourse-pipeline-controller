@@ -14,11 +14,41 @@ It also enforeces a consistency of pipeline configuration across projects.
 
 ## What Do You Want?
 
-[To configure a Concourse pipeline in my project and have it managed by an existing pipeline controller](#Setting up Your Own Instance of This Controller)
+[To configure a Concourse pipeline in my project and have it managed by an existing pipeline controller](#setup_pipeline_controller)
 
-[To set up a new controller on my own Concourse instance](#Setup Concourse and CredHub)
+To set up a new controller on my own Concourse instance. Continue reading below.
 
-### Add Repositories to be Scanned
+## Setting up Your Own Instance of This Controller
+
+### Prerequisites and How to Get Them
+
+To use the opinionated pipeline initialiser, you will need:
+
+* A Concourse Server
+* A CredHub Server
+* The Fly CLI
+* The CredHub CLI
+
+### Setup Concourse and CredHub
+
+I recommend using [Control Tower](https://github.com/EngineerBetter/control-tower) to setup Concourse and CredHub.
+
+### Setting the Pipeline Initialiser pipeline itself
+
+To bootstrap the pipeline initialiser, you need to run:
+
+    cd devops/concourse/
+    CONCOURSE_SERVER=https://concourse.example.com CONCOURSE_ADMIN_PASSWORD=[YOUR_PASSWORD_HERE] ./init-me.sh
+  
+### Setting credentials
+
+Set the following CredHub secrets
+
+    /concourse/main/pipeline-initialiser/AWS_SECRET_ACCESS_KEY
+    /concourse/main/pipeline-initialiser/AWS_ACCESS_KEY_ID
+    /concourse/main/pipeline-initialiser/CONCOURSE_ADMIN_PASSWORD
+    
+<a name="setup_pipeline_controller"/>### Add Repositories to be Scanned
 
 To cause a repository to be included in the scans, update the repositories.yml file and create a pull request. Once the pull request
 is merged into master, your project will be scanned for new commits. When a new commit is found, the pipeline configuration will first
@@ -76,35 +106,4 @@ such as:
 
     credhub set -n concourse/main/directorzone-api/S3_BUCKET_SECRET_ACCESS_KEY --type value --value \
     `credhub get -qn concourse/main/directorzone-api/S3_BUCKET_SECRET_ACCESS_KEY_ENCRYPTED \
-    | \base64 --decode | keybase pgp decrypt`
-
-## Setting up Your Own Instance of This Controller
-
-### Prerequisites and How to Get Them
-
-To use the opinionated pipeline initialiser, you will need:
-
-* A Concourse Server
-* A CredHub Server
-* The Fly CLI
-* The CredHub CLI
-
-### Setup Concourse and CredHub
-
-I recommend using [Control Tower](https://github.com/EngineerBetter/control-tower) to setup Concourse and CredHub.
-
-### Setting the Pipeline Initialiser pipeline itself
-
-To bootstrap the pipeline initialiser, you need to run:
-
-    cd devops/concourse/
-    CONCOURSE_SERVER=https://concourse.example.com CONCOURSE_ADMIN_PASSWORD=[YOUR_PASSWORD_HERE] ./init-me.sh
-  
-### Setting credentials
-
-Set the following CredHub secrets
-
-    /concourse/main/pipeline-initialiser/AWS_SECRET_ACCESS_KEY
-    /concourse/main/pipeline-initialiser/AWS_ACCESS_KEY_ID
-    /concourse/main/pipeline-initialiser/CONCOURSE_ADMIN_PASSWORD
-    
+    | \base64 --decode | keybase pgp decrypt`    
