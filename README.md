@@ -16,7 +16,7 @@ It also enforces a consistency of pipeline configuration across projects.
 
 If you already have this controller running with a Concourse instance, you should jump straight to the [Using the Controller](#setup_pipeline_controller) section.
 
-### Prerequisites and How to Get Them
+### Prerequisites
 
 To use the opinionated pipeline initialiser, you will need:
 
@@ -25,9 +25,7 @@ To use the opinionated pipeline initialiser, you will need:
 * The Fly CLI
 * The CredHub CLI
 
-### Setup Concourse and CredHub
-
-Please use [Control Tower](https://github.com/EngineerBetter/control-tower) to setup Concourse and CredHub.
+You need to use [Control Tower](https://github.com/EngineerBetter/control-tower) to setup Concourse and CredHub. The pipeline controller relies on it.
 
 ### Setting the Pipeline Initialiser pipeline itself
 
