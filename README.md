@@ -1,16 +1,16 @@
 # Concourse Pipeline Controller
 
-NOTE: This README file, like this project, is a work in progress. Check the last commit time to discover if I'm still updating it regularly :)
-
 ## One Job To Rule Them All
 
-This is a single-job Concourse pipeline that scans specified Git code repositories for updates to pipeline configurations. 
+This is a single-job Concourse pipeline that manages the pipelines of other services within the same Concourse instance.
+
+It scans specified Git code repositories for updates to pipeline configurations. 
 
 When an update is detected, the updated pipeline configuration is applied and the pipeline is triggered.
 
 This allows developers working on the specified Git repositories to manage the pipeline without needing to install anything on their local machines.
 
-It also enforeces a consistency of pipeline configuration across projects.
+It also enforces a consistency of pipeline configuration across projects.
 
 ## What Do You Want?
 
@@ -25,11 +25,11 @@ is merged into master, your project will be scanned for new commits. When a new 
 be updated with any new changes and then the ***build*** job from the pipeline will be triggered.
 
     repos:
-    - deploy_key_credhub_location: /concourse/main/directorzone-api/GITHUB_DEPLOY_KEY
-      pipeline_name: directorzone-api
+    - pipeline_name: directorzone-api
+      deploy_key_credhub_location: /concourse/main/directorzone-api/GITHUB_DEPLOY_KEY
       uri: git@github.com:chris-moreton/directorzone-api
-    - deploy_key_credhub_location: /concourse/main/directorzone-frontend/GITHUB_DEPLOY_KEY
-      pipeline_name: directorzone-frontend
+    - pipeline_name: directorzone-frontend
+      deploy_key_credhub_location: /concourse/main/directorzone-frontend/GITHUB_DEPLOY_KEY
       uri: git@github.com:chris-moreton/directorzone-frontend
       
 For each repository, you will need to add the correct deploy key to the CredHub location specified in the **deploy_key_credhub_location** field.
