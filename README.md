@@ -14,7 +14,7 @@ It also enforeces a consistency of pipeline configuration across projects.
 
 ## What Do You Want?
 
-[To configure a Concourse pipeline in my project and have it managed by an existing pipeline controller](#setup_pipeline_controller)
+[To configure a Concourse pipeline in my project and have it managed by an existing pipeline controller].(#setup_pipeline_controller)
 
 To set up a new controller on my own Concourse instance. Continue reading below.
 
@@ -48,7 +48,8 @@ Set the following CredHub secrets
     /concourse/main/pipeline-initialiser/AWS_ACCESS_KEY_ID
     /concourse/main/pipeline-initialiser/CONCOURSE_ADMIN_PASSWORD
     
-<a name="setup_pipeline_controller"/>### Add Repositories to be Scanned
+<a name="setup_pipeline_controller"/>
+### Add Repositories to be Scanned
 
 To cause a repository to be included in the scans, update the repositories.yml file and create a pull request. Once the pull request
 is merged into master, your project will be scanned for new commits. When a new commit is found, the pipeline configuration will first
