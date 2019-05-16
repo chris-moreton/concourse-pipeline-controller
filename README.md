@@ -12,13 +12,9 @@ This allows developers working on the specified Git repositories to manage the p
 
 It also enforces a consistency of pipeline configuration across projects.
 
-## What Do You Want?
-
-[To configure a Concourse pipeline in my project and have it managed by an existing pipeline controller].(#setup_pipeline_controller)
-
-To set up a new controller on my own Concourse instance. Continue reading below.
-
 ## Setting up Your Own Instance of This Controller
+
+If you already have this controller running with a Concourse instance, you should jump straight to the [Add Repositories](#setup_pipeline_controller) section.
 
 ### Prerequisites and How to Get Them
 
