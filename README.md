@@ -31,7 +31,7 @@ To use the opinionated pipeline initialiser, you will need:
 
 ### Setup Concourse and CredHub
 
-I recommend using [Control Tower](https://github.com/EngineerBetter/control-tower) to setup Concourse and CredHub.
+Please use [Control Tower](https://github.com/EngineerBetter/control-tower) to setup Concourse and CredHub.
 
 ### Setting the Pipeline Initialiser pipeline itself
 
@@ -47,6 +47,8 @@ Set the following CredHub secrets
     /concourse/main/pipeline-initialiser/AWS_SECRET_ACCESS_KEY
     /concourse/main/pipeline-initialiser/AWS_ACCESS_KEY_ID
     /concourse/main/pipeline-initialiser/CONCOURSE_ADMIN_PASSWORD
+    
+The AWS key should be for the same user that was used to create the Concourse environment with Control Tower.
     
 <a name="setup_pipeline_controller"/>
 ### Add Repositories to be Scanned
