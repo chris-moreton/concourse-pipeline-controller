@@ -12,6 +12,8 @@ This allows developers working on the specified Git repositories to manage the p
 
 It also enforces a consistency of pipeline configuration across projects.
 
+Not in place yet, this controller will also provide common components for pipelines to bring further conistency across projects and to provide out-of-the-box solutions for service developers.
+
 ## Setting up Your Own Instance of This Controller
 
 If you already have this controller running with a Concourse instance, you should jump straight to the [Using the Controller](#setup_pipeline_controller) section.
@@ -64,7 +66,7 @@ When a new commit is found, the pipeline configuration will first be updated wit
       deploy_key_credhub_location: /concourse/main/directorzone-frontend/GITHUB_DEPLOY_KEY
       uri: git@github.com:chris-moreton/directorzone-frontend
       
-For each repository, you will need to add the correct deploy key to the CredHub location specified in the **deploy_key_credhub_location** field.
+For private repositories, you will need to add the correct deploy key to the CredHub location specified in the **deploy_key_credhub_location** field. Public repositories do not need to have this field.
       
 ## Configure the Pipeline in your Projects
 
