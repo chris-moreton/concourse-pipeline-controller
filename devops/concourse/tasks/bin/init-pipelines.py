@@ -23,7 +23,7 @@ def GetRepos():
     return yaml_file
 
 
-def GetStateRepoRevisions(state_yaml_file):
+def GetStateRepoRevisions():
     state_yaml_file = GetState(yaml_file)
     state_repo_revisions = {}
     for state_repo in state_yaml_file["repos"]:
