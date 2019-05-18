@@ -3,7 +3,8 @@ import yaml
 import boto3
 import os
 
-def GetState(yaml_file):
+
+def get_state(yaml_file):
     s3 = boto3.client('s3')
     tmp_file_location = "/tmp/temp.yml"
     try:
@@ -15,7 +16,8 @@ def GetState(yaml_file):
         state_yaml_file = yaml_file
     return state_yaml_file
 
-def GetRepos():
+
+def get_repos():
     repo_yml_filename = "repositories.yml"
     os.system("cp ../../../../" + repo_yml_filename + " .")
     f = open(repo_yml_filename)
@@ -23,8 +25,8 @@ def GetRepos():
     return yaml_file
 
 
-def GetStateRepoRevisions():
-    state_yaml_file = GetState(yaml_file)
+def get_state_repo_revisions():
+    state_yaml_file = get_state(yaml_file)
     state_repo_revisions = {}
     for state_repo in state_yaml_file["repos"]:
         previous_head_revision = ""
@@ -33,7 +35,8 @@ def GetStateRepoRevisions():
         state_repo_revisions[state_repo["pipeline_name"]] = previous_head_revision
     return state_repo_revisions
 
-def SaveState(yaml_file):
+
+def save_state(yaml_file):
     s3 = boto3.client('s3')
     tmp_file_location = "/tmp/temp.yml"
     stream = open(tmp_file_location, "w")
@@ -42,7 +45,8 @@ def SaveState(yaml_file):
     with open(tmp_file_location, "rb") as f:
         s3.upload_fileobj(f, "pipeline-initialiser", "repositories.yml")
 
-def InitialisePipeline(filename, directory_name, pipeline_name):
+
+def initialise_pipeline(filename, directory_name, pipeline_name):
     print("Looking for " + filename + "...")
     pipeline_config = "/tmp/" + directory_name + "/devops/concourse/" + filename
     if os.path.isfile(pipeline_config):
@@ -58,7 +62,7 @@ def InitialisePipeline(filename, directory_name, pipeline_name):
         print("No " + filename + " found.")
 
 
-def GetDeployKey():
+def get_deploy_key():
     print("Getting deploy key from CredHub...")
     if ("deploy_key_credhub_location" in repo.keys()):
         if ('PYCHARM_HOSTED' in os.environ.keys() and os.environ['PYCHARM_HOSTED'] == "1"):
@@ -66,14 +70,18 @@ def GetDeployKey():
         else:
             deploy_key_file = "/root/.ssh/id_rsa"
 
-        print("Overwriting deploy key at " + deploy_key_file)
-        sed = "sed -e 's/\(KEY-----\)\s/\\1\\n/g; s/\s\(-----END\)/\\n\\1/g' | sed -e '2s/\s\+/\\n/g'"
-        os.system("credhub get -q -n " + repo[
-            "deploy_key_credhub_location"] + " -k private_key | " + sed + " > " + deploy_key_file)
-        os.system("chmod 600 ~/.ssh/id_rsa")
+        prepare_deploy_key(deploy_key_file)
 
 
-def CloneRepository():
+def prepare_deploy_key(deploy_key_file):
+    print("Overwriting deploy key at " + deploy_key_file)
+    sed = "sed -e 's/\(KEY-----\)\s/\\1\\n/g; s/\s\(-----END\)/\\n\\1/g' | sed -e '2s/\s\+/\\n/g'"
+    os.system("credhub get -q -n " + repo[
+        "deploy_key_credhub_location"] + " -k private_key | " + sed + " > " + deploy_key_file)
+    os.system("chmod 600 ~/.ssh/id_rsa")
+
+
+def clone_repository():
     os.system("ssh -o \"StrictHostKeyChecking=no\" git@github.com")
     os.system("rm -rf /tmp/" + repo["pipeline_name"])
     clone_dir = "/tmp/" + repo["pipeline_name"]
@@ -81,34 +89,32 @@ def CloneRepository():
     return clone_dir
 
 
-def GetCurrentHeadRevision():
-    GetDeployKey()
-    repo_object = git.Repo(CloneRepository())
+def get_current_head_revision():
+    get_deploy_key()
+    repo_object = git.Repo(clone_repository())
     return repo_object.head.commit.name_rev.split()[0]
 
 
-def GetPreviousHeadRevision(pipeline_name, state_repo_revisions):
+def get_previous_head_revision(pipeline_name):
+    state_repo_revisions = get_state_repo_revisions()
     if (pipeline_name in state_repo_revisions.keys()):
         return state_repo_revisions[repo["pipeline_name"]]
     else:
         return ""
 
 
-yaml_file = GetRepos()
-state_repo_revisions = GetStateRepoRevisions()
+yaml_file = get_repos()
 
 for repo in yaml_file["repos"]:
 
-    current_head_revision   = GetCurrentHeadRevision()
-    previous_head_revision  = GetPreviousHeadRevision(repo["pipeline_name"], state_repo_revisions)
+    current_head_revision = get_current_head_revision()
 
-    if current_head_revision == previous_head_revision:
+    if current_head_revision == get_previous_head_revision(repo["pipeline_name"]):
         print("We've done this one before...")
     else:
-        InitialisePipeline('pipeline.yml', repo["pipeline_name"], repo["pipeline_name"])
-        InitialisePipeline('pipeline-shared-infra.yml', repo["pipeline_name"], repo["pipeline_name"] + "-shared-infra")
+        initialise_pipeline('pipeline.yml', repo["pipeline_name"], repo["pipeline_name"])
+        initialise_pipeline('pipeline-shared-infra.yml', repo["pipeline_name"], repo["pipeline_name"] + "-shared-infra")
 
     repo["head_revision"] = current_head_revision
 
-SaveState(yaml_file)
-
+save_state(yaml_file)
