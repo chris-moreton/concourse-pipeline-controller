@@ -3,10 +3,10 @@ resources:
 - name: source-code
   type: git
   source:
-    uri: git@github.com:chris-moreton/concourse-pipeline-initialiser
+    uri: git@github.com:((GITHUB_OWNER))/concourse-pipeline-initialiser
     branch: master
     private_key: ((GITHUB_DEPLOY_KEY.private_key))
-    password: ((NETSENSIA_GITHUB_API_TOKEN))
+    password: ((GITHUB_API_TOKEN))
 - name: trigger-interval
   type: time
   source: {interval: 15m}

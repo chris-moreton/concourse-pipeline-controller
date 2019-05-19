@@ -8,12 +8,12 @@ def get_state(yaml_file):
     s3 = boto3.client('s3')
     tmp_file_location = "/tmp/temp.yml"
     try:
-        s3.download_file('pipeline-initialiser', 'repositories.yml', tmp_file_location)
+        s3.download_file(os.environ['STATE_BUCKET'], 'repositories.yml', tmp_file_location)
         state_file = open(tmp_file_location)
         state_yaml_file = yaml.safe_load(state_file)
     except:
         print("Unable to download repository state file")
-        state_yaml_file = yaml_file
+        state_yaml_file["repos"] = yaml_file["repos"]
     return state_yaml_file
 
 
@@ -43,7 +43,7 @@ def save_state(yaml_file):
     yaml.dump(yaml_file, stream)
     print("Saving state")
     with open(tmp_file_location, "rb") as f:
-        s3.upload_fileobj(f, "pipeline-initialiser", "repositories.yml")
+        s3.upload_fileobj(f, os.environ['STATE_BUCKET'], "repositories.yml")
 
 
 def initialise_pipeline(filename, directory_name, pipeline_name):

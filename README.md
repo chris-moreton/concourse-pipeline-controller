@@ -1,6 +1,6 @@
 # Concourse Pipeline Controller
 
-## One Job To Rule Them All
+## One Job To Control Them All
 
 This is a single-job Concourse pipeline that manages the pipelines of other services within the same Concourse instance.
 
@@ -31,6 +31,8 @@ You need to use [Control Tower](https://github.com/EngineerBetter/control-tower)
 
 ### Setting the Pipeline Initialiser pipeline itself
 
+To set this up on a new Concourse instance, you'll need a fork of this project, as you will need to make changes to the config.yml file and push it to GitHub.
+
 To bootstrap the pipeline initialiser, you need to run:
 
     cd devops/concourse/
@@ -38,14 +40,27 @@ To bootstrap the pipeline initialiser, you need to run:
   
 ### Setting credentials
 
-Set the following CredHub secrets
+Set the following CredHub secrets. They're not all necessarily secret, but this is a simple way to centralise the configuration.
 
-    /concourse/main/pipeline-initialiser/AWS_SECRET_ACCESS_KEY
-    /concourse/main/pipeline-initialiser/AWS_ACCESS_KEY_ID
-    /concourse/main/pipeline-initialiser/CONCOURSE_ADMIN_PASSWORD
+    # The AWS user credentials of the user used by Control Tower
+    /concourse/main/pipeline-initialiser/AWS_ACCESS_KEY_ID 
+    /concourse/main/pipeline-initialiser/AWS_SECRET_ACCESS_KEY      
     
-The AWS key should be for the same user that was used to create the Concourse environment with Control Tower.
+     # The password for the Concourse "admin" user
+    /concourse/main/pipeline-initialiser/CONCOURSE_ADMIN_PASSWORD  
     
+    # The deploy key for this repository - store as the "ssh" type
+    /concourse/main/pipeline-initialiser/GITHUB_DEPLOY_KEY        
+      
+    # The GitHub account where this repository is forked
+    /concourse/main/pipeline-initialiser/GITHUB_OWNER
+    
+    # An API token with repository access - this is to avoid getting rate limited by GitHub             
+    /concourse/main/pipeline-initialiser/GITHUB_API_TOKEN     
+    
+    # The name of an S3 bucket to store state - must be readable and writable by the AWS user above             
+    /concourse/main/pipeline-initialiser/STATE_BUCKET           
+        
 <a name="setup_pipeline_controller"/>
 
 ## Using the Controller
@@ -68,6 +83,11 @@ When a new commit is found, the pipeline configuration will first be updated wit
       
 For private repositories, you will need to add the correct deploy key to the CredHub location specified in the **deploy_key_credhub_location** field. Public repositories do not need to have this field.
       
+## Create a State Bucket
+
+You need to create a bucket (or use an existing one), in which the pipeline initialiser can store the last revision of each repo that
+was processed. Add the name of this bucket to the config.yml file.
+
 ## Configure the Pipeline in your Projects
 
 When you make commits to a repository that is registered with the pipeline controller, your repository will be scanned periodically for changes.

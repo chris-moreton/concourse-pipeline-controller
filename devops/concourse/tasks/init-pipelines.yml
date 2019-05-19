@@ -11,6 +11,8 @@ inputs:
 run:
   path: sh
   dir: source-code
+  params:
+    - STATE_BUCKET: ((STATE_BUCKET))
   args:
     - -ec
     - |
