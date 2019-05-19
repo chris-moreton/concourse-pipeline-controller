@@ -8,11 +8,11 @@ image_resource:
     tag: 1.0.5
 inputs:
   - name: source-code
+params:
+  - STATE_BUCKET: ((STATE_BUCKET))
 run:
   path: sh
   dir: source-code
-  params:
-    - STATE_BUCKET: ((STATE_BUCKET))
   args:
     - -ec
     - |
