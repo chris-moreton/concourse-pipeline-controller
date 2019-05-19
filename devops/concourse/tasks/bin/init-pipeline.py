@@ -5,6 +5,7 @@ import sys
 def initialise_pipeline(filename, directory_name, pipeline_name, concourse_root):
     fullpath = concourse_root + "/" + directory_name + "/devops/concourse/" + filename
     print("Looking for " + fullpath + "...")
+    os.system("echo `pwd`")
     pipeline_config = fullpath
     if os.path.isfile(pipeline_config):
         print("Updating pipeline " + pipeline_name + "...")
