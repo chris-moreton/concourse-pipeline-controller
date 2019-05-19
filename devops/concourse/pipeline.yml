@@ -51,6 +51,7 @@ jobs:
   - task: init-pipelines
     params:
       PROJECT: directorzone-api
+      CONCOURSE_ADMIN_PASSWORD: ((CONCOURSE_ADMIN_PASSWORD))
     file: source-code/devops/concourse/tasks/init-pipeline.yml
 - name: directorzone-frontend
   public: false
@@ -64,6 +65,7 @@ jobs:
   - task: init-pipelines
     params:
       PROJECT: directorzone-frontend
+      CONCOURSE_ADMIN_PASSWORD: ((CONCOURSE_ADMIN_PASSWORD))
     file: source-code/devops/concourse/tasks/init-pipeline.yml
 - name: tennisform-odds-widget
   public: false
@@ -77,6 +79,7 @@ jobs:
   - task: init-pipelines
     params:
       PROJECT: tennisform-odds-widget
+      CONCOURSE_ADMIN_PASSWORD: ((CONCOURSE_ADMIN_PASSWORD))
     file: source-code/devops/concourse/tasks/init-pipeline.yml
 - name: tennisform-vue-widget
   public: false
@@ -90,4 +93,5 @@ jobs:
   - task: init-pipelines
     params:
       PROJECT: tennisform-vue-widget
+      CONCOURSE_ADMIN_PASSWORD: ((CONCOURSE_ADMIN_PASSWORD))
     file: source-code/devops/concourse/tasks/init-pipeline.yml

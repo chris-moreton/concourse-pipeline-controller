@@ -2,9 +2,9 @@ import os
 import sys
 
 
-def initialise_pipeline(filename, directory_name, pipeline_name, pipeline_root):
+def initialise_pipeline(filename, directory_name, pipeline_name, concourse_root):
     print("Looking for " + filename + "...")
-    pipeline_config = pipeline_root + "/" + directory_name + "/devops/concourse/" + filename
+    pipeline_config = concourse_root + "/" + directory_name + "/devops/concourse/" + filename
     if os.path.isfile(pipeline_config):
         print("Updating pipeline " + pipeline_name + "...")
         os.system(
@@ -19,7 +19,7 @@ def initialise_pipeline(filename, directory_name, pipeline_name, pipeline_root):
 
 
 project_name = sys.argv[1]
-pipeline_root = sys.argv[2]
+concourse_root = sys.argv[2]
 
-initialise_pipeline('pipeline.yml', project_name, project_name, pipeline_root)
-initialise_pipeline('pipeline-shared-infra.yml', project_name, project_name + "-shared-infra", pipeline_root)
+initialise_pipeline('pipeline.yml', project_name, project_name, concourse_root)
+initialise_pipeline('pipeline-shared-infra.yml', project_name, project_name + "-shared-infra", concourse_root)
