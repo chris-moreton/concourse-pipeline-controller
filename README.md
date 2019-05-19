@@ -20,7 +20,7 @@ If you already have this controller running with a Concourse instance, you shoul
 
 ### Prerequisites
 
-To use the opinionated pipeline initialiser, you will need:
+To set up your own pipeline initialiser, you will need:
 
 * A Concourse Server
 * A CredHub Server
