@@ -10,7 +10,6 @@ inputs:
 - name: source-code
 run:
   path: sh
-  dir: source-code
   args:
     - -ec
     - |
@@ -18,6 +17,5 @@ run:
       fly --target netsensia-concourse login --insecure --concourse-url https://concourse.netsensia.com -u admin -p $CONCOURSE_ADMIN_PASSWORD
       echo "Syncing..."
       fly --target netsensia-concourse sync
-      echo "Hello"
       pwd
       python3 source-code/devops/concourse/tasks/bin/init-pipeline.py $PROJECT .
