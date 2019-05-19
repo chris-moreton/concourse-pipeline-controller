@@ -6,6 +6,9 @@ image_resource:
   source:
     repository: netsensia/pipelinefull
     tag: 1.0.5
+inputs:
+- name: source-code
+- name: ((PROJECT))
 run:
   path: sh
   dir: source-code
