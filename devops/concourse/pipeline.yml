@@ -3,7 +3,7 @@ resources:
 - name: source-code
   type: git
   source:
-    uri: git@github.com:chris-moreton/pipeline-initialiser
+    uri: git@github.com:chris-moreton/concourse-pipeline-initialiser
     branch: a-better-way
     private_key: ((GITHUB_DEPLOY_KEY.private_key))
     password: ((GITHUB_API_TOKEN))
@@ -15,8 +15,8 @@ resources:
   source:
     uri: git@github.com:chris-moreton/directorzone-api
     branch: master
-  private_key: ((directorzone-api/GITHUB_DEPLOY_KEY.private_key))
-  password: ((GITHUB_API_TOKEN))
+    private_key: ((directorzone-api/GITHUB_DEPLOY_KEY.private_key))
+    password: ((GITHUB_API_TOKEN))
 - name: directorzone-frontend
   type: git
   source:
@@ -46,6 +46,8 @@ jobs:
     trigger: true
   - get: directorzone-api
     trigger: false
+  - get: source-code
+    trigger: false
   - task: init-pipelines
     params:
       PROJECT: directorzone-api
@@ -57,7 +59,35 @@ jobs:
     trigger: true
   - get: directorzone-frontend
     trigger: false
+  - get: source-code
+    trigger: false
   - task: init-pipelines
     params:
       PROJECT: directorzone-frontend
+    file: source-code/devops/concourse/tasks/init-pipeline.yml
+- name: tennisform-odds-widget
+  public: false
+  plan:
+  - get: trigger-interval
+    trigger: true
+  - get: tennisform-odds-widget
+    trigger: false
+  - get: source-code
+    trigger: false
+  - task: init-pipelines
+    params:
+      PROJECT: tennisform-odds-widget
+    file: source-code/devops/concourse/tasks/init-pipeline.yml
+- name: tennisform-vue-widget
+  public: false
+  plan:
+  - get: trigger-interval
+    trigger: true
+  - get: tennisform-vue-widget
+    trigger: false
+  - get: source-code
+    trigger: false
+  - task: init-pipelines
+    params:
+      PROJECT: tennisform-vue-widget
     file: source-code/devops/concourse/tasks/init-pipeline.yml
