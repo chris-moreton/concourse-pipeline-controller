@@ -18,4 +18,5 @@ run:
       fly --target netsensia-concourse login --insecure --concourse-url https://concourse.netsensia.com -u admin -p $CONCOURSE_ADMIN_PASSWORD
       echo "Syncing..."
       fly --target netsensia-concourse sync
+      pwd
       python3 source-code/devops/concourse/tasks/bin/init-pipeline.py $PROJECT .
