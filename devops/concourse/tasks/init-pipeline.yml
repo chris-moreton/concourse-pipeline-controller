@@ -6,10 +6,6 @@ image_resource:
   source:
     repository: netsensia/pipelinefull
     tag: 1.0.5
-inputs:
-  - name: source-code
-params:
-  - STATE_BUCKET: ((STATE_BUCKET))
 run:
   path: sh
   dir: source-code
@@ -20,7 +16,4 @@ run:
       fly --target netsensia-concourse login --insecure --concourse-url https://concourse.netsensia.com -u admin -p $CONCOURSE_ADMIN_PASSWORD
       echo "Syncing..."
       fly --target netsensia-concourse sync
-      echo "Logging into CredHub..."
-      eval "$(control-tower info --iaas aws --env --region eu-west-2 netsensia-concourse)"
-      cd devops/concourse/tasks/bin
-      python3 init-pipelines.py
+      python3 devops/concourse/tasks/bin/init-pipelines.py $PROJECT ..

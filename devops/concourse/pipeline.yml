@@ -3,23 +3,59 @@ resources:
 - name: source-code
   type: git
   source:
-    uri: git@github.com:((GITHUB_OWNER))/concourse-pipeline-initialiser
-    branch: master
+    uri: git@github.com:chris-moreton/pipeline-initialiser
+    branch: a-better-way
     private_key: ((GITHUB_DEPLOY_KEY.private_key))
     password: ((GITHUB_API_TOKEN))
-- name: trigger-interval
-  type: time
-  source: {interval: 15m}
+- name: directorzone-api
+  type: git
+  source:
+    uri: git@github.com:chris-moreton/directorzone-api
+    branch: master
+    private_key: ((directorzone-api/GITHUB_DEPLOY_KEY.private_key))
+    password: ((GITHUB_API_TOKEN))
+- name: directorzone-frontend
+  type: git
+  source:
+    uri: git@github.com:chris-moreton/directorzone-frontend
+    branch: master
+    private_key: ((directorzone-frontend/GITHUB_DEPLOY_KEY.private_key))
+    password: ((GITHUB_API_TOKEN))
+- name: tennisform-odds-widget
+  type: git
+  source:
+    uri: git@github.com:chris-moreton/tennisform-odds-widget
+    branch: master
+    private_key: ((tennisform-odds-widget/GITHUB_DEPLOY_KEY.private_key))
+    password: ((GITHUB_API_TOKEN))
+- name: tennisform-vue-widget
+  type: git
+  source:
+    uri: git@github.com:chris-moreton/tennisform-vue-widget
+    branch: master
+    private_key: ((tennisform-vue-widget/GITHUB_DEPLOY_KEY.private_key))
+    password: ((GITHUB_API_TOKEN))
 jobs:
-- name: init-pipelines
+- name: directorzone-api
   public: false
   plan:
-  - get: trigger-interval
+  - get: directorzone-api
     trigger: true
-  - get: source-code
   - task: init-pipelines
-    file: source-code/devops/concourse/tasks/init-pipelines.yml
     params:
-      AWS_ACCESS_KEY_ID: ((AWS_ACCESS_KEY_ID))
-      AWS_SECRET_ACCESS_KEY: ((AWS_SECRET_ACCESS_KEY))
-      CONCOURSE_ADMIN_PASSWORD: ((CONCOURSE_ADMIN_PASSWORD))
+      - PROJECT: directorzone-api
+    inputs:
+      - name: directorzone-api
+    file: source-code/devops/concourse/tasks/init-pipeline.yml
+- name: directorzone-frontend
+  public: false
+  plan:
+  - get: directorzone-frontend
+    trigger: true
+  - task: init-pipelines
+    params:
+      - PROJECT: directorzone-frontend
+    inputs:
+      - name: source-code
+      - name: directorzone-frontend
+    file: source-code/devops/concourse/tasks/init-pipeline.yml
