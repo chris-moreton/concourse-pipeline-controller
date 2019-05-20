@@ -6,7 +6,7 @@ repos:
 - deploy_key_credhub_location: /concourse/main/directorzone-frontend/GITHUB_DEPLOY_KEY
   pipeline_name: directorzone-frontend
   uri: git@github.com:chris-moreton/directorzone-frontend
-  first_job: build-shared-infrastructure
+  first_job: build-infrastructure
 - deploy_key_credhub_location: /concourse/main/tennisform-odds-widget/GITHUB_DEPLOY_KEY
   pipeline_name: tennisform-odds-widget
   uri: git@github.com:chris-moreton/tennisform-odds-widget
