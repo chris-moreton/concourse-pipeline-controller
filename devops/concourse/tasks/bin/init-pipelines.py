@@ -46,7 +46,7 @@ def save_state(yaml_file):
         s3.upload_fileobj(f, os.environ['STATE_BUCKET'], "repositories.yml")
 
 
-def initialise_pipeline(filename, directory_name, pipeline_name):
+def initialise_pipeline(filename, directory_name, pipeline_name, first_job):
     print("Looking for " + filename + "...")
     pipeline_config = "/tmp/" + directory_name + "/devops/concourse/" + filename
     if os.path.isfile(pipeline_config):
@@ -57,7 +57,7 @@ def initialise_pipeline(filename, directory_name, pipeline_name):
         print("Unpausing pipeline...")
         os.system("fly --target netsensia-concourse unpause-pipeline -p " + pipeline_name)
         print("Triggering build job...")
-        os.system("fly --target netsensia-concourse trigger-job -j " + pipeline_name + "/build")
+        os.system("fly --target netsensia-concourse trigger-job -j " + pipeline_name + "/" + first_job)
     else:
         print("No " + filename + " found.")
 
@@ -97,7 +97,7 @@ def get_current_head_revision():
 
 def get_previous_head_revision(pipeline_name):
     state_repo_revisions = get_state_repo_revisions()
-    if (pipeline_name in state_repo_revisions.keys()):
+    if pipeline_name in state_repo_revisions.keys():
         return state_repo_revisions[repo["pipeline_name"]]
     else:
         return ""
@@ -112,8 +112,8 @@ for repo in yaml_file["repos"]:
     if current_head_revision == get_previous_head_revision(repo["pipeline_name"]):
         print("We've done this one before...")
     else:
-        initialise_pipeline('pipeline.yml', repo["pipeline_name"], repo["pipeline_name"])
-        initialise_pipeline('pipeline-shared-infra.yml', repo["pipeline_name"], repo["pipeline_name"] + "-shared-infra")
+        initialise_pipeline('pipeline.yml', repo["pipeline_name"], repo["pipeline_name"], repo["first_job"])
+        initialise_pipeline('pipeline-shared-infra.yml', repo["pipeline_name"], repo["pipeline_name"] + "-shared-infra", "build")
 
     repo["head_revision"] = current_head_revision
 
