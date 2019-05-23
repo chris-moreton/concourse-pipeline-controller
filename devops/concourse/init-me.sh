@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-fly --target netsensia-concourse login --insecure --concourse-url $CONCOURSE_SERVER -u admin -p $CONCOURSE_ADMIN_PASSWORD
-fly --target netsensia-concourse sync
-fly --target netsensia-concourse set-pipeline --non-interactive -c pipeline.yml -p pipeline-initialiser
-fly --target netsensia-concourse unpause-pipeline -p pipeline-initialiser
+fly --target $CONCOURSE_NAME login --insecure --concourse-url $CONCOURSE_SERVER -u admin -p $CONCOURSE_ADMIN_PASSWORD
+sudo fly --target $CONCOURSE_NAME sync
+fly --target $CONCOURSE_NAME set-pipeline --non-interactive -c pipeline.yml -p pipeline-controller
+fly --target $CONCOURSE_NAME unpause-pipeline -p pipeline-controller

@@ -24,3 +24,5 @@ RUN chmod +x ~/.terraform.d/plugins/linux_amd64/terraform-provider-cloudfoundry
 RUN mkdir /root/.ssh
 RUN wget -O /bin/fly https://www.dropbox.com/s/ishyogxcbpe4mlv/fly_linux_amd64?dl=1
 RUN chmod +x /bin/fly
+
+
