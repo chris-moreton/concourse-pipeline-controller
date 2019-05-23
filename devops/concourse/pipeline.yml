@@ -3,7 +3,7 @@ resources:
 - name: source-code
   type: git
   source:
-    uri: git@github.com:((GITHUB_OWNER))/concourse-pipeline-controller.git
+    uri: https://github.com/((GITHUB_OWNER))/concourse-pipeline-controller.git
     branch: master
     password: ((GITHUB_API_TOKEN))
 - name: trigger-interval
