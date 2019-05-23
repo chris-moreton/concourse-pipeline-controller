@@ -13,7 +13,7 @@ def get_state(yaml_file):
         state_yaml_file = yaml.safe_load(state_file)
     except:
         print("Unable to download repository state file")
-        state_yaml_file["repos"] = yaml_file["repos"]
+        state_yaml_file = {"repos": yaml_file["repos"]}
     return state_yaml_file
 
 

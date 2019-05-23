@@ -9,7 +9,7 @@ resources:
     password: ((GITHUB_API_TOKEN))
 - name: trigger-interval
   type: time
-  source: {interval: 5m}
+  source: {interval: 120m}
 jobs:
 - name: init-pipelines
   public: false
