@@ -113,7 +113,7 @@ for repo in yaml_file["repos"]:
         print("We've done this one before...")
     else:
         initialise_pipeline('pipeline.yml', repo["pipeline_name"], repo["pipeline_name"], repo["first_job"])
-        initialise_pipeline('pipeline-shared-infra.yml', repo["pipeline_name"], repo["pipeline_name"] + "-shared-infra", "build")
+        initialise_pipeline('pipeline-shared-infra.yml', repo["pipeline_name"], repo["pipeline_name"] + "-shared-infra", "build-shared-infrastructure")
 
     repo["head_revision"] = current_head_revision
 
