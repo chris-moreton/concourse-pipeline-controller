@@ -5,7 +5,6 @@ resources:
   source:
     uri: git@github.com:((GITHUB_OWNER))/concourse-pipeline-controller.git
     branch: master
-    private_key: ((GITHUB_DEPLOY_KEY))
     password: ((GITHUB_API_TOKEN))
 - name: trigger-interval
   type: time
