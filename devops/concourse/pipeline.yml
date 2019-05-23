@@ -5,11 +5,10 @@ resources:
   source:
     uri: git@github.com:((GITHUB_OWNER))/concourse-pipeline-initialiser
     branch: master
-    private_key: ((GITHUB_DEPLOY_KEY.private_key))
     password: ((GITHUB_API_TOKEN))
 - name: trigger-interval
   type: time
-  source: {interval: 120m}
+  source: {interval: 10m}
 jobs:
 - name: init-pipelines
   public: false
