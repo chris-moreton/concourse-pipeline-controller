@@ -8,6 +8,8 @@
 #      passed:
 #        - load-database-aat
 #      trigger: true
+#    - get: pipeline-controller
+#      trigger: false
 #    - get: packaged-build
 #      trigger: false
 #    - task: create-manifests

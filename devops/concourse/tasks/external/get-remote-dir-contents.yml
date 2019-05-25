@@ -6,6 +6,8 @@
 #  plan:
 #    - get: source-code
 #      trigger: false
+#    - get: pipeline-controller
+#      trigger: false
 #    - task: migrate-images
 #      file: pipeline-controller/devops/concourse/tasks/external/get-remote-dir-contents.yml
 #      params:

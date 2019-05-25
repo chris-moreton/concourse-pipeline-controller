@@ -8,6 +8,8 @@
 #      passed:
 #        - build-infrastructure-prod
 #      trigger: false
+#    - get: pipeline-controller
+#      trigger: false
 #    - task: dump-data
 #      file: pipeline-controller/devops/concourse/tasks/external/dump-mysql-data.yml
 #      params:
