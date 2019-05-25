@@ -50,7 +50,7 @@ def system_call(call_string):
     return_code = os.system(call_string)
     print("Exit code was: " + str(return_code))
     if return_code != 0:
-        exit(return_code)
+        exit(1)
 
 
 def initialise_pipeline(filename, directory_name, pipeline_name, first_job):
