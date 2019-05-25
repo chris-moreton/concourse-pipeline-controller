@@ -2,7 +2,7 @@
 
 This is a single-job Concourse pipeline that manages the pipelines of other services within the same Concourse instance.
 
-It scans specified Git code repositories for updates to pipeline configurations. When an update is detected, the updated pipeline configuration is applied and the pipeline is triggered.
+It scans specified Git code repositories for updates to pipeline configurations. When an update is detected, to either the pipeline or the application code, the updated pipeline configuration is applied, if needed, and the pipeline is triggered.
 
 This removes the need to have any special software installed locally, but also simplifies modifying a pipeline and its tasks, which would normaly require two steps:
 
