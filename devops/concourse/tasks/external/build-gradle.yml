@@ -1,3 +1,22 @@
+#-------------------------------------------------------------------------------------------------
+# Example usage:
+#-------------------------------------------------------------------------------------------------
+#- name: build
+#  public: false
+#  plan:
+#  - get: source-code
+#    trigger: false
+#  - get: pipeline-controller
+#    trigger: false
+#  - task: build
+#    file: pipeline-controller/devops/concourse/tasks/external/build-gradle.yml
+#  - put: packaged-build
+#    params:
+#      file: build/((PRODUCT))-((COMPONENT)).jar
+#-------------------------------------------------------------------------------------------------
+
+
+
 platform: linux
 image_resource:
   type: docker-image

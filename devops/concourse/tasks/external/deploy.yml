@@ -1,0 +1,47 @@
+#-------------------------------------------------------------------------------------------------
+# Example usage:
+#-------------------------------------------------------------------------------------------------
+#- name: deploy-aat
+#  public: false
+#  plan:
+#    - get: source-code
+#      passed:
+#        - load-database-aat
+#      trigger: true
+#    - get: packaged-build
+#      trigger: false
+#    - task: create-manifests
+#      file: source-code/devops/concourse/tasks/create-manifest.yml
+#      vars:
+#        ENVIRONMENT: aat
+#    - task: deploy
+#      file: pipeline-controller/devops/concourse/tasks/external/deploy.yml
+#      vars:
+#        ENVIRONMENT: aat
+#-------------------------------------------------------------------------------------------------
+
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: governmentpaas/cf-cli
+inputs:
+  - name: packaged-build
+  - name: manifests
+params:
+  CF_USER: ((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.username))
+  CF_PASS: ((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.password))
+  CF_SPACE: ((PRODUCT))-((ENVIRONMENT))
+  CF_APP: ((PRODUCT))-((COMPONENT))-((ENVIRONMENT))
+run:
+  path: sh
+  dir: packaged-build
+  args:
+    - -exc
+    - |
+      cf add-plugin-repo CF-Community https://plugins.cloudfoundry.org
+      cf install-plugin blue-green-deploy -f -r CF-Community
+      cf login -a api.run.pivotal.io -u $CF_USER -p $CF_PASS -s $CF_SPACE
+      cp ../manifests/manifest.yaml .
+      export CF_TRACE=~/cf-trace.log
+      cf blue-green-deploy $CF_APP

@@ -1,0 +1,35 @@
+#-------------------------------------------------------------------------------------------------
+# Example usage:
+#-------------------------------------------------------------------------------------------------
+#- name: migrate-images
+#  public: false
+#  plan:
+#    - get: source-code
+#      trigger: false
+#    - task: migrate-images
+#      file: pipeline-controller/devops/concourse/tasks/external/get-remote-dir-contents.yml
+#      params:
+#        SERVER_KEY: ((legacy/SERVER_KEY.private_key))
+#    - put: s3-images-bucket-aat
+#    - put: s3-images-bucket-prod
+#-------------------------------------------------------------------------------------------------
+
+outputs:
+  - name: images
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: ubuntu
+    tag: xenial
+run:
+  path: sh
+  dir: images
+  args:
+    - -exc
+    - |
+      apt-get update && apt-get -y install openssh-client
+      echo $SERVER_KEY | sed -e 's/\(KEY-----\)\s/\1\n/g; s/\s\(-----END\)/\n\1/g' | sed -e '2s/\s\+/\n/g' > server_key
+      chmod 600 server_key
+      scp -r -o StrictHostKeyChecking=no -i server_key forge@www.director-zone.com:www.director-zone.com/public/assets/img/moxiemanager .
+      rm server_key
