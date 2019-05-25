@@ -46,7 +46,9 @@ def save_state(yaml_file):
         s3.upload_fileobj(f, os.environ['STATE_BUCKET'], "repositories.yml")
 
 def system_call(call_string):
+    print("Running command: " + call_string)
     return_code = os.system(call_string)
+    print("Exit code was: " + return_code)
     if return_code != 0:
         exit(return_code)
 
