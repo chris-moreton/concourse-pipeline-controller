@@ -48,7 +48,7 @@ def save_state(yaml_file):
 def system_call(call_string):
     print("Running command: " + call_string)
     return_code = os.system(call_string)
-    print("Exit code was: " + return_code)
+    print("Exit code was: " + str(return_code))
     if return_code != 0:
         exit(return_code)
 
