@@ -49,7 +49,7 @@ def system_call(call_string):
     print("Running command: " + call_string)
     return_code = os.system(call_string)
     print("Exit code was: " + str(return_code))
-    if return_code != 0:
+    if return_code != 0 and return_code < 255:
         exit(return_code)
 
 
