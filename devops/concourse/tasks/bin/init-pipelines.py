@@ -49,7 +49,7 @@ def system_call(call_string):
     print("Running command: " + call_string)
     return_code = os.system(call_string)
     print("Exit code was: " + str(return_code))
-    if return_code != 0 and return_code < 255:
+    if return_code != 0:
         exit(return_code)
 
 
@@ -89,7 +89,7 @@ def prepare_deploy_key(deploy_key_file):
 
 
 def clone_repository():
-    system_call("ssh -o \"StrictHostKeyChecking=no\" git@github.com")
+    os.system("ssh -o \"StrictHostKeyChecking=no\" git@github.com")
     system_call("rm -rf /tmp/" + repo["pipeline_name"])
     clone_dir = "/tmp/" + repo["pipeline_name"]
     system_call("git clone " + repo["uri"] + " " + clone_dir)
