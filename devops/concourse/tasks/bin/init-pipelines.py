@@ -19,7 +19,7 @@ def get_state(yaml_file):
 
 def get_repos():
     repo_yml_filename = "repositories.yml"
-    os.system("cp ../../../../" + repo_yml_filename + " .")
+    system_call("cp ../../../../" + repo_yml_filename + " .")
     f = open(repo_yml_filename)
     yaml_file = yaml.safe_load(f)
     return yaml_file
@@ -45,19 +45,24 @@ def save_state(yaml_file):
     with open(tmp_file_location, "rb") as f:
         s3.upload_fileobj(f, os.environ['STATE_BUCKET'], "repositories.yml")
 
+def system_call(call_string):
+    return_code = system_call(call_string)
+    if return_code != 0:
+        exit(return_code)
+
 
 def initialise_pipeline(filename, directory_name, pipeline_name, first_job):
     print("Looking for " + filename + "...")
     pipeline_config = "/tmp/" + directory_name + "/devops/concourse/" + filename
     if os.path.isfile(pipeline_config):
         print("Updating pipeline " + pipeline_name + "...")
-        os.system(
+        system_call(
             "fly --target netsensia-concourse set-pipeline --non-interactive -c " + pipeline_config + " -p " + pipeline_name
         )
         print("Unpausing pipeline...")
-        os.system("fly --target netsensia-concourse unpause-pipeline -p " + pipeline_name)
+        system_call("fly --target netsensia-concourse unpause-pipeline -p " + pipeline_name)
         print("Triggering build job...")
-        os.system("fly --target netsensia-concourse trigger-job -j " + pipeline_name + "/" + first_job)
+        system_call("fly --target netsensia-concourse trigger-job -j " + pipeline_name + "/" + first_job)
     else:
         print("No " + filename + " found.")
 
@@ -76,16 +81,16 @@ def get_deploy_key():
 def prepare_deploy_key(deploy_key_file):
     print("Overwriting deploy key at " + deploy_key_file)
     sed = "sed -e 's/\(KEY-----\)\s/\\1\\n/g; s/\s\(-----END\)/\\n\\1/g' | sed -e '2s/\s\+/\\n/g'"
-    os.system("credhub get -q -n " + repo[
+    system_call("credhub get -q -n " + repo[
         "deploy_key_credhub_location"] + " -k private_key | " + sed + " > " + deploy_key_file)
-    os.system("chmod 600 ~/.ssh/id_rsa")
+    system_call("chmod 600 ~/.ssh/id_rsa")
 
 
 def clone_repository():
-    os.system("ssh -o \"StrictHostKeyChecking=no\" git@github.com")
-    os.system("rm -rf /tmp/" + repo["pipeline_name"])
+    system_call("ssh -o \"StrictHostKeyChecking=no\" git@github.com")
+    system_call("rm -rf /tmp/" + repo["pipeline_name"])
     clone_dir = "/tmp/" + repo["pipeline_name"]
-    os.system("git clone " + repo["uri"] + " " + clone_dir)
+    system_call("git clone " + repo["uri"] + " " + clone_dir)
     return clone_dir
 
 
