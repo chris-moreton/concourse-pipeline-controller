@@ -9,12 +9,12 @@
 #    - get: pipeline-controller
 #      trigger: false
 #    - task: dump-data
-#      file: source-code/devops/concourse/tasks/dump-legacy-data.yml
+#      file: pipeline-controller/devops/concourse/tasks/external/get-remote-mysql-dump.yml
 #      params:
 #        LEGACY_DB_PASS: ((legacy/DB_USER.password))
 #        LEGACY_DB_USER: ((legacy/DB_USER.username))
 #        LEGACY_DB_NAME: directorzone
-#        FORGE_SERVER_KEY: ((legacy/SERVER_KEY.private_key))
+#        SERVER_KEY: ((legacy/SERVER_KEY.private_key))
 #    - put: legacy-dump-file
 #      params:
 #        file: dump-dir/((legacy/SQL_DUMP_FILENAME)).tar.gz
@@ -35,7 +35,7 @@ run:
     - -exc
     - |
       apt-get update && apt-get -y install openssh-client
-      echo $FORGE_SERVER_KEY | sed -e 's/\(KEY-----\)\s/\1\n/g; s/\s\(-----END\)/\n\1/g' | sed -e '2s/\s\+/\n/g' > forge_server_key
-      chmod 600 forge_server_key
-      ssh -o StrictHostKeyChecking=no -i forge_server_key forge@www.director-zone.com "MYSQL_PWD=$LEGACY_DB_PASS mysqldump -u$LEGACY_DB_USER $LEGACY_DB_NAME --ignore-table=directorzone_old.marketplace" > ((legacy/SQL_DUMP_FILENAME))
+      echo $SERVER_KEY | sed -e 's/\(KEY-----\)\s/\1\n/g; s/\s\(-----END\)/\n\1/g' | sed -e '2s/\s\+/\n/g' > server_key
+      chmod 600 server_key
+      ssh -o StrictHostKeyChecking=no -i server_key forge@www.director-zone.com "MYSQL_PWD=$LEGACY_DB_PASS mysqldump -u$LEGACY_DB_USER $LEGACY_DB_NAME --ignore-table=directorzone_old.marketplace" > ((legacy/SQL_DUMP_FILENAME))
       tar -zcvf ((legacy/SQL_DUMP_FILENAME)).tar.gz ((legacy/SQL_DUMP_FILENAME))
