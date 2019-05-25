@@ -1,99 +1,18 @@
 # Concourse Pipeline Controller
 
-## One Job To Control Them All
-
 This is a single-job Concourse pipeline that manages the pipelines of other services within the same Concourse instance.
 
-It scans specified Git code repositories for updates to pipeline configurations. 
+It scans specified Git code repositories for updates to pipeline configurations. When an update is detected, the updated pipeline configuration is applied and the pipeline is triggered.
 
-When an update is detected, the updated pipeline configuration is applied and the pipeline is triggered.
+This removes the need to have any special software installed locally, but also simplifies modifying a pipeline and its tasks, which would normaly require two steps:
 
-This allows developers working on the specified Git repositories to manage the pipeline without needing to install anything on their local machines.
+* Push changes to GitHub
+* Initialise the pipeline
 
-It also enforces a consistency of pipeline configuration across projects.
+By handing over the updating and triggering of pipelines to this controller, developers can push pipeline changes, pipeline task change, or application code changes and the controller will deal with it.
 
-Not in place yet, this controller will also provide common components for pipelines to bring further conistency across projects and to provide out-of-the-box solutions for service developers.
+It also encourages a consistency of pipeline configuration across projects.  Certain conventions must be followed to use it. 
 
-## Setting up Your Own Instance of This Controller
+Various task files are provided that can be referenced directly in an application pipeline.
 
-If you already have this controller running with a Concourse instance, you should jump straight to the [Using the Controller](#setup_pipeline_controller) section.
-
-### Prerequisites
-
-To use the opinionated pipeline initialiser, you will need:
-
-* A Concourse Server
-* A CredHub Server
-* The Fly CLI
-* The CredHub CLI
-
-You need to use [Control Tower](https://github.com/EngineerBetter/control-tower) to setup Concourse and CredHub. The pipeline controller relies on it.
-
-### Setting the Pipeline Initialiser pipeline itself
-
-To set this up on a new Concourse instance, you'll need a fork of this project, as you will need to make changes to the config.yml file and push it to GitHub.
-
-To bootstrap the pipeline initialiser, you need to run:
-
-    cd devops/concourse/
-    CONCOURSE_SERVER=https://concourse.example.com CONCOURSE_ADMIN_PASSWORD=[YOUR_PASSWORD_HERE] ./init-me.sh
-  
-### Setting credentials
-
-Set the following CredHub secrets. They're not all necessarily secret, but this is a simple way to centralise the configuration.
-
-    # The AWS user credentials of the user used by Control Tower
-    /concourse/main/pipeline-initialiser/AWS_ACCESS_KEY_ID 
-    /concourse/main/pipeline-initialiser/AWS_SECRET_ACCESS_KEY      
-    
-     # The password for the Concourse "admin" user
-    /concourse/main/pipeline-initialiser/CONCOURSE_ADMIN_PASSWORD  
-    
-    # The deploy key for this repository - store as the "ssh" type
-    /concourse/main/pipeline-initialiser/GITHUB_DEPLOY_KEY        
-      
-    # The GitHub account where this repository is forked
-    /concourse/main/pipeline-initialiser/GITHUB_OWNER
-    
-    # An API token with repository access - this is to avoid getting rate limited by GitHub             
-    /concourse/main/pipeline-initialiser/GITHUB_API_TOKEN     
-    
-    # The name of an S3 bucket to store state - must be readable and writable by the AWS user above             
-    /concourse/main/pipeline-initialiser/STATE_BUCKET           
-        
-<a name="setup_pipeline_controller"/>
-
-## Using the Controller
-
-## Add Repositories to be Scanned
-
-To cause a repository to be included in the scans, update the repositories.yml file and create a pull request.
-
-Once the pull request is merged into master, your project will be scanned for new commits. 
-
-When a new commit is found, the pipeline configuration will first be updated with any new changes and then the ***build*** job from the pipeline will be triggered.
-
-    repos:
-    - pipeline_name: directorzone-api
-      deploy_key_credhub_location: /concourse/main/directorzone-api/GITHUB_DEPLOY_KEY
-      uri: git@github.com:chris-moreton/directorzone-api
-    - pipeline_name: directorzone-frontend
-      deploy_key_credhub_location: /concourse/main/directorzone-frontend/GITHUB_DEPLOY_KEY
-      uri: git@github.com:chris-moreton/directorzone-frontend
-      
-For private repositories, you will need to add the correct deploy key to the CredHub location specified in the **deploy_key_credhub_location** field. Public repositories do not need to have this field.
-      
-## Create a State Bucket
-
-You need to create a bucket (or use an existing one), in which the pipeline initialiser can store the last revision of each repo that
-was processed. Add the name of this bucket to the config.yml file.
-
-## Configure the Pipeline in your Projects
-
-When you make commits to a repository that is registered with the pipeline controller, your repository will be scanned periodically for changes.
-
-During a scan, the controller will look for a pipeline.yml file.
-
-    devops
-        concourse
-            pipeline.yml
+Full documentation can be found in the [wiki](https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Netsensia-Deployment-Pipeline).
