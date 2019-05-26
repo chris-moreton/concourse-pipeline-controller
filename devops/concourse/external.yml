@@ -57,7 +57,7 @@ jobs:
   plan:
     - get: source-code
       passed:
-        - load-database-aat
+        - build-infrastructure-aat
       trigger: true
     - get: pipeline-controller
       trigger: false
