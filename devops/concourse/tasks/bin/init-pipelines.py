@@ -76,13 +76,14 @@ def initialise_pipeline(repo):
     pipeline_name = repo["pipeline_name"]
     filename = "pipeline.yml"
     pipeline_config = "/tmp/" + pipeline_name + "/devops/concourse/" + filename
+    merged_config = "/tmp/merged.yml"
     core_config = "../../external.yml"
     if os.path.isfile(pipeline_config):
         print("Merging external and custom pipeline jobs")
         merged = merge_yaml_files(pipeline_config, core_config)
-        f = open("../../external.yml", "w")
+        f = open(merged_config, "w")
         f.write(merged)
-        merged_pipeline_config = load_yaml_file(core_config)
+        merged_pipeline_config = merged_config
     else:
         merged_pipeline_config = core_config
         print("No " + filename + " found.")
