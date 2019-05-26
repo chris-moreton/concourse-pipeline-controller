@@ -6,28 +6,48 @@ A Concourse pipeline that manages the pipelines of other services within the sam
 
 It provides an opinionated pipeline that can be used easily, and extended, in your application.
 
-It will build the application infrastructure, depending upon which configuration values are provided in CredHub. The following infrastructure is used:
+It will build the application infrastructure, depending upon which configuration values are provided in CredHub. 
 
----------------------
-|Service|Description|
-|-------|-----------|
-|Cloud Foundry|Applications are deployed to a Cloud Foundry instance, the spaces, applications and services are configured automatically|
-|MySQL RDS|If CredHub DB_USER is provided, an RDS instance will be created and attached to your application as a Cloud Foundry service|
+It deploys to Cloud Foundry and uses AWS for backend services such as databases and Elasticsearch instances.
 
 Java (Gradle) and NodeJS (yarn) builds are supported - the pipeline will detect the langauge and build and deploy it accordingly.
 
 ## Using the Pipeline
 
-At its simplest, a developer need only provide three configuration values (stored in CredHub):
+The pipeline is fully extendable using Concourse YML configuration.
 
-    PRODUCT
-    COMPONENT
-    
-And add a netsensia-pipeline.yml file in the following location
+### The simplest pipeline
 
-    /devops/netsensia-pipeline.yml
+An application will consist of a PRODUCT and COMPONENT. The product is the overarching system or company name, e.g. "directorzone". The component is the name of the service within the PRODUCT, e.g. "api" or "frontend".
 
-   
+Your repository must be named:
+
+    product-component
+
+e.g.
+
+    directorzone-api
+
+Update the repositories.yml file to include your project.
+
+Create a pull request, and when your PR is merged, your project will now be included in the pipeline and run through the following steps.
+
+#### Build
+
+This will build and package your application. Your unit tests will be executed in this step.
+
+| Project Type | Command         |
+| ------------ | --------------- |
+| Java         | ./gradlew build |
+| Node         | yarn build      |
+
+
+2) Build Infrastructure (AAT)
+3) Deploy (AAT)
+4) Build Infrastructure (PROD)
+5) Deploy (PROD)
+
+
 Full documentation, including how to set up your own pipeline controller, can be found in the [wiki](https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Netsensia-Deployment-Pipeline).
 
 
