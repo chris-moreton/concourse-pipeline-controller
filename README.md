@@ -20,13 +20,23 @@ An application will consist of a PRODUCT and COMPONENT. The product is the overa
 
 Your repository must be named:
 
-    product-component
+    <product>-<component>
 
 e.g.
 
     directorzone-api
 
 Update the repositories.yml file to include your project. Included projects must be repositories in the GitHub organisation specified when the pipeline controller was [created](<https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Creating-Your-Own-Pipeline-Controller>).
+
+##### Deployment Key
+
+If your project is not open source, you will need to add a deployment key to your repository. Store the key in the following location in CredHub. See [Adding Secrets to CredHub](<https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Adding-Secrets-To-CredHub>) in the wiki for more details on this.
+
+It may be easier to get someone who has the necessary tools installed and/or knows the credentials to authenticate against CredHub.
+
+```
+/concourse/main/<product>-<component>/GITHUB_DEPLOY_KEY
+```
 
 Create a pull request, and when your PR is merged, your project will now be included in the pipeline and run through the following steps.
 
