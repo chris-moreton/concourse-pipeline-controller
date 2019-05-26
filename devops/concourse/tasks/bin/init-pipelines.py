@@ -24,6 +24,25 @@ def get_repos():
     yaml_file = yaml.safe_load(f)
     return yaml_file
 
+def load_yaml_file(filename):
+    f = open(filename)
+    return yaml.safe_load(f)
+
+
+def merge_yaml_files(file1, file2):
+    y1 = load_yaml_file(file1)
+    y2 = load_yaml_file(file2)
+    for y1Key in y1.keys():
+        if y1Key in y2.keys():
+            print("Merging key '" + y1Key + "' from custom pipeline into core pipeline")
+            for y1Item in y1[y1Key]:
+                y2[y1Key].append(y1Item)
+        else:
+            print("Adding key '" + y1Key + "' to core pipeline")
+            y2[y1Key] = y1[y1Key]
+
+    return yaml.dump(y2)
+
 
 def get_state_repo_revisions():
     state_yaml_file = get_state(yaml_file)
@@ -56,14 +75,17 @@ def system_call(call_string):
 def initialise_pipeline(repo):
     pipeline_name = repo["pipeline_name"]
     filename = "pipeline.yml"
-    print("Looking for " + filename + "...")
     pipeline_config = "/tmp/" + pipeline_name + "/devops/concourse/" + filename
+    core_config = "../../external.yml"
     if os.path.isfile(pipeline_config):
         print("Merging external and custom pipeline jobs")
+        merged = merge_yaml_files(pipeline_config, core_config)
+        f = open("../../external.yml")
+        f.write(merged)
+        merged_pipeline_config = load_yaml_file(core_config)
     else:
+        merged_pipeline_config = core_config
         print("No " + filename + " found.")
-
-    merged_pipeline_config = "../../external.yml"
 
     print("Updating pipeline " + pipeline_name + "...")
     system_call(
