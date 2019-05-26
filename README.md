@@ -106,6 +106,16 @@ cf s
 
 ### Extending the Pipeline
 
+This is an example of how the directorzone-api pipeline was extended to include jobs to:
+
+1) Migrate data from a legacy system
+
+2) Move legacy images into an S3 bucket
+
+3) Load test data into AAT
+
+4) Dump and restore data from and into production
+
 ![Directorzone Extended Pipeline](images/extended_pipeline.png)
 
 #### Adding Jobs
