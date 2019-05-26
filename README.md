@@ -1,6 +1,6 @@
 # Netsensia Concourse Pipeline
 
-![Directorzone Pipeline](https://i.ibb.co/LJQ6fM7/Screenshot-from-2019-05-21-17-40-22.png)
+![Directorzone Pipeline](images/pipeline.png)
 
 A Concourse pipeline that manages the pipelines of other services within the same Concourse instance.
 
