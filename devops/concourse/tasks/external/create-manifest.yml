@@ -1,0 +1,49 @@
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: governmentpaas/cf-cli
+outputs:
+  - name: manifests
+run:
+  path: sh
+  dir: manifests
+  args:
+    - -exc
+    - |
+      if [ "((ENVIRONMENT))" == "prod" ]
+      then
+        INSTANCES=1
+      else
+        INSTANCES=1
+      fi
+      cat > manifest.yaml << EOT
+      ---
+      applications:
+      - name: ((PRODUCT))-((COMPONENT))-((ENVIRONMENT))
+        path: ((PRODUCT))-((COMPONENT)).jar
+        buildpack: java_buildpack
+        memory: 768M
+        instances: $INSTANCES
+        services:
+          - ((COMPONENT))-mysql
+          - ((COMPONENT))-elasticsearch
+        env:
+          SPRING_PROFILES_ACTIVE: production
+      EOT
+      if [ "((ENVIRONMENT))" == "prod" ]
+      then
+          cat >> manifest.yaml << EOT
+          AMAZONPROPERTIES_ACCESSKEY: ((pipeline-controller/AWS_ACCESS_KEY_ID))
+          AMAZONPROPERTIES_SECRETKEY: ((pipeline-controller/AWS_SECRET_ACCESS_KEY))
+          PEXELS_AUTH: ((prod/PEXELS_AUTH))
+      EOT
+      else
+          cat >> manifest.yaml << EOT
+          AMAZONPROPERTIES_ACCESSKEY: ((pipeline-controller/AWS_ACCESS_KEY_ID))
+          AMAZONPROPERTIES_SECRETKEY: ((pipeline-controller/AWS_SECRET_ACCESS_KEY))
+          PEXELS_AUTH: ((aat/PEXELS_AUTH))
+      EOT
+      fi
+
+

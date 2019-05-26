@@ -82,7 +82,7 @@ jobs:
       trigger: false
     - get: packaged-build
       trigger: false
-    - task: deploy
+    - task: functional-test
       file: pipeline-controller/devops/concourse/tasks/external/functional-test.yml
       vars:
         ENVIRONMENT: aat
@@ -113,7 +113,7 @@ jobs:
     - get: packaged-build
       trigger: false
     - task: create-manifests
-      file: source-code/devops/concourse/tasks/create-manifest.yml
+      file: pipeline-controller/devops/concourse/tasks/external/create-manifest.yml
       vars:
         ENVIRONMENT: prod
     - task: deploy
