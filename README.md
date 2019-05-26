@@ -6,11 +6,13 @@ A Concourse pipeline that manages the pipelines of other services within the sam
 
 It provides an opinionated pipeline that can be used easily, and extended, in your application.
 
-It will build the application infrastructure, depending upon which configuration values are provided in CredHub. 
+Java (Gradle) and NodeJS (yarn) applications are supported.
+
+It will build the application and maintain the infrastructure.
 
 It deploys to Cloud Foundry and uses AWS for backend services such as databases and Elasticsearch instances.
 
-Java (Gradle) and NodeJS (yarn) builds are supported - the pipeline will detect the langauge and build and deploy it accordingly.
+The example image shown above shows the core pipeline that has been extended to include several additional jobs, such as the migration of data from a legacy system.
 
 ## Using the Pipeline
 
@@ -45,7 +47,7 @@ This will build and package your application. Your unit tests will be executed i
 
 This first time this stage runs, it will create a Cloud Foundry space for your AAT (automated acceptance testing) environment. It will also create any services that you have requested. See [Adding Services To Your Infrastructure](#AddingServices).
 
-You can add your own infrastructure by adding Terraform configurations to your repository. See [Adding  Custom Infrastructure](#AddingInfrastructure)
+You can add your own infrastructure by adding Terraform configurations to your repository. See [Adding  Custom Infrastructure](#AddingInfrastructure).
 
 3) Deploy (AAT)
 4) Build Infrastructure (PROD)

@@ -104,7 +104,7 @@ def get_current_head_revision(repo):
 
 
 def get_previous_head_revision(repo):
-    state_repo_revisions = get_state_repo_revisions(repo)
+    state_repo_revisions = get_state_repo_revisions()
     if repo["pipeline_name"] in state_repo_revisions.keys():
         return state_repo_revisions[repo["pipeline_name"]]
     else:
