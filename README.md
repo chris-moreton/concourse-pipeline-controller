@@ -4,13 +4,11 @@
 
 A Concourse pipeline that manages the pipelines of other services within the same Concourse instance.
 
-It provides an opinionated pipeline that can be enabled for any application in the same GitHub organisation as the controller is running.
+It provides an opinionated pipeline that can be enabled for any Java (Gradle) and NodeJS (yarn) application in the same GitHub organisation as the controller is running.
 
-Java (Gradle) and NodeJS (yarn) applications are supported.
+It will build the application and maintain the infrastructure and deploy your application to Cloud Foundry.
 
-It will build the application and maintain the infrastructure.
-
-It deploys to Cloud Foundry and uses AWS for backend services such as databases and Elasticsearch instances.
+It uses AWS for backend services such as databases and Elasticsearch instances.
 
 ## Using the Pipeline
 
