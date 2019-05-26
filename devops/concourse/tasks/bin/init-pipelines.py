@@ -89,6 +89,11 @@ def prepare_deploy_key(deploy_key_file, repo):
     system_call("chmod 600 ~/.ssh/id_rsa")
 
 
+def set_component_and_product(pipeline_name):
+    parts = pipeline_name.split("-")
+    system_call("credhub set -n concourse/main/" + pipeline_name + "/PRODUCT --type value --value " + parts[0])
+    system_call("credhub set -n concourse/main/" + pipeline_name + "/COMPONENT --type value --value " + parts[1])
+
 def clone_repository(repo):
     os.system("ssh -o \"StrictHostKeyChecking=no\" git@github.com")
     system_call("rm -rf /tmp/" + repo["pipeline_name"])
@@ -114,6 +119,8 @@ def get_previous_head_revision(repo):
 yaml_file = get_repos()
 
 for repo in yaml_file["repos"]:
+
+    set_component_and_product(repo["pipeline_name"])
 
     current_head_revision = get_current_head_revision(repo)
 
