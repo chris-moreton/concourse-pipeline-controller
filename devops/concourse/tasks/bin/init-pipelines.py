@@ -71,7 +71,7 @@ def initialise_pipeline(repo):
         print("No " + filename + " found.")
 
 
-def get_deploy_key():
+def get_deploy_key(repo):
     print("Getting deploy key from CredHub...")
 
     if 'PYCHARM_HOSTED' in os.environ.keys() and os.environ['PYCHARM_HOSTED'] == "1":
@@ -79,7 +79,7 @@ def get_deploy_key():
     else:
         deploy_key_file = "/root/.ssh/id_rsa"
 
-    prepare_deploy_key(deploy_key_file)
+    prepare_deploy_key(deploy_key_file, repo)
 
 
 def prepare_deploy_key(deploy_key_file, repo):
@@ -98,7 +98,7 @@ def clone_repository(repo):
 
 
 def get_current_head_revision(repo):
-    get_deploy_key()
+    get_deploy_key(repo)
     repo_object = git.Repo(clone_repository(repo["pipeline_name"]))
     return repo_object.head.commit.name_rev.split()[0]
 
