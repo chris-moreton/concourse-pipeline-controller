@@ -14,7 +14,7 @@ It uses AWS for backend services such as databases and Elasticsearch instances.
 
 The pipeline is fully extendable using Concourse YML configuration.
 
-### The simplest pipeline
+### The Simplest Pipeline
 
 An application will consist of a PRODUCT and COMPONENT. The product is the overarching system or company name, e.g. "directorzone". The component is the name of the service within the PRODUCT, e.g. "api" or "frontend".
 
@@ -25,6 +25,8 @@ Your repository must be named:
 e.g.
 
     directorzone-api
+
+This must be the name of your GitHub repository.
 
 Update the repositories.yml file to include your project. Included projects must be repositories in the GitHub organisation specified when the pipeline controller was [created](<https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Creating-Your-Own-Pipeline-Controller>).
 

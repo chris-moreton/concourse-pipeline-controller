@@ -81,7 +81,7 @@ def initialise_pipeline(repo):
     if os.path.isfile(pipeline_config):
         print("Merging external and custom pipeline jobs")
         merged = merge_yaml_files(pipeline_config, core_config)
-        print merged
+        print(merged)
         f = open(merged_config, "w")
         f.write(merged)
         f.close()
