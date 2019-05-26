@@ -59,16 +59,20 @@ def initialise_pipeline(repo):
     print("Looking for " + filename + "...")
     pipeline_config = "/tmp/" + pipeline_name + "/devops/concourse/" + filename
     if os.path.isfile(pipeline_config):
-        print("Updating pipeline " + pipeline_name + "...")
-        system_call(
-            "fly --target netsensia-concourse set-pipeline --non-interactive -c " + pipeline_config + " -p " + pipeline_name
-        )
-        print("Unpausing pipeline...")
-        system_call("fly --target netsensia-concourse unpause-pipeline -p " + pipeline_name)
-        print("Triggering build job...")
-        system_call("fly --target netsensia-concourse trigger-job -j " + pipeline_name + "/" + "build")
+        print("Merging external and custom pipeline jobs")
     else:
         print("No " + filename + " found.")
+
+    merged_pipeline_config = "../../external.yml"
+
+    print("Updating pipeline " + pipeline_name + "...")
+    system_call(
+        "fly --target netsensia-concourse set-pipeline --non-interactive -c " + merged_pipeline_config + " -p " + pipeline_name
+    )
+    print("Unpausing pipeline...")
+    system_call("fly --target netsensia-concourse unpause-pipeline -p " + pipeline_name)
+    print("Triggering build job...")
+    system_call("fly --target netsensia-concourse trigger-job -j " + pipeline_name + "/" + "build")
 
 
 def get_deploy_key(repo):
