@@ -49,9 +49,43 @@ This first time this stage runs, it will create a Cloud Foundry space for your A
 
 You can add your own infrastructure by adding Terraform configurations to your repository. See [Adding  Custom Infrastructure](#AddingInfrastructure).
 
-3) Deploy (AAT)
-4) Build Infrastructure (PROD)
-5) Deploy (PROD)
+#### Deploy (AAT)
+
+The deployment step is a [blue/green deployment](https://docs.cloudfoundry.org/devguide/deploy-apps/blue-green.html) to Cloud Foundry which ensures that the new build is ready for use before switching it with the old one. It will also run a smoke test.
+
+#### Build Infrastructure (PROD)
+
+This is where the same infrastructure build for AAT is applied in the PROD environment.
+
+#### Deploy (PROD)
+
+Finally, the application is deployed to production in Cloud Foundry.
+
+You will be able to look at your deployments using the Cloud Foundry CLI.
+
+Assuming you are logged into the Cloud Foundry instance associated with the pipeline controller, you should see your AAT and PROD environments when you run:
+
+```
+cf spaces
+```
+
+You can then target a space with:
+
+```
+cf target -s product-aat
+```
+
+And view the applications with:
+
+```
+cf a
+```
+
+And the services, if any, with:
+
+```
+cf s
+```
 
 ### Extending the Pipeline
 
