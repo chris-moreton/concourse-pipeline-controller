@@ -1,13 +1,10 @@
 # Netsensia Concourse Pipeline
 
-![Directorzone Pipeline](https://i.ibb.co/2M1sgH3/Screenshot-from-2019-05-21-17-40-22.png)
+![Directorzone Pipeline](https://i.ibb.co/LJQ6fM7/Screenshot-from-2019-05-21-17-40-22.png)
 
-This is a single-job Concourse pipeline that manages the pipelines of other services within the same Concourse instance.
+A Concourse pipeline that manages the pipelines of other services within the same Concourse instance.
 
-It provides an opinionated pipeline that can be used, and extended, in your application.
-
-You do not need to have any additional software installed locally to manage your pipeline, and pipeline changes will be
-automatically applied before triggering your pipeline.
+It provides an opinionated pipeline that can be used easily, and extended, in your application.
 
 It will build the application infrastructure, depending upon which configuration values are provided in CredHub. The following infrastructure is used:
 
