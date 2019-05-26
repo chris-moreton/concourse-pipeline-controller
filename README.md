@@ -89,11 +89,13 @@ cf s
 
 ### Extending the Pipeline
 
-<a href="#AddingServices"/>
+<a href="AddingServices"/>
 
 #### Adding Services To Your Infrastructure
 
 
 Full documentation, including how to set up your own pipeline controller, can be found in the [wiki](https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Netsensia-Deployment-Pipeline).
+
+<a href="AddingInfrastructure"/>
 
 #### Adding Custom Infrastructure
