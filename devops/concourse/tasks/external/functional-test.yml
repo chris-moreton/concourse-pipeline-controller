@@ -1,0 +1,36 @@
+#-------------------------------------------------------------------------------------------------
+# Example usage:
+#-------------------------------------------------------------------------------------------------
+#- name: deploy-aat
+#  public: false
+#  plan:
+#    - get: source-code
+#      passed:
+#        - load-database-aat
+#      trigger: true
+#    - get: pipeline-controller
+#      trigger: false
+#    - get: packaged-build
+#      trigger: false
+#    - task: create-manifests
+#      file: source-code/devops/concourse/tasks/create-manifest.yml
+#      vars:
+#        ENVIRONMENT: aat
+#    - task: deploy
+#      file: pipeline-controller/devops/concourse/tasks/external/deploy.yml
+#      vars:
+#        ENVIRONMENT: aat
+#-------------------------------------------------------------------------------------------------
+
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: governmentpaas/cf-cli
+run:
+  path: sh
+  dir: packaged-build
+  args:
+    - -exc
+    - |
+      echo "Hello, I am a placeholder for a functional test suite"

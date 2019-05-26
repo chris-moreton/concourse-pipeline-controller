@@ -71,12 +71,27 @@ jobs:
       file: pipeline-controller/devops/concourse/tasks/external/deploy.yml
       vars:
         ENVIRONMENT: aat
+- name: functional-test-aat
+  public: false
+  plan:
+    - get: source-code
+      passed:
+        - deploy-aat
+      trigger: true
+    - get: pipeline-controller
+      trigger: false
+    - get: packaged-build
+      trigger: false
+    - task: deploy
+      file: pipeline-controller/devops/concourse/tasks/external/functional-test.yml
+      vars:
+        ENVIRONMENT: aat
 - name: build-infrastructure-prod
   public: false
   plan:
     - get: packaged-build
       passed:
-        - deploy-aat
+        - functional-test-aat
       trigger: true
     - get: pipeline-controller
       trigger: false
