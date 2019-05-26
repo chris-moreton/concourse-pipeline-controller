@@ -1,5 +1,7 @@
 # Netsensia Concourse Pipeline
 
+You have stumbled across a project which is about 80% complete. This README file may reference things that don't yet exist.
+
 ![Directorzone Pipeline](images/pipeline.png)
 
 A Concourse pipeline that manages the pipelines of other services within the same Concourse instance.
