@@ -99,7 +99,7 @@ def clone_repository(repo):
 
 def get_current_head_revision(repo):
     get_deploy_key(repo)
-    repo_object = git.Repo(clone_repository(repo["pipeline_name"]))
+    repo_object = git.Repo(clone_repository(repo))
     return repo_object.head.commit.name_rev.split()[0]
 
 
