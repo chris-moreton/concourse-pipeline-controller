@@ -4,15 +4,13 @@
 
 A Concourse pipeline that manages the pipelines of other services within the same Concourse instance.
 
-It provides an opinionated pipeline that can be used easily, and extended, in your application.
+It provides an opinionated pipeline that can be enabled for any application in the same GitHub organisation as the controller is running.
 
 Java (Gradle) and NodeJS (yarn) applications are supported.
 
 It will build the application and maintain the infrastructure.
 
 It deploys to Cloud Foundry and uses AWS for backend services such as databases and Elasticsearch instances.
-
-The example image shown above shows the core pipeline that has been extended to include several additional jobs, such as the migration of data from a legacy system.
 
 ## Using the Pipeline
 
@@ -53,6 +51,13 @@ You can add your own infrastructure by adding Terraform configurations to your r
 
 The deployment step is a [blue/green deployment](https://docs.cloudfoundry.org/devguide/deploy-apps/blue-green.html) to Cloud Foundry which ensures that the new build is ready for use before switching it with the old one. It will also run a smoke test.
 
+#### Functional Tests (AAT)
+
+| Project Type | Test Command         |
+| ------------ | -------------------- |
+| Java         | ./gradlew functional |
+| Node         | yarn test:functional |
+
 #### Build Infrastructure (PROD)
 
 This is where the same infrastructure build for AAT is applied in the PROD environment.
@@ -88,6 +93,56 @@ cf s
 ```
 
 ### Extending the Pipeline
+
+#### Adding Jobs
+
+You can easily add new Concourse jobs to your pipeline which can use resources from the core pipeline as well as their own defined resource.
+
+Simple create the following file:
+
+```
+devops/concourse/pipeline.yml
+```
+
+And add resource and jobs to it.
+
+In the example below, the pipeline defines a new data-dump resource while also references three resources from the core pipeline.
+
+Behind the scenes, the pipeline controller simply merges the core pipeline with your new resources and jobs, and creates an extended pipeline.
+
+```
+---
+resources:
+- name: data-dump
+  type: s3
+  source:
+    bucket: pipeline-controller-dumps
+    region_name: eu-west-2
+    versioned_file: ((SQL_DUMP_FILENAME)).tar.gz
+    access_key_id: ((pipeline-controller/AWS_ACCESS_KEY_ID))
+    secret_access_key: ((pipeline-controller/AWS_SECRET_ACCESS_KEY))
+jobs:
+- name: restore-database
+  public: false
+  plan:
+    - get: packaged-build
+      passed:
+        - build-infrastructure-prod
+      trigger: false
+    - get: pipeline-controller
+      trigger: false
+    - get: source-code
+      trigger: false
+    - get: data-dump
+      trigger: false
+    - task: load-data
+      file: source-code/devops/concourse/tasks/load-data.yml
+      params:
+        DB_HOST: ((prod/DB_HOST))
+        DB_NAME: ((prod/DB_NAME))
+        DB_USER: ((prod/DB_USER.username))
+        DB_PASS: ((prod/DB_USER.password))
+```
 
 <a name="AddingServices"/>
 
