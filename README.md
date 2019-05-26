@@ -30,7 +30,7 @@ e.g.
 
     directorzone-api
 
-Update the repositories.yml file to include your project.
+Update the repositories.yml file to include your project. Included projects must be repositories in the GitHub organisation specified when the pipeline controller was [created](<https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Creating-Your-Own-Pipeline-Controller>).
 
 Create a pull request, and when your PR is merged, your project will now be included in the pipeline and run through the following steps.
 
