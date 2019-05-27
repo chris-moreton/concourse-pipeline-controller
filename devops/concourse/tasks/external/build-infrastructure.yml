@@ -63,7 +63,10 @@ run:
       EOL
       terraform init -backend-config=./backend.config
       SPACE_GUID="1741ab54-084d-4142-80f1-3bdf57abc8bb"
-      terraform import cloudfoundry_space.product_space $SPACE_GUID
+      terraform import \
+        -config=./import_providers cloudfoundry_space.product_space $SPACE_GUID
+        -var='cloudfoundry_org_owner_username=((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.username))'
+        -var='cloudfoundry_org_owner_password=((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.password))'
       terraform plan \
         -var='credhub_host=((pipeline-controller/CONCOURSE_HOST))' \
         -var='credhub_client_id=((pipeline-controller/CREDHUB_CLIENT))' \
