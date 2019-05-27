@@ -23,7 +23,7 @@ image_resource:
     repository: netsensia/terraform
     version: latest
 inputs:
-  - name: source-code
+  - name: pipeline-controller
 run:
   path: sh
   dir: pipeline-controller/devops/terraform/product
