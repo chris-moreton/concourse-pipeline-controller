@@ -84,22 +84,26 @@ Assuming you are logged into the Cloud Foundry instance associated with the pipe
 cf spaces
 ```
 
-You can then target a space with:
+You should see that two spaces have been created:
 
 ```
-cf target -s product-aat
+<product>-aat
+<product>-prod
 ```
 
-And view the applications with:
+You'll noticed that the component is not referenced in the space name. This is because all components within the same product will share the same space.
+
+You can view the applications within the space with:
 
 ```
-cf a
+cf target -s <product>-<environment>
+cf applications
 ```
 
-And the services, if any, with:
+And you can view the services, if any, with:
 
 ```
-cf s
+cf services
 ```
 
 ### Extending the Pipeline
