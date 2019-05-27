@@ -1,6 +1,12 @@
 resource "cloudfoundry_space" "product_space" {
   name = "${var.product}-${var.environment}"
-  org = "${data.credhub_value.org_netsensia_guid.value}"
+  org = "${data.credhub_value.org_netsensia.value}"
+  managers = [
+    "${data.credhub_value.cloudfoundry_org_owner_guid.value}"
+  ]
+  developers = [
+    "${data.credhub_value.cloudfoundry_org_owner_guid.value}"
+  ]
 }
 
 resource "aws_s3_bucket" "private_bucket" {
