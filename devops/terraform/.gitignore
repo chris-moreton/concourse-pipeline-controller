@@ -1,0 +1,10 @@
+.terraform
+terraform.tfvars
+terraform.tfstate
+plan
+destroy
+backend.config
+variables-real.tf
+
+
+

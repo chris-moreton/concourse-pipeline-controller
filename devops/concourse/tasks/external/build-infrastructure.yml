@@ -26,10 +26,11 @@ inputs:
   - name: source-code
 run:
   path: sh
-  dir: source-code/devops/terraform/env
+  dir: pipeline-controller/devops/terraform
   args:
     - -exc
     - |
+      cp ../../../source-code/devops/terraform/custom-* .
       cat > backend.config << EOL
       access_key="((pipeline-controller/AWS_ACCESS_KEY_ID))"
       secret_key="((pipeline-controller/AWS_SECRET_ACCESS_KEY))"
@@ -44,7 +45,7 @@ run:
         -var='environment=((ENVIRONMENT))' \
         -var='product=((PRODUCT))' \
         -var='component=((COMPONENT))'
-      terraform apply \
+      terraform destroy \
         -auto-approve \
         -var='credhub_host=((pipeline-controller/CONCOURSE_HOST))' \
         -var='credhub_client_id=((pipeline-controller/CREDHUB_CLIENT))' \
