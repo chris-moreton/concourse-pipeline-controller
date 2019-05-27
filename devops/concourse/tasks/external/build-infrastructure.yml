@@ -64,7 +64,7 @@ run:
       bucket="((pipeline-controller/STATE_BUCKET))"
       EOL
       terraform init -backend-config=./backend.config
-      true || terraform import \
+      terraform import \
         -var='credhub_host=((pipeline-controller/CONCOURSE_HOST))' \
         -var='credhub_client_id=((pipeline-controller/CREDHUB_CLIENT))' \
         -var='credhub_client_secret=((pipeline-controller/CREDHUB_SECRET))' \
@@ -75,7 +75,8 @@ run:
         -var='environment=((ENVIRONMENT))' \
         -var='product=((PRODUCT))' \
         cloudfoundry_space.product_space \
-        $SPACE_GUID
+        $SPACE_GUID \
+        || true
       terraform plan \
         -var='credhub_host=((pipeline-controller/CONCOURSE_HOST))' \
         -var='credhub_client_id=((pipeline-controller/CREDHUB_CLIENT))' \
