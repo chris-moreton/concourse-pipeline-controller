@@ -6,14 +6,6 @@ data "credhub_value" "aws_terraform_secret_access_key" {
   name = "/concourse/main/pipeline-controller/AWS_SECRET_ACCESS_KEY"
 }
 
-data "credhub_user" "cloudfoundry_org_owner" {
-  name = "/concourse/main/pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER"
-}
-
-data "credhub_value" "cloudfoundry_org_owner_guid" {
-  name = "/concourse/main/pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER_GUID"
-}
-
 data "credhub_value" "db_port" {
   name = "/concourse/main/${var.product}-${var.component}/${var.environment}/DB_PORT"
 }
@@ -24,10 +16,6 @@ data "credhub_value" "db_name" {
 
 data "credhub_user" "db_user" {
   name = "/concourse/main/${var.product}-${var.component}/${var.environment}/DB_USER"
-}
-
-data "cloudfoundry_org" "org_netsensia" {
-  name = "netsensia"
 }
 
 data "aws_vpc" "default" {
