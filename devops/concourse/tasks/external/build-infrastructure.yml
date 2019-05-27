@@ -45,7 +45,7 @@ run:
         -var='environment=((ENVIRONMENT))' \
         -var='product=((PRODUCT))' \
         -var='component=((COMPONENT))'
-      terraform destroy \
+      terraform apply \
         -auto-approve \
         -var='credhub_host=((pipeline-controller/CONCOURSE_HOST))' \
         -var='credhub_client_id=((pipeline-controller/CREDHUB_CLIENT))' \
@@ -69,7 +69,7 @@ run:
         -var='environment=((ENVIRONMENT))' \
         -var='product=((PRODUCT))' \
         -var='component=((COMPONENT))'
-      terraform destroy \
+      terraform apply \
         -auto-approve \
         -var='credhub_host=((pipeline-controller/CONCOURSE_HOST))' \
         -var='credhub_client_id=((pipeline-controller/CREDHUB_CLIENT))' \
