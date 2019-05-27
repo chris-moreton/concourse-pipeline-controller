@@ -7,7 +7,7 @@ provider "credhub" {
 
 provider "aws" {
   access_key = "${var.aws_terraform_access_key_id}"
-  secret_key = "${var.}"
+  secret_key = "${var.aws_terraform_secret_access_key}"
   region = "eu-west-2"
 }
 
