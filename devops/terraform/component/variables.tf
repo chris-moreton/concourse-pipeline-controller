@@ -21,3 +21,19 @@ variable "product" {
 variable "component" {
   default = ""
 }
+
+variable "aws_terraform_access_key_id" {
+  default = ""
+}
+
+variable "aws_terraform_secret_access_key" {
+  default = ""
+}
+
+variable "cloudfoundry_org_owner_username" {
+  default = ""
+}
+
+variable "cloudfoundry_org_owner_password" {
+  default = ""
+}

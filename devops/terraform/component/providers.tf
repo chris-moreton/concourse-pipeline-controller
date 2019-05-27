@@ -6,7 +6,15 @@ provider "credhub" {
 }
 
 provider "aws" {
-  access_key = "${data.credhub_value.aws_terraform_access_key_id.value}"
-  secret_key = "${data.credhub_value.aws_terraform_secret_access_key.value}"
+  access_key = "${var.aws_terraform_access_key_id}"
+  secret_key = "${var.}"
   region = "eu-west-2"
 }
+
+provider "cloudfoundry" {
+  api_url = "https://api.run.pivotal.io"
+  user = "${var.cloudfoundry_org_owner_username}"
+  password = "${var.cloudfoundry_org_owner_password}"
+  skip_ssl_validation = true
+}
+
