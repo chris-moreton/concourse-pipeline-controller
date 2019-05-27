@@ -62,7 +62,7 @@ run:
       bucket="((pipeline-controller/STATE_BUCKET))"
       EOL
       terraform init -backend-config=./backend.config
-      SPACE_GUID=`cf space directorzone-aat --guid`
+      SPACE_GUID="1741ab54-084d-4142-80f1-3bdf57abc8bb"
       terraform import cloudfoundry_space.product_space $SPACE_GUID
       terraform plan \
         -var='credhub_host=((pipeline-controller/CONCOURSE_HOST))' \

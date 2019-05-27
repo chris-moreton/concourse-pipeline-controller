@@ -2,7 +2,7 @@ FROM ubuntu:xenial
 MAINTAINER "Chris Moreton <chris@netsensia.com>"
 
 RUN apt-get -y update
-RUN apt-get -y install software-properties-common python-software-properties
+RUN apt-get -y install software-properties-common python-software-properties apt-transport-https ca-certificates
 RUN add-apt-repository -y ppa:jonathonf/python-3.6
 RUN apt-get -y update
 RUN apt-get -y install wget unzip curl python3.6 python3-pip git-core
@@ -24,5 +24,10 @@ RUN chmod +x ~/.terraform.d/plugins/linux_amd64/terraform-provider-cloudfoundry
 RUN mkdir /root/.ssh
 RUN wget -O /bin/fly https://www.dropbox.com/s/ishyogxcbpe4mlv/fly_linux_amd64?dl=1
 RUN chmod +x /bin/fly
+RUN wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | apt-key add -
+RUN echo "deb https://packages.cloudfoundry.org/debian stable main" | tee /etc/apt/sources.list.d/cloudfoundry-cli.list
+RUN apt-get update
+RUN apt-get install cf-cli
+
 
 
