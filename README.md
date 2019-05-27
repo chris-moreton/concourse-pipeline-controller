@@ -1,14 +1,12 @@
 # Netsensia Concourse Pipeline
 
-You have stumbled across a project which is about 80% complete. This README file may reference things that don't yet exist.
-
 ![Core Pipeline](images/pipeline.png)
 
-A Concourse pipeline that manages the pipelines of other services within the same Concourse instance.
+A Concourse pipeline that manages other pipelines within the same Concourse instance.
 
-It provides an opinionated pipeline that can be enabled for any Java (Gradle) and NodeJS (yarn) application in the same GitHub organisation as the controller is running.
+An opinionated pipeline that can be enabled for any Java (Gradle) and NodeJS (yarn) application in the same GitHub organisation as the controller is running.
 
-It will build the application and maintain the infrastructure and deploy your application to Cloud Foundry.
+It will build and test the application, create and maintain the infrastructure, and deploy your application to Cloud Foundry.
 
 It uses AWS for backend services such as databases and Elasticsearch instances.
 
