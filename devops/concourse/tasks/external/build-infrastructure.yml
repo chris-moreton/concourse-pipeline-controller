@@ -80,6 +80,8 @@ run:
         -var='credhub_host=((pipeline-controller/CONCOURSE_HOST))' \
         -var='credhub_client_id=((pipeline-controller/CREDHUB_CLIENT))' \
         -var='credhub_client_secret=((pipeline-controller/CREDHUB_SECRET))' \
+        -var='aws_terraform_access_key_id=((pipeline-controller/AWS_ACCESS_KEY_ID))' \
+        -var='aws_terraform_secret_access_key=((pipeline-controller/AWS_SECRET_ACCESS_KEY))' \
         -var='environment=((ENVIRONMENT))' \
         -var='product=((PRODUCT))' \
         -var='component=((COMPONENT))'
@@ -88,6 +90,8 @@ run:
         -var='credhub_host=((pipeline-controller/CONCOURSE_HOST))' \
         -var='credhub_client_id=((pipeline-controller/CREDHUB_CLIENT))' \
         -var='credhub_client_secret=((pipeline-controller/CREDHUB_SECRET))' \
+        -var='aws_terraform_access_key_id=((pipeline-controller/AWS_ACCESS_KEY_ID))' \
+        -var='aws_terraform_secret_access_key=((pipeline-controller/AWS_SECRET_ACCESS_KEY))' \
         -var='environment=((ENVIRONMENT))' \
         -var='product=((PRODUCT))' \
         -var='component=((COMPONENT))'
