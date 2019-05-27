@@ -64,14 +64,14 @@ run:
       terraform init -backend-config=./backend.config
       SPACE_GUID="1741ab54-084d-4142-80f1-3bdf57abc8bb"
       terraform import \
-        -config=./import_providers cloudfoundry_space.product_space $SPACE_GUID
-        -var='cloudfoundry_org_owner_username=((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.username))'
-        -var='cloudfoundry_org_owner_password=((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.password))'
-        -var='aws_terraform_access_key_id=((pipeline-controller/AWS_ACCESS_KEY_ID))'
-        -var='aws_terraform_secret_access_key=((pipeline-controller/AWS_SECRET_ACCESS_KEY))'
+        -config=./import_providers cloudfoundry_space.product_space $SPACE_GUID \
+        -var='cloudfoundry_org_owner_username=((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.username))' \
+        -var='cloudfoundry_org_owner_password=((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.password))' \
+        -var='aws_terraform_access_key_id=((pipeline-controller/AWS_ACCESS_KEY_ID))' \
+        -var='aws_terraform_secret_access_key=((pipeline-controller/AWS_SECRET_ACCESS_KEY))' \
         -var='environment=((ENVIRONMENT))' \
         -var='product=((PRODUCT))'
-\      terraform plan \
+      terraform plan \
         -var='credhub_host=((pipeline-controller/CONCOURSE_HOST))' \
         -var='credhub_client_id=((pipeline-controller/CREDHUB_CLIENT))' \
         -var='credhub_client_secret=((pipeline-controller/CREDHUB_SECRET))' \
