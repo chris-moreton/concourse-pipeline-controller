@@ -1,7 +1,3 @@
-resource "cloudfoundry_space" "product_space" {
-  name = "${var.product}-${var.environment}"
-}
-
 resource "aws_s3_bucket" "private_bucket" {
   bucket = "${var.product}-${var.component}-${var.environment}-private"
   acl    = "private"
