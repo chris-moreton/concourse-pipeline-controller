@@ -30,6 +30,6 @@ data "aws_region" "current" {}
 
 data "aws_caller_identity" "current" {}
 
-data "credhub_value" "org_netsensia" {
-  name = "/concourse/main/pipeline-controller/CLOUD_FOUNDRY_ORGANISATION_NAME"
+data "credhub_value" "org_netsensia_guid" {
+  name = "/concourse/main/pipeline-controller/CLOUD_FOUNDRY_ORGANISATION_GUID"
 }
