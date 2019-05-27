@@ -64,7 +64,7 @@ run:
       bucket="((pipeline-controller/STATE_BUCKET))"
       EOL
       terraform init -backend-config=./backend.config
-      terraform import \
+      true || terraform import \
         -var='credhub_host=((pipeline-controller/CONCOURSE_HOST))' \
         -var='credhub_client_id=((pipeline-controller/CREDHUB_CLIENT))' \
         -var='credhub_client_secret=((pipeline-controller/CREDHUB_SECRET))' \
