@@ -55,7 +55,6 @@ run:
         -var='component=((COMPONENT))'
       SPACE_GUID=`terraform output cf_space_guid`
       echo $SPACE_GUID
-      exit
       cd ../component
       cp ../../../../source-code/devops/terraform/custom-* .
       cat > backend.config << EOL
