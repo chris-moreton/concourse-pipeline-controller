@@ -54,7 +54,7 @@ run:
         -var='product=((PRODUCT))' \
         -var='component=((COMPONENT))'
       cd ../component
-      cp ../../../source-code/devops/terraform/custom-* .
+      cp ../../../../source-code/devops/terraform/custom-* .
       cat > backend.config << EOL
       access_key="((pipeline-controller/AWS_ACCESS_KEY_ID))"
       secret_key="((pipeline-controller/AWS_SECRET_ACCESS_KEY))"
