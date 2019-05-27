@@ -24,6 +24,7 @@ image_resource:
     version: latest
 inputs:
   - name: pipeline-controller
+  - name: source-code
 run:
   path: sh
   dir: pipeline-controller/devops/terraform/product
