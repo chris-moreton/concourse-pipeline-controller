@@ -53,6 +53,9 @@ run:
         -var='environment=((ENVIRONMENT))' \
         -var='product=((PRODUCT))' \
         -var='component=((COMPONENT))'
+      SPACE_GUID=`terraform output cf_space_guid`
+      echo $SPACE_GUID
+      exit
       cd ../component
       cp ../../../../source-code/devops/terraform/custom-* .
       cat > backend.config << EOL
@@ -62,8 +65,10 @@ run:
       bucket="((pipeline-controller/STATE_BUCKET))"
       EOL
       terraform init -backend-config=./backend.config
-      SPACE_GUID="1741ab54-084d-4142-80f1-3bdf57abc8bb"
       terraform import \
+        -var='credhub_host=((pipeline-controller/CONCOURSE_HOST))' \
+        -var='credhub_client_id=((pipeline-controller/CREDHUB_CLIENT))' \
+        -var='credhub_client_secret=((pipeline-controller/CREDHUB_SECRET))' \
         -var='cloudfoundry_org_owner_username=((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.username))' \
         -var='cloudfoundry_org_owner_password=((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.password))' \
         -var='aws_terraform_access_key_id=((pipeline-controller/AWS_ACCESS_KEY_ID))' \
