@@ -21,7 +21,7 @@ image_resource:
   type: docker-image
   source:
     repository: netsensia/pipelinefull
-    version: latest
+    version: 1.0.5
 inputs:
   - name: pipeline-controller
   - name: source-code
