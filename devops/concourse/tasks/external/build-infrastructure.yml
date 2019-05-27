@@ -20,7 +20,7 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: netsensia/terraform
+    repository: netsensia/pipelinefull
     version: latest
 inputs:
   - name: pipeline-controller
@@ -62,6 +62,7 @@ run:
       bucket="((pipeline-controller/STATE_BUCKET))"
       EOL
       terraform init -backend-config=./backend.config
+      terraform import cloudfoundry_space.product_space `cf space ((PRODUCT))-((ENVIRONMENT)) --guid`
       terraform plan \
         -var='credhub_host=((pipeline-controller/CONCOURSE_HOST))' \
         -var='credhub_client_id=((pipeline-controller/CREDHUB_CLIENT))' \
