@@ -29,3 +29,7 @@ data "aws_subnet_ids" "all" {
 data "aws_region" "current" {}
 
 data "aws_caller_identity" "current" {}
+
+data "credhub_value" "org_netsensia" {
+  name = "/concourse/main/pipeline-controller/CLOUD_FOUNDRY_ORGANISATION_NAME"
+}
