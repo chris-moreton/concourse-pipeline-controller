@@ -71,7 +71,7 @@ run:
         -var='aws_terraform_secret_access_key=((pipeline-controller/AWS_SECRET_ACCESS_KEY))' \
         -var='environment=((ENVIRONMENT))' \
         -var='product=((PRODUCT))' \
-        cloudfoundry_space.product_space
+        cloudfoundry_space.product_space \
         $SPACE_GUID
       terraform plan \
         -var='credhub_host=((pipeline-controller/CONCOURSE_HOST))' \
