@@ -14,11 +14,11 @@ run:
   args:
     - -exc
     - |
-      n 10.14
+      n 10
       npm install
       npm run build
       FILENAME=((PRODUCT))-((COMPONENT)).tar.gz
-      tar --exclude=$FILENAME -zcf $FILENAME .
+      tar -zcf $FILENAME . || true
       cp $FILENAME ../build/$FILENAME
 caches:
   - path: .gradle/
