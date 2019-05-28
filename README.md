@@ -12,7 +12,7 @@ It uses AWS for backend services such as databases and Elasticsearch instances.
 
 ## Using the Pipeline
 
-The pipeline is fully extendable using Concourse YML configuration.
+Although you can extend the pipeline using Concourse YML configuration to add any jobs you require see [Extending the Pipeline](#ExtendingPipeline), at its simplest, all a developer need do is add their project to the pipeline controller repository. Assuming certain conventions are followed, as detailed below, this will cause a pipeline to be created, and for the project to be built and deployed.
 
 ### The Simplest Pipeline
 
@@ -105,6 +105,8 @@ And you can view the services, if any, with:
 ```
 cf services
 ```
+
+<a name="ExtendingPipeline"/>
 
 ### Extending the Pipeline
 
