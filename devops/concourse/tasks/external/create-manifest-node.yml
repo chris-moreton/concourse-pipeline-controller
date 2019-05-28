@@ -21,9 +21,17 @@ run:
       if [ "((ENVIRONMENT))" == "prod" ]
       then
           cat >> manifest.yaml << EOT
+          NODE_ENV: production
+          AUTH0_DOMAIN: dzone.auth0.com
+          AUTH0_CLIENT_ID: ((prod/AUTH0_CLIENT_ID))
+          BASE_URL: https://((PRODUCT))-((COMPONENT))-prod.cfapps.io
       EOT
       else
           cat >> manifest.yaml << EOT
+          NODE_ENV: production
+          AUTH0_DOMAIN: dzone.auth0.com
+          AUTH0_CLIENT_ID: ((aat/AUTH0_CLIENT_ID))
+          BASE_URL: https://((PRODUCT))-((COMPONENT))-aat.cfapps.io
       EOT
       fi
 
