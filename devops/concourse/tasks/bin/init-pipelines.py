@@ -104,6 +104,7 @@ def initialise_pipeline(repo):
     system_call(
         "fly --target netsensia-concourse set-pipeline --non-interactive -c " + merged_pipeline_config + " -p " + pipeline_name
     )
+    system_call("sed -i s/" + project_type + "/PROJECT_TYPE/g " + core_config)
     print("Unpausing pipeline...")
     system_call("fly --target netsensia-concourse unpause-pipeline -p " + pipeline_name)
     print("Triggering build job...")
