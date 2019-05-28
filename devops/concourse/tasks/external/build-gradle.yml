@@ -17,8 +17,9 @@ run:
       ./gradlew build
       JAR_FILE=((PRODUCT))-((COMPONENT)).jar
       ZIP_FILE=((PRODUCT))-((COMPONENT)).tar.gz
+      cd build/libs
       tar -zcvf $ZIP_FILE $JAR_FILE
-      cp build/libs/$ZIP_FILE ../build/$ZIP_FILE
+      cp $ZIP_FILE ../../../build/$ZIP_FILE
 caches:
   - path: .gradle/
   - path: .m2/
