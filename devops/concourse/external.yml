@@ -38,7 +38,7 @@ jobs:
     file: pipeline-controller/devops/concourse/tasks/external/build-PROJECT_TYPE.yml
   - put: packaged-build
     params:
-      file: build/((PRODUCT))-((COMPONENT)).jar
+      file: build/((PRODUCT))-((COMPONENT)).tar.gz
 - name: build-infrastructure-aat
   public: false
   plan:

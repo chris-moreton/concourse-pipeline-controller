@@ -1,21 +1,3 @@
-#-------------------------------------------------------------------------------------------------
-# Example usage:
-#-------------------------------------------------------------------------------------------------
-#- name: build-infrastructure-aat
-#  public: false
-#  plan:
-#    - get: source-code
-#      passed:
-#        - build
-#      trigger: true
-#    - get: pipeline-controller
-#      trigger: false
-#    - task: call-terraform
-#      file: pipeline-controller/devops/concourse/tasks/external/build-infrastructure.yml
-#      vars:
-#        ENVIRONMENT: aat
-#-------------------------------------------------------------------------------------------------
-
 platform: linux
 image_resource:
   type: docker-image

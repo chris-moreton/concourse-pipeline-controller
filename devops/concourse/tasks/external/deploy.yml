@@ -41,6 +41,7 @@ run:
   args:
     - -exc
     - |
+      tar -zxvf ((PRODUCT))-((COMPONENT)).tar.gz
       cf add-plugin-repo CF-Community https://plugins.cloudfoundry.org
       cf install-plugin blue-green-deploy -f -r CF-Community
       cf login -a api.run.pivotal.io -u $CF_USER -p $CF_PASS -s $CF_SPACE

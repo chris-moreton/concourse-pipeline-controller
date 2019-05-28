@@ -14,11 +14,10 @@ run:
   args:
     - -exc
     - |
-      ./gradlew build
-      JAR_FILE=((PRODUCT))-((COMPONENT)).jar
-      ZIP_FILE=((PRODUCT))-((COMPONENT)).tar.gz
-      tar -zcvf $ZIP_FILE $JAR_FILE
-      cp build/libs/$ZIP_FILE ../build/$ZIP_FILE
+      npm install
+      FILENAME=((PRODUCT))-((COMPONENT)).tar.gz
+      tar -zcvf $FILENAME .
+      cp build/libs/$FILENAME ../build/$FILENAME
 caches:
   - path: .gradle/
   - path: .m2/
