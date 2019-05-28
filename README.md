@@ -8,7 +8,7 @@ The controller will create a default pipeline for any Java (Gradle) and NodeJS (
 
 It will build and test the application, create and maintain the infrastructure, and deploy the application to Cloud Foundry.
 
-An application pipeline can be extended using Concourse YML configuration to add additional jobs and resources (see [Extending the Pipeline](#ExtendingPipeline)), but, at its simplest, all a developer need do is add their project to the pipeline controller repository. 
+An application pipeline can be extended using Concourse YML configuration to add additional jobs and resources (see [Extending the Pipeline](#ExtendingPipeline)), but, at its simplest, all a developer need do is add the name of their project to [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml). 
 
 ### Setting Up A Pipeline Controller
 
