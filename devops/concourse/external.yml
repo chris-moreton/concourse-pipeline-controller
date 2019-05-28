@@ -23,7 +23,7 @@ resources:
   source:
     bucket: pipeline-controller-builds
     region_name: eu-west-2
-    versioned_file: ((PRODUCT))-((COMPONENT)).jar
+    versioned_file: ((PRODUCT))-((COMPONENT)).tar.gz
     access_key_id: ((pipeline-controller/AWS_ACCESS_KEY_ID))
     secret_access_key: ((pipeline-controller/AWS_SECRET_ACCESS_KEY))
 jobs:
