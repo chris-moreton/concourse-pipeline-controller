@@ -17,7 +17,7 @@ run:
       n 10.14
       npm install
       FILENAME=((PRODUCT))-((COMPONENT)).tar.gz
-      tar -zcf $FILENAME
+      tar -zcf $FILENAME *
       cp build/libs/$FILENAME ../build/$FILENAME
 caches:
   - path: .gradle/
