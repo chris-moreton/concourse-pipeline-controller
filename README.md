@@ -67,10 +67,10 @@ The next time the pipeline job runs, a pipeline will be created for your applica
 
 This will build and package your application. Your unit tests will be executed in this step.
 
-| Project Type | Build Command   |
-| ------------ | --------------- |
-| Java         | ./gradlew build |
-| Node         | yarn build      |
+| Project Type | Build Command                |
+| ------------ | ---------------------------- |
+| Java         | ./gradlew build              |
+| Node         | npm install && npm run build |
 
 #### Build Infrastructure (AAT)
 
