@@ -10,15 +10,13 @@ It will build and test the application, create and maintain the infrastructure, 
 
 An application pipeline can be extended using Concourse YML configuration to add additional jobs and resources (see [Extending the Pipeline](#ExtendingPipeline)), but, at its simplest, all a developer need do is add the name of their project to [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml). 
 
-### Setting Up A Pipeline Controller
+## Setting Up A Pipeline Controller
 
 This README file is concerned with how an application developer can take advantage of a pipeline controller that has already been set up and configured for their GitHub organisation.
 
 To learn more about how a controller can be configured for a GitHub organisation, please see [Creating Your Own Pipeline Controller](<https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Creating-Your-Own-Pipeline-Controller>) in the project wiki.
 
-### Using the Pipeline
-
-#### The Simplest Pipeline
+## Using the Pipeline
 
 An application will consist of a PRODUCT and COMPONENT. The product is the overarching system or company name, e.g. "directorzone". The component is the name of the service within the PRODUCT, e.g. "api" or "frontend".
 
@@ -32,8 +30,6 @@ e.g.
 
 This must be the name of your GitHub repository.
 
-Update the repositories.yml file to include your project. Included projects must be repositories in the GitHub organisation specified when the pipeline controller was [created](<https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Creating-Your-Own-Pipeline-Controller>).
-
 ##### Deployment Key
 
 If your project is not open source, you will need to add a deployment key to your repository. Store the key in the following location in CredHub. See [Adding Secrets to CredHub](<https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Adding-Secrets-To-CredHub>) in the wiki for more details on this.
@@ -44,7 +40,28 @@ It may be easier to get someone who has the necessary tools installed and/or kno
 /concourse/main/<product>-<component>/GITHUB_DEPLOY_KEY
 ```
 
+##### Setting Environment Variables
+
+To set environment variables for your application, add them to CredHub at the following locations:
+
+```
+concourse/main/product-component/aat
+concourse/main/product-component/prod
+```
+
+Example:
+
+```
+credhub set -n concourse/main/directorzone-api/aat/PEXELS_AUTH --type value --value ABCDEFG123456
+```
+
+##### Add Your Application
+
 Create a pull request, and when your PR is merged, your project will now be included in the pipeline and run through the following steps.
+
+Update [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml) to include your project. Included projects must be repositories in the GitHub organisation for which the controller is [configured](<https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Creating-Your-Own-Pipeline-Controller>).
+
+The next time the pipeline job runs, a pipeline will be created for your application with the following stages:
 
 #### Build
 
