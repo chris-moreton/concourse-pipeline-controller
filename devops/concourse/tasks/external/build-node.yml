@@ -18,7 +18,7 @@ run:
       npm install
       npm run build
       FILENAME=((PRODUCT))-((COMPONENT)).tar.gz
-      tar -zcf $FILENAME *
+      tar --exclude=$FILENAME -zcf $FILENAME .
       cp $FILENAME ../build/$FILENAME
 caches:
   - path: .gradle/
