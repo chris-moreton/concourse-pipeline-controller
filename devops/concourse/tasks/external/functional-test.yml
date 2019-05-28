@@ -13,7 +13,7 @@
 #    - get: packaged-build
 #      trigger: false
 #    - task: create-manifests
-#      file: source-code/devops/concourse/tasks/create-manifest.yml
+#      file: source-code/devops/concourse/tasks/create-manifest-gradle.yml
 #      vars:
 #        ENVIRONMENT: aat
 #    - task: deploy

@@ -35,7 +35,7 @@ jobs:
   - get: pipeline-controller
     trigger: false
   - task: build
-    file: pipeline-controller/devops/concourse/tasks/external/build-gradle.yml
+    file: pipeline-controller/devops/concourse/tasks/external/build-PROJECT_TYPE.yml
   - put: packaged-build
     params:
       file: build/((PRODUCT))-((COMPONENT)).jar
@@ -64,7 +64,7 @@ jobs:
     - get: packaged-build
       trigger: false
     - task: create-manifests
-      file: pipeline-controller/devops/concourse/tasks/external/create-manifest.yml
+      file: pipeline-controller/devops/concourse/tasks/external/create-manifest-PROJECT_TYPE.yml
       vars:
         ENVIRONMENT: aat
     - task: deploy
@@ -113,7 +113,7 @@ jobs:
     - get: packaged-build
       trigger: false
     - task: create-manifests
-      file: pipeline-controller/devops/concourse/tasks/external/create-manifest.yml
+      file: pipeline-controller/devops/concourse/tasks/external/create-manifest-PROJECT_TYPE.yml
       vars:
         ENVIRONMENT: prod
     - task: deploy

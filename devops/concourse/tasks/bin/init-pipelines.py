@@ -72,12 +72,21 @@ def system_call(call_string):
         exit(1)
 
 
+def get_project_type(repo):
+    if os.path.isfile("/tmp/" + repo["pipeline_name"] + "/build.gradle"):
+        return "gradle"
+    else:
+        return "node"
+
+
 def initialise_pipeline(repo):
     pipeline_name = repo["pipeline_name"]
     filename = "pipeline.yml"
     pipeline_config = "/tmp/" + pipeline_name + "/devops/concourse/" + filename
     merged_config = "/tmp/merged.yml"
     core_config = "../../external.yml"
+    project_type = get_project_type(repo)
+    system_call("sed -i s/PROJECT_TYPE/" + project_type + "/g " + core_config)
     if os.path.isfile(pipeline_config):
         print("Merging external and custom pipeline jobs")
         merged = merge_yaml_files(pipeline_config, core_config)
