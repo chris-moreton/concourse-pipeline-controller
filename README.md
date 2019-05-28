@@ -2,17 +2,23 @@
 
 ![Core Pipeline](images/pipeline.png)
 
-A Concourse pipeline that manages other pipelines within the same Concourse instance.
+A Concourse pipeline that creates and manages pipelines for other projects.
 
-An opinionated pipeline that can be enabled for any Java (Gradle) and NodeJS (yarn) application in the same GitHub organisation as the controller is running.
+The controller will create a default pipeline for any Java (Gradle) and NodeJS (yarn) application in the  GitHub organisation for which the controller is configured.
 
-It will build and test the application, create and maintain the infrastructure, and deploy your application to Cloud Foundry.
+It will build and test the application, create and maintain the infrastructure, and deploy the application to Cloud Foundry.
 
 It uses AWS for backend services such as databases and Elasticsearch instances.
 
-## Using the Pipeline
+The pipeline can be extended using Concourse YML configuration to add additional jobs and resources (see [Extending the Pipeline](#ExtendingPipeline)), but, at its simplest, all a developer need do is add their project to the pipeline controller repository. 
 
-Although you can extend the pipeline using Concourse YML configuration to add any jobs you require see [Extending the Pipeline](#ExtendingPipeline), at its simplest, all a developer need do is add their project to the pipeline controller repository. Assuming certain conventions are followed, as detailed below, this will cause a pipeline to be created, and for the project to be built and deployed.
+Setting Up A Pipeline Controller
+
+This README file is concerned with how an application developer can take advantage of a pipeline controller that has already been set up and configured for their GitHub organisation.
+
+To learn more about how a controller can be configured for a GitHub organisation, please see (Creating Your Own Pipeline Controller)[<https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Creating-Your-Own-Pipeline-Controller>] in the project wiki.
+
+## Using the Pipeline
 
 ### The Simplest Pipeline
 
