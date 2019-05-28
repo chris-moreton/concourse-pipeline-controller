@@ -8,19 +8,17 @@ The controller will create a default pipeline for any Java (Gradle) and NodeJS (
 
 It will build and test the application, create and maintain the infrastructure, and deploy the application to Cloud Foundry.
 
-It uses AWS for backend services such as databases and Elasticsearch instances.
+An application pipeline can be extended using Concourse YML configuration to add additional jobs and resources (see [Extending the Pipeline](#ExtendingPipeline)), but, at its simplest, all a developer need do is add their project to the pipeline controller repository. 
 
-The pipeline can be extended using Concourse YML configuration to add additional jobs and resources (see [Extending the Pipeline](#ExtendingPipeline)), but, at its simplest, all a developer need do is add their project to the pipeline controller repository. 
-
-Setting Up A Pipeline Controller
+### Setting Up A Pipeline Controller
 
 This README file is concerned with how an application developer can take advantage of a pipeline controller that has already been set up and configured for their GitHub organisation.
 
-To learn more about how a controller can be configured for a GitHub organisation, please see (Creating Your Own Pipeline Controller)[<https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Creating-Your-Own-Pipeline-Controller>] in the project wiki.
+To learn more about how a controller can be configured for a GitHub organisation, please see [Creating Your Own Pipeline Controller](<https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Creating-Your-Own-Pipeline-Controller>) in the project wiki.
 
-## Using the Pipeline
+### Using the Pipeline
 
-### The Simplest Pipeline
+#### The Simplest Pipeline
 
 An application will consist of a PRODUCT and COMPONENT. The product is the overarching system or company name, e.g. "directorzone". The component is the name of the service within the PRODUCT, e.g. "api" or "frontend".
 
