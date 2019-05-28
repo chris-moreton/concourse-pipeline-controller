@@ -38,7 +38,7 @@ run:
       SPACE_GUID=`terraform output cf_space_guid`
       echo $SPACE_GUID
       cd ../component
-      cp ../../../../source-code/devops/terraform/custom-* .
+      cp ../../../../source-code/devops/terraform/custom-* . || true
       cat > backend.config << EOL
       access_key="((pipeline-controller/AWS_ACCESS_KEY_ID))"
       secret_key="((pipeline-controller/AWS_SECRET_ACCESS_KEY))"
