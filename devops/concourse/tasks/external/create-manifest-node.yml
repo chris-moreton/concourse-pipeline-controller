@@ -11,12 +11,6 @@ run:
   args:
     - -exc
     - |
-      if [ "((ENVIRONMENT))" == "prod" ]
-      then
-        INSTANCES=1
-      else
-        INSTANCES=1
-      fi
       cat > manifest.yaml << EOT
       ---
       applications:
@@ -24,11 +18,6 @@ run:
         buildpack: nodejs_buildpack
         memory: 768M
         instances: $INSTANCES
-        services:
-          - ((COMPONENT))-mysql
-          - ((COMPONENT))-elasticsearch
-        env:
-          SPRING_PROFILES_ACTIVE: production
       EOT
       if [ "((ENVIRONMENT))" == "prod" ]
       then

@@ -11,12 +11,6 @@ run:
   args:
     - -exc
     - |
-      if [ "((ENVIRONMENT))" == "prod" ]
-      then
-        INSTANCES=1
-      else
-        INSTANCES=1
-      fi
       cat > manifest.yaml << EOT
       ---
       applications:
