@@ -28,6 +28,10 @@ RUN wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.k
 RUN echo "deb https://packages.cloudfoundry.org/debian stable main" | tee /etc/apt/sources.list.d/cloudfoundry-cli.list
 RUN apt-get update
 RUN apt-get install cf-cli
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN apt-get install nodejs
+RUN npm install -g n
+
 
 
 

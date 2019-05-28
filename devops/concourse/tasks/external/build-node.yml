@@ -2,8 +2,8 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: openjdk
-    tag: 8-jdk
+    repository: netsensia/pipelinefull
+    tag: 1.0.7
 inputs:
   - name: source-code
 outputs:
@@ -14,6 +14,7 @@ run:
   args:
     - -exc
     - |
+      n 10.14
       npm install
       FILENAME=((PRODUCT))-((COMPONENT)).tar.gz
       tar -zcvf $FILENAME .
