@@ -86,6 +86,7 @@ def initialise_pipeline(repo):
     merged_config = "/tmp/merged.yml"
     core_config = "../../external.yml"
     project_type = get_project_type(repo)
+    print("Project Type is " + project_type)
     system_call("sed -i s/PROJECT_TYPE/" + project_type + "/g " + core_config)
     if os.path.isfile(pipeline_config):
         print("Merging external and custom pipeline jobs")
