@@ -17,7 +17,6 @@ run:
       - name: ((PRODUCT))-((COMPONENT))-((ENVIRONMENT))
         buildpack: nodejs_buildpack
         memory: 768M
-        instances: $INSTANCES
       EOT
       if [ "((ENVIRONMENT))" == "prod" ]
       then
