@@ -48,13 +48,13 @@ run:
       node_modules/.cache
       EOT
       INDEX=`find .next/server/static -name index.js`;
-      if [ -z $INDEX ];
+      if [ ! -z $INDEX ];
       then
-        if [ "prod" == ((ENVIRONMENT)) ];
+        if [ "prod" == "prod" ];
         then
-          sed -i s/API_URL: undefined/API_URL: ((prod/API_URL))/g $INDEX
+          sed -i -e 's/API_URL: undefined/API_URL: ((prod/API_URL))/g' $INDEX
         else
-          sed -i s/API_URL: undefined/API_URL: ((aat/API_URL))/g $INDEX
+          sed -i -e 's/API_URL: undefined/API_URL: ((aat/API_URL))/g' $INDEX
         fi
       fi
       cf add-plugin-repo CF-Community https://plugins.cloudfoundry.org
