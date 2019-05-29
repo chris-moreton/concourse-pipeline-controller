@@ -17,6 +17,7 @@ run:
       - name: ((PRODUCT))-((COMPONENT))-((ENVIRONMENT))
         buildpack: nodejs_buildpack
         memory: 768M
+        command: npm run start
       env:
         NODE_ENV: production
         AUTH0_DOMAIN: dzone.auth0.com
