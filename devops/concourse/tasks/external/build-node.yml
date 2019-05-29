@@ -16,7 +16,7 @@ run:
     - |
       n 10
       npm install
-      npm run build
+      npm run build-prod
       FILENAME=((PRODUCT))-((COMPONENT)).tar.gz
       tar -zcf $FILENAME . || true
       cp $FILENAME ../build/$FILENAME
