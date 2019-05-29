@@ -166,7 +166,6 @@ for repo in yaml_file["repos"]:
 
     if current_head_revision == get_previous_head_revision(repo):
         print("We've done this one before...")
-        initialise_pipeline(repo)
     else:
         initialise_pipeline(repo)
 
