@@ -26,10 +26,12 @@ run:
       then
       cat >> manifest.yaml << EOT
         AUTH0_CLIENT_ID: ((prod/AUTH0_CLIENT_ID))
+        API_URL: ((prod/API_URL))
       EOT
       else
       cat >> manifest.yaml << EOT
         AUTH0_CLIENT_ID: ((aat/AUTH0_CLIENT_ID))
+        API_URL: ((aat/API_URL))
       EOT
       fi
 
