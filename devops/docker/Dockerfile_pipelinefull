@@ -31,6 +31,8 @@ RUN apt-get install cf-cli
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 RUN apt-get install nodejs
 RUN npm install -g n
+RUN cf add-plugin-repo CF-Community https://plugins.cloudfoundry.org
+RUN cf install-plugin blue-green-deploy -f -r CF-Community
 
 
 

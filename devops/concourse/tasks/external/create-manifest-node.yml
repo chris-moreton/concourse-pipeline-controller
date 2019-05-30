@@ -2,7 +2,8 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: governmentpaas/cf-cli
+    repository: netsensia/pipelinefull
+    tag: 1.0.8
 outputs:
   - name: manifests
 run:
@@ -21,6 +22,19 @@ run:
       env:
         NODE_ENV: production
       EOT
-
+      $ENV=((ENVIRONMENT))
+      OUTPUT=`credhub find -n concourse/main/directorzone-frontend/$ENV`
+      ENV_VARS=$(echo $OUTPUT | grep -o "aat/\S*")
+      while IFS=' ' read -ra VAL; do
+            for i in "${VAL[@]}"; do
+                VALUE=`credhub get -q -n concourse/main/directorzone-frontend/$i`
+                VALUE=${VALUE//\//\\\/}
+                VALUE=${VALUE//\./\\\.}
+                ENV_VAR=${i/$ENV\//}
+      cat >> manifest.yaml << EOT
+        $ENV_VAR: $VALUE
+      EOT
+            done
+      done <<< "$ENV_VARS"
 
 

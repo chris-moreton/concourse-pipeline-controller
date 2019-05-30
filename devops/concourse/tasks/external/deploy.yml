@@ -2,7 +2,8 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: governmentpaas/cf-cli
+    repository: netsensia/pipelinefull
+    tag: 1.0.8
 inputs:
   - name: packaged-build
   - name: manifests
@@ -39,8 +40,6 @@ run:
               done
         done <<< "$ENV_VARS"
       fi
-      cf add-plugin-repo CF-Community https://plugins.cloudfoundry.org
-      cf install-plugin blue-green-deploy -f -r CF-Community
       cf login -a api.run.pivotal.io -u $CF_USER -p $CF_PASS -s $CF_SPACE
       cp ../manifests/manifest.yaml .
       export CF_TRACE=~/cf-trace.log
