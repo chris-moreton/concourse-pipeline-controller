@@ -34,7 +34,7 @@ run:
         fi
         API_URL=${API_URL//\//\\\/}
         API_URL=${API_URL//\./\\\.}
-        sed -i -e "s/API_URL: undefined/API_URL: $API_URL/g" $INDEX
+        sed -i -e "s/API_URL: undefined/API_URL: '$API_URL'/g" $INDEX
       fi
       cf add-plugin-repo CF-Community https://plugins.cloudfoundry.org
       cf install-plugin blue-green-deploy -f -r CF-Community
