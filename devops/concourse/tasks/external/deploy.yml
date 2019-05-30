@@ -13,7 +13,7 @@ params:
   CF_SPACE: ((PRODUCT))-((ENVIRONMENT))
   CF_APP: ((PRODUCT))-((COMPONENT))-((ENVIRONMENT))
 run:
-  path: sh
+  path: bash
   dir: packaged-build
   args:
     - -exc
