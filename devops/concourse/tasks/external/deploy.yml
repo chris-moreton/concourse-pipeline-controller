@@ -43,7 +43,7 @@ run:
                   VALUE=`credhub get -q -n concourse/main/directorzone-frontend/$i`
                   VALUE=${VALUE//\//\\\/}
                   VALUE=${VALUE//\./\\\.}
-                  ENV_VAR=${i/$ENV\//}
+                  ENV_VAR=${i/$ENV\/env\//}
                   sed -i -e "s/$ENV_VAR: undefined/$ENV_VAR: '$VALUE'/g" $INDEX
               done
         done <<< "$ENV_VARS"

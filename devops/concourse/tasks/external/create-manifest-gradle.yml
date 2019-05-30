@@ -39,7 +39,7 @@ run:
       while IFS=' ' read -ra VAL; do
             for i in "${VAL[@]}"; do
                 VALUE=`credhub get -q -n concourse/main/((PRODUCT))-((COMPONENT))/$i`
-                ENV_VAR=${i/$ENV\//}
+                ENV_VAR=${i/$ENV\/env\//}
       cat >> manifest.yaml << EOT
           $ENV_VAR: $VALUE
       EOT
