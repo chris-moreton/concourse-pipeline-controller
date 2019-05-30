@@ -36,8 +36,6 @@ run:
       while IFS=' ' read -ra VAL; do
             for i in "${VAL[@]}"; do
                 VALUE=`credhub get -q -n concourse/main/directorzone-frontend/$i`
-                VALUE=${VALUE//\//\\\/}
-                VALUE=${VALUE//\./\\\.}
                 ENV_VAR=${i/$ENV\//}
       cat >> manifest.yaml << EOT
         $ENV_VAR: $VALUE
