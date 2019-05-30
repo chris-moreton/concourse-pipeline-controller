@@ -26,15 +26,18 @@ run:
       INDEX=`find .next/server/static -name index.js`;
       if [ ! -z $INDEX ];
       then
-        if [ "prod" == "prod" ];
-        then
-          API_URL=((prod/API_URL))
-        else
-          API_URL=((aat/API_URL))
-        fi
-        API_URL=${API_URL//\//\\\/}
-        API_URL=${API_URL//\./\\\.}
-        sed -i -e "s/API_URL: undefined/API_URL: '$API_URL'/g" $INDEX
+        $ENV=((ENVIRONMENT))
+        OUTPUT=`credhub find -n concourse/main/directorzone-frontend/$ENV`
+        ENV_VARS=$(echo $OUTPUT | grep -o "aat/\S*")
+        while IFS=' ' read -ra VAL; do
+              for i in "${VAL[@]}"; do
+                  VALUE=`credhub get -q -n concourse/main/directorzone-frontend/$i`
+                  VALUE=${VALUE//\//\\\/}
+                  VALUE=${VALUE//\./\\\.}
+                  ENV_VAR=${i/$ENV\//}
+                  sed -i -e "s/$ENV_VAR: undefined/$ENV_VAR: '$VALUE'/g" $INDEX
+              done
+        done <<< "$ENV_VARS"
       fi
       cf add-plugin-repo CF-Community https://plugins.cloudfoundry.org
       cf install-plugin blue-green-deploy -f -r CF-Community
