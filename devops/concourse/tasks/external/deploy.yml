@@ -27,7 +27,12 @@ run:
       INDEX=`find .next/server/static -name index.js`;
       if [ ! -z $INDEX ];
       then
-        ENV=((ENVIRONMENT))
+        echo "Logging into Concourse..."
+        fly --target netsensia-concourse login --insecure --concourse-url https://$CONCOURSE_HOST -u admin -p $CONCOURSE_ADMIN_PASSWORD
+        echo "Syncing..."
+        fly --target netsensia-concourse sync
+        echo "Logging into CredHub..."
+        eval "$(control-tower info --iaas aws --env --region eu-west-2 netsensia-concourse)"        ENV=((ENVIRONMENT))
         OUTPUT=`credhub find -n concourse/main/directorzone-frontend/$ENV`
         ENV_VARS=$(echo $OUTPUT | grep -o "aat/\S*")
         while IFS=' ' read -ra VAL; do
