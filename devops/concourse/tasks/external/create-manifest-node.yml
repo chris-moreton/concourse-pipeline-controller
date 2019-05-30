@@ -31,7 +31,7 @@ run:
       echo "Logging into CredHub..."
       eval "$(control-tower info --iaas aws --env --region eu-west-2 netsensia-concourse)"
       ENV=((ENVIRONMENT))
-      OUTPUT=`credhub find -n concourse/main/((PRODUCT))-((COMPONENT))/$ENV`
+      OUTPUT=`credhub find -n concourse/main/((PRODUCT))-((COMPONENT))/$ENV/env`
       ENV_VARS=$(echo $OUTPUT | grep -o "((ENVIRONMENT))/\S*")
       while IFS=' ' read -ra VAL; do
             for i in "${VAL[@]}"; do
