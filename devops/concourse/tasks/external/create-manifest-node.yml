@@ -23,7 +23,7 @@ run:
         NODE_ENV: production
       EOT
       echo "Logging into Concourse..."
-      fly --target netsensia-concourse login --insecure --concourse-url https://$CONCOURSE_HOST -u admin -p $CONCOURSE_ADMIN_PASSWORD
+      fly --target netsensia-concourse login --insecure --concourse-url https://$CONCOURSE_HOST -u admin -p ((pipeline-controller/CONCOURSE_ADMIN_PASSWORD))
       echo "Syncing..."
       fly --target netsensia-concourse sync
       echo "Logging into CredHub..."
