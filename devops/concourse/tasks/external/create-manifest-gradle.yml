@@ -25,19 +25,23 @@ run:
         env:
           SPRING_PROFILES_ACTIVE: production
       EOT
-      if [ "((ENVIRONMENT))" == "prod" ]
-      then
-          cat >> manifest.yaml << EOT
-          AMAZONPROPERTIES_ACCESSKEY: ((pipeline-controller/AWS_ACCESS_KEY_ID))
-          AMAZONPROPERTIES_SECRETKEY: ((pipeline-controller/AWS_SECRET_ACCESS_KEY))
-          PEXELS_AUTH: ((prod/PEXELS_AUTH))
+      export AWS_ACCESS_KEY_ID=((pipeline-controller/AWS_ACCESS_KEY_ID))
+      export AWS_SECRET_ACCESS_KEY=((pipeline-controller/AWS_SECRET_ACCESS_KEY))
+      echo "Logging into Concourse..."
+      fly --target netsensia-concourse login --insecure --concourse-url https://((pipeline-controller/CONCOURSE_HOST)) -u admin -p ((pipeline-controller/CONCOURSE_ADMIN_PASSWORD))
+      echo "Syncing..."
+      fly --target netsensia-concourse sync
+      echo "Logging into CredHub..."
+      eval "$(control-tower info --iaas aws --env --region eu-west-2 netsensia-concourse)"
+      ENV=((ENVIRONMENT))
+      OUTPUT=`credhub find -n concourse/main/directorzone-frontend/$ENV`
+      ENV_VARS=$(echo $OUTPUT | grep -o "((ENVIRONMENT))/\S*")
+      while IFS=' ' read -ra VAL; do
+            for i in "${VAL[@]}"; do
+                VALUE=`credhub get -q -n concourse/main/directorzone-frontend/$i`
+                ENV_VAR=${i/$ENV\//}
+      cat >> manifest.yaml << EOT
+        $ENV_VAR: $VALUE
       EOT
-      else
-          cat >> manifest.yaml << EOT
-          AMAZONPROPERTIES_ACCESSKEY: ((pipeline-controller/AWS_ACCESS_KEY_ID))
-          AMAZONPROPERTIES_SECRETKEY: ((pipeline-controller/AWS_SECRET_ACCESS_KEY))
-          PEXELS_AUTH: ((aat/PEXELS_AUTH))
-      EOT
-      fi
-
-
+            done
+      done <<< "$ENV_VARS"

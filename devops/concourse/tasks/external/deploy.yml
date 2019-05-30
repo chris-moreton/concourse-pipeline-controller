@@ -24,7 +24,7 @@ run:
       cat > .cfignore << EOT
       node_modules/.cache
       EOT
-      INDEX=`find .next/server/static -name index.js`;
+      INDEX=`find .next/server/static -name index.js` || true
       if [ ! -z $INDEX ];
       then
         export AWS_ACCESS_KEY_ID=((pipeline-controller/AWS_ACCESS_KEY_ID))
