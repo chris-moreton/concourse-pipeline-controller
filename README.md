@@ -45,14 +45,14 @@ It may be easier to get someone who has the necessary tools installed and/or kno
 To set environment variables for your application, add them to CredHub at the following locations:
 
 ```
-concourse/main/product-component/aat
-concourse/main/product-component/prod
+concourse/main/product-component/aat/env
+concourse/main/product-component/prod/env
 ```
 
 Example:
 
 ```
-credhub set -n concourse/main/directorzone-api/aat/PEXELS_AUTH --type value --value ABCDEFG123456
+credhub set -n concourse/main/directorzone-api/aat/env/PEXELS_AUTH --type value --value ABCDEFG123456
 ```
 
 ##### Add Your Application
