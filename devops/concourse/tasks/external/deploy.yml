@@ -27,7 +27,7 @@ run:
       INDEX=`find .next/server/static -name index.js`;
       if [ ! -z $INDEX ];
       then
-        $ENV=((ENVIRONMENT))
+        ENV=((ENVIRONMENT))
         OUTPUT=`credhub find -n concourse/main/directorzone-frontend/$ENV`
         ENV_VARS=$(echo $OUTPUT | grep -o "aat/\S*")
         while IFS=' ' read -ra VAL; do
