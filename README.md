@@ -6,9 +6,7 @@ A Concourse pipeline that creates and manages pipelines for other projects.
 
 I have multiple projects within my GitHub organisation.
 
-### I want all repositories to
-
-* Share the same pipeline configuration, which, in turn means that they all use the same backend services for storing builds (S3), attaching backend services (RDS, Elasticsearch) and deployment (Cloud Foundry).
+I want all repositories to share the same pipeline configuration. This, in turn means that they all use the same backend services for storing builds (S3), attaching backend services (RDS, Elasticsearch) and deployment (Cloud Foundry).
 
 ### I want developers to be able to
 
