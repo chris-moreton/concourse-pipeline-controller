@@ -18,6 +18,9 @@ run:
   args:
     - -exc
     - |
+      ZIP_FILE=((PRODUCT))-((COMPONENT)).tar.gz
+      tar -zxf $ZIP_FILE
+      rm $ZIP_FILE
       cat > .cfignore << EOT
       node_modules/.cache
       EOT
@@ -42,7 +45,6 @@ run:
         done
       done <<< "$ENV_VARS"
       n 10
-      npm install
       npm run build-prod
       cf login -a api.run.pivotal.io -u $CF_USER -p $CF_PASS -s $CF_SPACE
       cp ../manifests/manifest.yaml .
