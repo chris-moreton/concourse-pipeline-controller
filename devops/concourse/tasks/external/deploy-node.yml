@@ -38,8 +38,6 @@ run:
       while IFS=' ' read -ra VAL; do
         for i in "${VAL[@]}"; do
             VALUE=`credhub get -q -n concourse/main/directorzone-frontend/$i`
-            VALUE=${VALUE//\//\\\/}
-            VALUE=${VALUE//\./\\\.}
             ENV_VAR=${i/$ENV\/env\//}
             export $ENV_VAR=$VALUE
         done
