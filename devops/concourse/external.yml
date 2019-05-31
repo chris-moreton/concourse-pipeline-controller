@@ -68,7 +68,7 @@ jobs:
       vars:
         ENVIRONMENT: aat
     - task: deploy
-      file: pipeline-controller/devops/concourse/tasks/external/deploy.yml
+      file: pipeline-controller/devops/concourse/tasks/external/deploy-PROJECT_TYPE.yml
       vars:
         ENVIRONMENT: aat
 - name: functional-test-aat
@@ -117,6 +117,6 @@ jobs:
       vars:
         ENVIRONMENT: prod
     - task: deploy
-      file: pipeline-controller/devops/concourse/tasks/external/deploy.yml
+      file: pipeline-controller/devops/concourse/tasks/external/deploy-PROJECT_TYPE.yml
       vars:
         ENVIRONMENT: prod

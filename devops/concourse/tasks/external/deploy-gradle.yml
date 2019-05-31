@@ -1,0 +1,27 @@
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: netsensia/pipelinefull
+    tag: 1.0.8
+inputs:
+  - name: packaged-build
+  - name: manifests
+params:
+  CF_USER: ((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.username))
+  CF_PASS: ((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.password))
+  CF_SPACE: ((PRODUCT))-((ENVIRONMENT))
+  CF_APP: ((PRODUCT))-((COMPONENT))-((ENVIRONMENT))
+run:
+  path: bash
+  dir: packaged-build
+  args:
+    - -exc
+    - |
+      ZIP_FILE=((PRODUCT))-((COMPONENT)).tar.gz
+      tar -zxf $ZIP_FILE
+      rm $ZIP_FILE
+      cf login -a api.run.pivotal.io -u $CF_USER -p $CF_PASS -s $CF_SPACE
+      cp ../manifests/manifest.yaml .
+      export CF_TRACE=~/cf-trace.log
+      cf blue-green-deploy $CF_APP --delete-old-apps
