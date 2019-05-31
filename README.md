@@ -22,7 +22,7 @@ I have multiple projects within my GitHub organisation.
 * Carry out unit and integration tests
 * Perform blue/green deployments with smoke tests
 * Pick up all environment variables from a vault (CredHub)
-* Detect the application framework and deploy accordingly (current it supports Java and NodeJS)
+* Detect the application framework and deploy accordingly (currently it supports Java and NodeJS)
 
 At its simplest, all a developer need do is add the name of their project to [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml), which will create the following pipeline.
 
