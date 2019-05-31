@@ -27,7 +27,7 @@ I want them all to use the same backend services for storing builds (S3), attach
 
 Assuming an existing Concourse instance has been initialised with this pipeline and configured for a particular GitHub account, all a developer need do is add the name of their project to [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml).
 
-The next time the controller pipeline runs (every few minutes), it will create the following pipeline for the application.
+The next time the controller pipeline runs, it will create the following pipeline for the application and trigger the first job. On subsequent runs, it will pick up any extensions to the pipeline and apply them, and will trigger the first job whenever it detects changes to the application code.
 
 ![Core Pipeline](images/pipeline.png)
 
