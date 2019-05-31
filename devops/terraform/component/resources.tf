@@ -20,15 +20,6 @@ resource "aws_s3_bucket" "private_bucket" {
   }
 }
 
-resource "aws_s3_bucket" "public_bucket" {
-  bucket = "${var.product}-${var.component}-${var.environment}-public"
-
-  region = "eu-west-2"
-
-  versioning {
-    enabled = false
-  }
-}
 
 resource "aws_s3_bucket_policy" "public_bucket" {
   depends_on = ["aws_s3_bucket.public_bucket"]
