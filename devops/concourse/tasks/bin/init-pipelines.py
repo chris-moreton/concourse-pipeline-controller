@@ -107,8 +107,6 @@ def initialise_pipeline(repo):
     system_call("sed -i s/" + project_type + "/PROJECT_TYPE/g " + core_config)
     print("Unpausing pipeline...")
     system_call("fly --target netsensia-concourse unpause-pipeline -p " + pipeline_name)
-    print("Triggering build job...")
-    system_call("fly --target netsensia-concourse trigger-job -j " + pipeline_name + "/" + "build")
 
 
 def get_deploy_key(repo):
@@ -165,9 +163,12 @@ for repo in yaml_file["repos"]:
     current_head_revision = get_current_head_revision(repo)
 
     if current_head_revision == get_previous_head_revision(repo):
-        print("We've done this one before...")
+        print("Setting pipeline...")
+        initialise_pipeline(repo)
     else:
         initialise_pipeline(repo)
+        print("Triggering build job...")
+        system_call("fly --target netsensia-concourse trigger-job -j " + repo["pipeline_name"] + "/" + "build")
 
     repo["head_revision"] = current_head_revision
 
