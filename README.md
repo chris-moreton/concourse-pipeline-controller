@@ -4,17 +4,19 @@
 
 A Concourse pipeline that creates and manages pipelines for other projects.
 
-The controller will create a default pipeline for any Java (Gradle) and NodeJS (yarn) application in the  GitHub organisation for which the controller is configured.
+The controller will create a default pipeline for Java and NodeJS applications in the  GitHub organisation for which the controller is configured.
 
 It will build and test the application, create and maintain the infrastructure, and deploy the application to Cloud Foundry.
 
-An application pipeline can be extended using Concourse YML configuration to add additional jobs and resources (see [Extending the Pipeline](#ExtendingPipeline)), but, at its simplest, all a developer need do is add the name of their project to [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml). 
+An application pipeline can be easily extended to add additional jobs and resources (see [Extending the Pipeline](#ExtendingPipeline)), and these changes will be picked up automatically and applied.
+
+At its simplest, all a developer need do is add the name of their project to [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml). 
 
 ## Setting Up A Pipeline Controller
 
-This README file is concerned with how an application developer can take advantage of a pipeline controller that has already been set up and configured for their GitHub organisation.
+Skip this section if you are using an existing pipeline controller and just need to know how to configure your application to use it.
 
-To learn more about how a controller can be configured for a GitHub organisation, please see [Creating Your Own Pipeline Controller](<https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Creating-Your-Own-Pipeline-Controller>) in the project wiki.
+Otherwise, to learn more about how a controller can be configured for a GitHub organisation, please see [Creating Your Own Pipeline Controller](<https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Creating-Your-Own-Pipeline-Controller>) in the project wiki.
 
 ## Using the Pipeline
 
