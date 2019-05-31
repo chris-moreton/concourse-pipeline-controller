@@ -28,14 +28,7 @@ At its simplest, all a developer need do is add the name of their project to [re
 
 ![Core Pipeline](images/pipeline.png)
 
-
-## Setting Up A Pipeline Controller
-
-Skip this section if you are using an existing pipeline controller and just need to know how to configure your application to use it.
-
-Otherwise, to learn more about how a controller can be configured for a GitHub organisation, please see [Creating Your Own Pipeline Controller](<https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Creating-Your-Own-Pipeline-Controller>) in the project wiki.
-
-## Using the Pipeline
+## Using the Pipeline Controller
 
 An application will consist of a PRODUCT and COMPONENT. The product is the overarching system or company name, e.g. "directorzone". The component is the name of the service within the PRODUCT, e.g. "api" or "frontend".
 
@@ -222,3 +215,7 @@ Full documentation, including how to set up your own pipeline controller, can be
 <a name="AddingInfrastructure"/>
 
 #### Adding Custom Infrastructure
+
+## Setting Up A Pipeline Controller
+
+To learn more about how a controller can be configured for a GitHub organisation, please see [Creating Your Own Pipeline Controller](<https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Creating-Your-Own-Pipeline-Controller>) in the project wiki.
