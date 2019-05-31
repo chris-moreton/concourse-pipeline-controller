@@ -3,7 +3,7 @@ image_resource:
   type: docker-image
   source:
     repository: netsensia/pipelinefull
-    tag: 1.0.7
+    tag: 1.0.8
 run:
   path: sh
   dir: packaged-build
