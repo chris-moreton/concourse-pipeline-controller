@@ -1,5 +1,24 @@
 # Netsensia Concourse Pipeline
 
+## What problems are we solving here?
+
+I have multiple projects within my GitHub organisation.
+
+### Consistency
+
+I want all repositories to:
+
+* Share the same pipeline configuration
+* Use a consistent naming convention
+* Use the same backend services (AWS and Cloud Foundry)
+
+### To make a developer's life easier
+
+I want developers to be able to:
+
+* Get a deployment pipeline running for an application with close to zero effor
+* Extend an application pipeline in their repository and have the new configuration applied automatically
+
 ![Core Pipeline](images/pipeline.png)
 
 A Concourse pipeline that creates and manages pipelines for other projects.
