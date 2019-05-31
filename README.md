@@ -4,13 +4,17 @@ A Concourse pipeline that creates and manages pipelines for other projects.
 
 ## What problems are we solving here?
 
+### Consistency
+
 I have multiple projects within my GitHub organisation.
 
-I want all repositories to share the same pipeline configuration. This, in turn means that they all use the same backend services for storing builds (S3), attaching backend services (RDS, Elasticsearch) and deployment (Cloud Foundry).
+I want all repositories to share the same pipeline configuration. 
+
+I want them all to use the same backend services for storing builds (S3), attaching backend services (RDS, Elasticsearch) and deployment (Cloud Foundry).
 
 ### I want developers to be able to
 
-* Get a deployment pipeline running for an application with close to zero effor
+* Get a deployment pipeline running for an application with close to zero effort
 * Add new jobs to an application pipeline in their repository and have the new configuration applied automatically (see [Extending the Pipeline](#ExtendingPipeline))
 
 ### I want the pipeline to
