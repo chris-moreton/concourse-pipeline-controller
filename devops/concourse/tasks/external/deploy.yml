@@ -37,6 +37,7 @@ run:
         eval "$(control-tower info --iaas aws --env --region eu-west-2 netsensia-concourse)"
         ENV=((ENVIRONMENT))
         OUTPUT=`credhub find -n concourse/main/directorzone-frontend/$ENV`
+        for JS_FILENAME in .next/server/static/*/pages/*.js; do
         ENV_VARS=$(echo $OUTPUT | grep -o "((ENVIRONMENT))/\S*")
         while IFS=' ' read -ra VAL; do
               for i in "${VAL[@]}"; do
@@ -44,7 +45,7 @@ run:
                   VALUE=${VALUE//\//\\\/}
                   VALUE=${VALUE//\./\\\.}
                   ENV_VAR=${i/$ENV\/env\//}
-                  sed -i -e "s/$ENV_VAR: undefined/$ENV_VAR: '$VALUE'/g" $INDEX
+                  sed -i -e "s/$ENV_VAR: undefined/$ENV_VAR: '$VALUE'/g" $JS_FILENAME
               done
         done <<< "$ENV_VARS"
       fi
