@@ -9,7 +9,6 @@ I have multiple projects within my GitHub organisation.
 ### I want all repositories to
 
 * Share the same pipeline configuration
-* Use a consistent naming convention
 * Use the same backend services (AWS and Cloud Foundry)
 
 ### I want developers to be able to
