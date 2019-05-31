@@ -1,35 +1,34 @@
 # Netsensia Concourse Pipeline
 
+A Concourse pipeline that creates and manages pipelines for other projects.
+
 ## What problems are we solving here?
 
 I have multiple projects within my GitHub organisation.
 
-### Consistency
-
-I want all repositories to:
+### I want all repositories to
 
 * Share the same pipeline configuration
 * Use a consistent naming convention
 * Use the same backend services (AWS and Cloud Foundry)
 
-### To make a developer's life easier
-
-I want developers to be able to:
+### I want developers to be able to
 
 * Get a deployment pipeline running for an application with close to zero effor
-* Extend an application pipeline in their repository and have the new configuration applied automatically
+* Add new jobs to an application pipeline in their repository and have the new configuration applied automatically (see [Extending the Pipeline](#ExtendingPipeline))
+
+### I want the pipeline to
+
+* Build infrastructure automatically for testing and production environments
+* Carry out unit and integration tests
+* Perform blue/green deployments with smoke tests
+* Pick up all environment variables from a vault (CredHub)
+* Detect the application framework and deploy accordingly (current it supports Java and NodeJS)
+
+At its simplest, all a developer need do is add the name of their project to [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml), which will create the following pipeline.
 
 ![Core Pipeline](images/pipeline.png)
 
-A Concourse pipeline that creates and manages pipelines for other projects.
-
-The controller will create a default pipeline for Java and NodeJS applications in the  GitHub organisation for which the controller is configured.
-
-It will build and test the application, create and maintain the infrastructure, and deploy the application to Cloud Foundry.
-
-An application pipeline can be easily extended to add additional jobs and resources (see [Extending the Pipeline](#ExtendingPipeline)), and these changes will be picked up automatically and applied.
-
-At its simplest, all a developer need do is add the name of their project to [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml). 
 
 ## Setting Up A Pipeline Controller
 
