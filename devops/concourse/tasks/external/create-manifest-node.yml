@@ -17,7 +17,7 @@ run:
       applications:
       - name: ((PRODUCT))-((COMPONENT))-((ENVIRONMENT))
         buildpack: nodejs_buildpack
-        memory: 768M
+        memory: 1G
         command: npm run start
       env:
         NODE_ENV: production
