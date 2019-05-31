@@ -25,7 +25,9 @@ I want them all to use the same backend services for storing builds (S3), attach
 * Pick up all environment variables from a vault (CredHub)
 * Detect the application framework and deploy accordingly (currently it supports Java and NodeJS)
 
-At its simplest, all a developer need do is add the name of their project to [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml), which will create the following pipeline.
+Assuming an existing Concourse instance has been initialised with this pipeline and configured for a particular GitHub account, all a developer need do is add the name of their project to [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml).
+
+The next time the controller pipeline runs (every few minutes), it will create the following pipeline for the application.
 
 ![Core Pipeline](images/pipeline.png)
 
