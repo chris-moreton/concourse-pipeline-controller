@@ -1,22 +1,34 @@
 # Netsensia Concourse Pipeline
 
-![Core Pipeline](images/pipeline.png)
-
 A Concourse pipeline that creates and manages pipelines for other projects.
 
-The controller will create a default pipeline for any Java (Gradle) and NodeJS (yarn) application in the  GitHub organisation for which the controller is configured.
+## What problems are we solving here?
 
-It will build and test the application, create and maintain the infrastructure, and deploy the application to Cloud Foundry.
+I have multiple projects within my GitHub organisation.
 
-An application pipeline can be extended using Concourse YML configuration to add additional jobs and resources (see [Extending the Pipeline](#ExtendingPipeline)), but, at its simplest, all a developer need do is add the name of their project to [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml). 
+### I want all repositories to
 
-## Setting Up A Pipeline Controller
+* Share the same pipeline configuration
+* Use the same backend services (AWS and Cloud Foundry)
 
-This README file is concerned with how an application developer can take advantage of a pipeline controller that has already been set up and configured for their GitHub organisation.
+### I want developers to be able to
 
-To learn more about how a controller can be configured for a GitHub organisation, please see [Creating Your Own Pipeline Controller](<https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Creating-Your-Own-Pipeline-Controller>) in the project wiki.
+* Get a deployment pipeline running for an application with close to zero effor
+* Add new jobs to an application pipeline in their repository and have the new configuration applied automatically (see [Extending the Pipeline](#ExtendingPipeline))
 
-## Using the Pipeline
+### I want the pipeline to
+
+* Build infrastructure automatically for testing and production environments
+* Carry out unit and integration tests
+* Perform blue/green deployments with smoke tests
+* Pick up all environment variables from a vault (CredHub)
+* Detect the application framework and deploy accordingly (currently it supports Java and NodeJS)
+
+At its simplest, all a developer need do is add the name of their project to [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml), which will create the following pipeline.
+
+![Core Pipeline](images/pipeline.png)
+
+## Using the Pipeline Controller
 
 An application will consist of a PRODUCT and COMPONENT. The product is the overarching system or company name, e.g. "directorzone". The component is the name of the service within the PRODUCT, e.g. "api" or "frontend".
 
@@ -203,3 +215,7 @@ Full documentation, including how to set up your own pipeline controller, can be
 <a name="AddingInfrastructure"/>
 
 #### Adding Custom Infrastructure
+
+## Setting Up A Pipeline Controller
+
+To learn more about how a controller can be configured for a GitHub organisation, please see [Creating Your Own Pipeline Controller](<https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Creating-Your-Own-Pipeline-Controller>) in the project wiki.
