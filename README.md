@@ -23,10 +23,6 @@ I want the pipeline to
 
 Assuming an existing Concourse instance has been initialised with this pipeline and configured for a particular GitHub account, all a developer need do is add the name of their project to [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml).
 
-The next time the controller pipeline runs, it will create the following pipeline for the application and trigger the first job. 
-
-On subsequent runs, it will pick up any extensions to the pipeline and apply them, and will trigger the first job whenever it detects changes to the application code.
-
 ## Using the Pipeline Controller
 
 An application will consist of a PRODUCT and COMPONENT. The product is the overarching system or company name, e.g. "directorzone". The component is the name of the service within the PRODUCT, e.g. "api" or "frontend".
