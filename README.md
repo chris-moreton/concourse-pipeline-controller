@@ -1,5 +1,7 @@
 # Netsensia Concourse Pipeline
 
+![Core Pipeline](images/pipeline.png)
+
 A Concourse pipeline that creates and manages pipelines for other projects.
 
 ## What problems are we solving here?
@@ -22,14 +24,14 @@ I want them all to use the same backend services for storing builds (S3), attach
 * Build infrastructure automatically for testing and production environments
 * Carry out unit and integration tests
 * Perform blue/green deployments with smoke tests
-* Pick up all environment variables from a vault (CredHub)
+* Determine the environment variables from a vault
 * Detect the application framework and deploy accordingly (currently it supports Java and NodeJS)
 
 Assuming an existing Concourse instance has been initialised with this pipeline and configured for a particular GitHub account, all a developer need do is add the name of their project to [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml).
 
-The next time the controller pipeline runs, it will create the following pipeline for the application and trigger the first job. On subsequent runs, it will pick up any extensions to the pipeline and apply them, and will trigger the first job whenever it detects changes to the application code.
+The next time the controller pipeline runs, it will create the following pipeline for the application and trigger the first job. 
 
-![Core Pipeline](images/pipeline.png)
+On subsequent runs, it will pick up any extensions to the pipeline and apply them, and will trigger the first job whenever it detects changes to the application code.
 
 ## Using the Pipeline Controller
 
