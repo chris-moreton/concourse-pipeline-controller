@@ -1,32 +1,27 @@
 # Netsensia Concourse Pipeline
 
+![Core Pipeline](images/pipeline.png)
+
 A Concourse pipeline that creates and manages pipelines for other projects.
 
 ## What problems are we solving here?
 
-I have multiple projects within my GitHub organisation.
+I have multiple projects within my GitHub organisation, and I want them to share the same deployment pipeline without having to copy and paste the pipeline configuration to each repository.
 
-### I want all repositories to
+I want developers to be able to
 
-* Share the same pipeline configuration
-* Use the same backend services (AWS and Cloud Foundry)
-
-### I want developers to be able to
-
-* Get a deployment pipeline running for an application with close to zero effor
+* Get a deployment pipeline running for an application with close to zero effort
 * Add new jobs to an application pipeline in their repository and have the new configuration applied automatically (see [Extending the Pipeline](#ExtendingPipeline))
 
-### I want the pipeline to
+I want the pipeline to
 
 * Build infrastructure automatically for testing and production environments
 * Carry out unit and integration tests
 * Perform blue/green deployments with smoke tests
-* Pick up all environment variables from a vault (CredHub)
+* Determine the environment variables from a vault
 * Detect the application framework and deploy accordingly (currently it supports Java and NodeJS)
 
-At its simplest, all a developer need do is add the name of their project to [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml), which will create the following pipeline.
-
-![Core Pipeline](images/pipeline.png)
+Assuming an existing Concourse instance has been initialised with this pipeline and configured for a particular GitHub account, all a developer need do is add the name of their project to [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml).
 
 ## Using the Pipeline Controller
 
