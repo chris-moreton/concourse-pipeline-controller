@@ -46,7 +46,7 @@ run:
       npm run build-prod
       cf login -a api.run.pivotal.io -u $CF_USER -p $CF_PASS -s $CF_SPACE
       cp ../manifests/manifest.yaml .
-      SMOKE_TEST=smoketest/smoketest.sh
+      SMOKE_TEST=../source-code/smoketest/smoketest.sh
       if test -f $SMOKE_TEST; then
          SMOKE_SWITCH="--smoke-test $SMOKE_TEST"
       else
