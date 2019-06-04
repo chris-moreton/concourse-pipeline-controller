@@ -87,7 +87,15 @@ You can add your own infrastructure by adding Terraform configurations to your r
 
 #### Deploy (AAT)
 
-The deployment step is a [blue/green deployment](https://docs.cloudfoundry.org/devguide/deploy-apps/blue-green.html) to Cloud Foundry which ensures that the new build is ready for use before switching it with the old one. It will also run a smoke test.
+The deployment step is a [blue/green deployment](https://docs.cloudfoundry.org/devguide/deploy-apps/blue-green.html) to Cloud Foundry which ensures that the new build is ready for use before switching it with the old one.
+
+##### Smoke Test
+
+After pushing the application to a holding area (blue), it will look for a smoketest file at:
+
+    smoketest/smoketest.sh
+    
+You can place any commands you like in there. Just ensure that the script returns a zero exit code to indicate success.
 
 #### Functional Tests (AAT)
 
@@ -102,7 +110,7 @@ This is where the same infrastructure build for AAT is applied in the PROD envir
 
 #### Deploy (PROD)
 
-Finally, the application is deployed to production in Cloud Foundry.
+Finally, the application is deployed to production in Cloud Foundry using the same process as the deployment to AAT.
 
 You will be able to look at your deployments using the Cloud Foundry CLI.
 
