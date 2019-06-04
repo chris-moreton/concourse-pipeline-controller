@@ -1,0 +1,60 @@
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: netsensia/pipelinefull
+    tag: 1.0.10
+inputs:
+  - name: packaged-build
+  - name: manifests
+  - name: source-code
+params:
+  CF_USER: ((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.username))
+  CF_PASS: ((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.password))
+  CF_SPACE: ((PRODUCT))-((ENVIRONMENT))
+  CF_APP: ((PRODUCT))-((COMPONENT))-((ENVIRONMENT))
+run:
+  path: bash
+  dir: packaged-build
+  args:
+    - -exc
+    - |
+      ZIP_FILE=((PRODUCT))-((COMPONENT)).tar.gz
+      tar -zxf $ZIP_FILE
+      rm $ZIP_FILE
+      cat > .cfignore << EOT
+      node_modules/.cache
+      EOT
+      export AWS_ACCESS_KEY_ID=((pipeline-controller/AWS_ACCESS_KEY_ID))
+      export AWS_SECRET_ACCESS_KEY=((pipeline-controller/AWS_SECRET_ACCESS_KEY))
+      echo "Logging into Concourse..."
+      fly --target netsensia-concourse login --insecure --concourse-url https://((pipeline-controller/CONCOURSE_HOST)) -u admin -p ((pipeline-controller/CONCOURSE_ADMIN_PASSWORD))
+      echo "Syncing..."
+      fly --target netsensia-concourse sync
+      echo "Logging into CredHub..."
+      eval "$(control-tower info --iaas aws --env --region eu-west-2 netsensia-concourse)"
+      ENV=((ENVIRONMENT))
+      OUTPUT=`credhub find -n concourse/main/directorzone-frontend/$ENV`
+      ENV_VARS=$(echo $OUTPUT | grep -o "((ENVIRONMENT))/\S*")
+      while IFS=' ' read -ra VAL; do
+        for i in "${VAL[@]}"; do
+            VALUE=`credhub get -q -n concourse/main/directorzone-frontend/$i`
+            ENV_VAR=${i/$ENV\/env\//}
+            export $ENV_VAR=$VALUE
+        done
+      done <<< "$ENV_VARS"
+      cf login -a api.run.pivotal.io -u $CF_USER -p $CF_PASS -s $CF_SPACE
+      cp ../manifests/manifest.yml .
+      cat manifest.yml
+      SMOKE_TEST=../source-code/smoketest/smoketest.sh
+      if test -f $SMOKE_TEST; then
+         SMOKE_SWITCH="--smoke-test $SMOKE_TEST"
+      else
+         SMOKE_SWITCH=""
+      fi
+      export CF_TRACE=~/cf-trace.log
+      cf blue-green-deploy $CF_APP --delete-old-apps $SMOKE_SWITCH
+
+
+
+
