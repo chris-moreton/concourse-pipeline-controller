@@ -12,7 +12,7 @@ run:
   args:
     - -exc
     - |
-      cat > manifest.yaml << EOT
+      cat > manifest.yml << EOT
       ---
       applications:
       - name: ((PRODUCT))-((COMPONENT))-((ENVIRONMENT))
@@ -40,7 +40,7 @@ run:
             for i in "${VAL[@]}"; do
                 VALUE=`credhub get -q -n concourse/main/((PRODUCT))-((COMPONENT))/$i`
                 ENV_VAR=${i/$ENV\/env\//}
-      cat >> manifest.yaml << EOT
+      cat >> manifest.yml << EOT
           $ENV_VAR: $VALUE
       EOT
             done

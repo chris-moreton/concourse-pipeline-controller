@@ -23,7 +23,8 @@ run:
       tar -zxf $ZIP_FILE
       rm $ZIP_FILE
       cf login -a api.run.pivotal.io -u $CF_USER -p $CF_PASS -s $CF_SPACE
-      cp ../manifests/manifest.yaml .
+      cp ../manifests/manifest.yml .
+      cat manifest.yml
       SMOKE_TEST=../source-code/smoketest/smoketest.sh
       if test -f $SMOKE_TEST; then
          SMOKE_SWITCH="--smoke-test $SMOKE_TEST"
