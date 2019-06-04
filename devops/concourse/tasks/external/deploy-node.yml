@@ -7,6 +7,7 @@ image_resource:
 inputs:
   - name: packaged-build
   - name: manifests
+  - name: source-code
 params:
   CF_USER: ((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.username))
   CF_PASS: ((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.password))
