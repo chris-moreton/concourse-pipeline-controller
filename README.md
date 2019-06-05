@@ -1,27 +1,25 @@
-# Netsensia Concourse Pipeline
+# Netsensia Opinionated Pipeline
 
 ![Core Pipeline](images/pipeline.png)
 
 A Concourse pipeline that creates and manages pipelines for other projects.
 
-## What problems are we solving here?
+By adding your project to [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml), a pipeline will be created that will:
 
-I have multiple projects within my GitHub organisation, and I want them to share the same deployment pipeline without having to copy and paste the pipeline configuration to each repository.
-
-I want developers to be able to
-
-* Get a deployment pipeline running for an application with close to zero effort
-* Add new jobs to an application pipeline in their repository and have the new configuration applied automatically (see [Extending the Pipeline](#ExtendingPipeline))
-
-I want the pipeline to
-
-* Build infrastructure automatically for testing and production environments
+* Build infrastructure for testing and production environments
 * Carry out unit and integration tests
 * Perform blue/green deployments with smoke tests
 * Determine the environment variables from a vault
-* Detect the application framework and deploy accordingly (currently it supports Java and NodeJS)
+* Detect the application framework and deploy accordingly (currently it supports Java, NodeJS and PHP)
 
-Assuming an existing Concourse instance has been initialised with this pipeline and configured for a particular GitHub account, all a developer need do is add the name of their project to [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml).
+## Before You Start
+
+The following are assumed:
+
+* Your organisation has a Concourse instance, set up to run the Opinionated Pipeline. The Netsensia Concourse instance is at https://concourse.wonderpath.com.
+* The GitHub repository for your application is within the same organisation for which the Opinionated Pipeline is configured
+
+If this is not the case, you can read about how to set up the Opinionated Pipeline in the wiki under [Creating Your Own Pipeline Controller](https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Creating-Your-Own-Pipeline-Controller).
 
 ## Using the Pipeline Controller
 
@@ -66,9 +64,9 @@ credhub set -n concourse/main/directorzone-api/aat/env/PEXELS_AUTH --type value 
 
 Create a pull request, and when your PR is merged, your project will now be included in the pipeline and run through the following steps.
 
-Update [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml) to include your project. Included projects must be repositories in the GitHub organisation for which the controller is [configured](<https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Creating-Your-Own-Pipeline-Controller>).
+Update [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml) to include your project.
 
-The next time the pipeline job runs, a pipeline will be created for your application with the following stages:
+Within a few minutes, a pipeline will be created for your application with the following stages:
 
 #### Build
 
@@ -188,7 +186,7 @@ resources:
 jobs:
 - name: restore-database
   public: false
-  plan:
+  plan:, e.g.
     - get: packaged-build
       passed:
         - build-infrastructure-prod
@@ -218,6 +216,35 @@ Full documentation, including how to set up your own pipeline controller, can be
 <a name="AddingInfrastructure"/>
 
 #### Adding Custom Infrastructure
+
+Create the following directory
+
+    devops/terraform
+    
+Within this directory, add Terraform files prefixed with "custom-", e.g.
+
+    devops/terraform
+            |---------- custom-data.tf
+                        custom-resource.tf
+                        
+##### Access to Pipeline Variables
+
+    ${var.product}
+    ${var.component}
+    ${var.environment}
+    ${cloudfoundry_space.product_space.id}
+    
+##### Access to CredHub Values
+    
+You can create a CredHub resource to access values within your project's vault. For example:
+
+    data "credhub_value" "my_secret_value" {
+      name = "/concourse/main/${var.product}-${var.component}/${var.environment}/MY_SECRET_VALUE"
+    }
+    
+    data "credhub_user" "my_secret_user" {
+      name = "/concourse/main/${var.product}-${var.component}/${var.environment}/MY_SECRET_USER"
+    }
 
 ## Setting Up A Pipeline Controller
 
