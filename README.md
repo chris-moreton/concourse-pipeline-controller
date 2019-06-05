@@ -62,9 +62,9 @@ credhub set -n concourse/main/directorzone-api/aat/env/PEXELS_AUTH --type value 
 
 ##### Add Your Application
 
-Create a pull request, and when your PR is merged, your project will now be included in the pipeline and run through the following steps.
-
 Update [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml) to include your project.
+
+Create a pull request, and when your PR is merged, your project will now be included in the pipeline and run through the following steps.
 
 Within a few minutes, a pipeline will be created for your application with the following stages:
 
@@ -228,6 +228,8 @@ Within this directory, add Terraform files prefixed with "custom-", e.g.
                         custom-resource.tf
                         
 ##### Access to Pipeline Variables
+
+The following variables are available to use:
 
     ${var.product}
     ${var.component}
