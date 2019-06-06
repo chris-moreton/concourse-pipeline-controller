@@ -53,6 +53,8 @@ run:
          SMOKE_SWITCH=""
       fi
       export CF_TRACE=~/cf-trace.log
+      rm composer.lock
+      rm composer.json
       cf blue-green-deploy $CF_APP --delete-old-apps $SMOKE_SWITCH
 
 
