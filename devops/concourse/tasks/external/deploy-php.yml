@@ -55,7 +55,14 @@ run:
       export CF_TRACE=~/cf-trace.log
       rm composer.lock
       rm composer.json
-      cf blue-green-deploy $CF_APP --delete-old-apps $SMOKE_SWITCH
+      EXIT_CODE=`cf blue-green-deploy $CF_APP --delete-old-apps $SMOKE_SWITCH`
+      if [ "$EXIT_CODE" = "0" ];
+      then
+        echo "Smoke tests were successful"
+      else
+        echo "Showing recent logs folllowing failed smoke tests"
+        cf logs --recent ((PRODUCT))-((COMPONENT))-((ENVIRONMENT))-failed
+      fi
 
 
 
