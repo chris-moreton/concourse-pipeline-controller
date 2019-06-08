@@ -18,7 +18,8 @@ run:
       - name: ((PRODUCT))-((COMPONENT))-((ENVIRONMENT))
         path: ((PRODUCT))-((COMPONENT)).jar
         buildpack: java_buildpack
-        memory: 1G
+        memory: 768M
+        disk: 256M
         services:
           - ((COMPONENT))-mysql
           - ((COMPONENT))-elasticsearch
