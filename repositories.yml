@@ -2,4 +2,3 @@ repos:
 - pipeline_name: directorzone-api
 - pipeline_name: directorzone-frontend
 - pipeline_name: golfingrecord-rhor
-- pipeline_name: golfingrecord-mobile
