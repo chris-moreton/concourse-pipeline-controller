@@ -17,11 +17,6 @@ run:
       ROUTE_ENV="((ENVIRONMENT)).((DOMAIN))"
       ROUTE_BARE="((DOMAIN))"
 
-      if [ "((ENVIRONMENT))" == "prod" ]; then
-        ROUTES="routes:\n- route: $ROUTE_CF_APPS\n- route: $ROUTE_WWW\n- route: $ROUTE_BARE\n"
-      else
-        ROUTES="routes:\n- route: $ROUTE_CF_APPS\n- route: $ROUTE_ENV\n"
-      fi
       cat > manifest.yml << EOT
       ---
       applications:
@@ -32,6 +27,18 @@ run:
         services:
           - ((COMPONENT))-mysql
       EOT
+
+      if [ "((ENVIRONMENT))" = "prod" ]; then
+        echo "  routes:" >> manifest.yml
+        echo "    - route: $ROUTE_CF_APPS" >> manifest.yml
+        echo "    - route: $ROUTE_WWW" >> manifest.yml
+        echo "    - route: $ROUTE_BARE" >> manifest.yml
+      else
+        echo "  routes:" >> manifest.yml
+        echo "  - route: $ROUTE_CF_APPS" >> manifest.yml
+        echo "  - route: $ROUTE_ENV" >> manifest.yml
+      fi
+
       echo $ROUTES >> manifest.yml
       export AWS_ACCESS_KEY_ID=((pipeline-controller/AWS_ACCESS_KEY_ID))
       export AWS_SECRET_ACCESS_KEY=((pipeline-controller/AWS_SECRET_ACCESS_KEY))
