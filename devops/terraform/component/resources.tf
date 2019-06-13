@@ -61,7 +61,7 @@ POLICY
 
 resource "cloudfoundry_domain" "app_domain" {
   name = "${data.credhub_value.domain_name.name}"
-  org = "${data.credhub_value.org_netsensia_guid}"
+  org = "${data.credhub_value.org_netsensia_guid.value}"
 }
 
 resource "cloudfoundry_route" "app_route" {
