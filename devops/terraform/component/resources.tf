@@ -58,20 +58,3 @@ resource "aws_s3_bucket_policy" "public_bucket" {
 }
 POLICY
 }
-
-resource "cloudfoundry_domain" "app_domain" {
-  name = "${data.credhub_value.domain_name.value}"
-  org = "${data.credhub_value.org_netsensia_guid.value}"
-}
-
-resource "cloudfoundry_route" "app_route" {
-  domain = "${cloudfoundry_domain.app_domain.id}"
-  space = "${cloudfoundry_space.product_space.id}"
-  hostname = ""
-}
-
-resource "cloudfoundry_route" "app_route_www" {
-  domain = "${cloudfoundry_domain.app_domain.id}"
-  space = "${cloudfoundry_space.product_space.id}"
-  hostname = "www"
-}
