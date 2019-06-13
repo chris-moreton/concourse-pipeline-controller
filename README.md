@@ -140,6 +140,15 @@ And you can view the services, if any, with:
 cf services
 ```
 
+### Adding a Domain Name
+
+Add your domain name in the following location in your CredHub instance:
+
+```
+/concourse/main/<product>-<component>/<environment>/DOMAIN
+```
+
+
 <a name="ExtendingPipeline"/>
 
 ### Extending the Pipeline
@@ -160,7 +169,7 @@ This is an example of how the directorzone-api pipeline was extended to include 
 
 You can easily add new Concourse jobs to your pipeline which can use resources from the core pipeline as well as their own defined resource.
 
-Simple create the following file:
+Simply create the following file:
 
 ```
 devops/concourse/pipeline.yml

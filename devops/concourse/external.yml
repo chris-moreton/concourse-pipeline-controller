@@ -116,6 +116,7 @@ jobs:
       file: pipeline-controller/devops/concourse/tasks/external/create-manifest-PROJECT_TYPE.yml
       vars:
         ENVIRONMENT: prod
+        DOMAIN: ((prod/DOMAIN))
     - task: deploy
       file: pipeline-controller/devops/concourse/tasks/external/deploy-PROJECT_TYPE.yml
       vars:

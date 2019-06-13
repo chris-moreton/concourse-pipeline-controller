@@ -21,6 +21,9 @@ run:
         disk: 256M
         services:
           - ((COMPONENT))-mysql
+        routes:
+          - route: ((ROUTE))
+          - route: www.((ROUTE))
       env:
         NODE_ENV: production
       EOT
