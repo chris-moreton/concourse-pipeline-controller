@@ -60,7 +60,7 @@ POLICY
 }
 
 resource "cloudfoundry_domain" "app_domain" {
-  name = "${data.credhub_value.domain_name.name}"
+  name = "${data.credhub_value.domain_name.value}"
   org = "${data.credhub_value.org_netsensia_guid.value}"
 }
 
