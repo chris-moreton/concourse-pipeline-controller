@@ -12,7 +12,7 @@ run:
   args:
     - -exc
     - |
-      ROUTE_CFAPPS="((PRODUCT))-((COMPONENT))-((ENVIRONMENT)).cfapps.io"
+      ROUTE_CF_APPS="((PRODUCT))-((COMPONENT))-((ENVIRONMENT)).cfapps.io"
       ROUTE_WWW="www.((DOMAIN))"
       ROUTE_ENV="((ENVIRONMENT)).((DOMAIN))"
       ROUTE_BARE="((DOMAIN))"
