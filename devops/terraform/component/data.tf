@@ -31,5 +31,5 @@ data "credhub_value" "org_netsensia_guid" {
 }
 
 data "credhub_value" "domain_name" {
-  name = "/concourse/main/${var.product}-${var.component}/${var.environment}/DOMAIN"
+  name = "/concourse/main/${var.product}-${var.component}/DOMAIN"
 }

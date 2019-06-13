@@ -22,8 +22,9 @@ run:
         services:
           - ((COMPONENT))-mysql
         routes:
-          - route: ((ROUTE))
-          - route: www.((ROUTE))
+          - route: ((DOMAIN))
+          - route: www.((DOMAIN))
+          - route: ((ENVIRONMENT)).((DOMAIN))
       env:
         NODE_ENV: production
       EOT
