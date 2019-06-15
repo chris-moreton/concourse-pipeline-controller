@@ -26,6 +26,7 @@ run:
         disk: 256M
         services:
           - ((COMPONENT))-mysql
+          - golfingrecord-production-newrelic
       EOT
 
       if [ "((ENVIRONMENT))" = "prod" ]; then
