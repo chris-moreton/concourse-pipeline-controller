@@ -26,7 +26,6 @@ run:
         disk: 256M
         services:
           - ((COMPONENT))-mysql
-          - ((PRODUCT))-((ENVIRONMENT))-newrelic
       EOT
 
       if [ "((ENVIRONMENT))" = "prod" ]; then
