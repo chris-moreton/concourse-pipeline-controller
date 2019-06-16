@@ -145,8 +145,11 @@ cf services
 Add your domain name in the following location in your CredHub instance:
 
 ```
-/concourse/main/<product>-<component>/<environment>/DOMAIN
+/concourse/main/<product>-<component>/DOMAIN
 ```
+
+You also need to add it to the netsensia-infrastructure repository:
+
 
 
 <a name="ExtendingPipeline"/>
