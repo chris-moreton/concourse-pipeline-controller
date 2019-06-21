@@ -17,3 +17,4 @@ variable "environment" {
 variable "product" {
   default = ""
 }
+

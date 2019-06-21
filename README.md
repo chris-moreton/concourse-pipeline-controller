@@ -148,9 +148,7 @@ Add your domain name in the following location in your CredHub instance:
 /concourse/main/<product>-<component>/DOMAIN
 ```
 
-You also need to add it to the netsensia-infrastructure repository:
-
-
+You also need to add it to the netsensia-infrastructure repository, see [this file for an example](https://github.com/chris-moreton/netsensia-infrastructure/blob/master/terraform/domain_golfingrecord_com.tf).
 
 <a name="ExtendingPipeline"/>
 
