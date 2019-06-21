@@ -11,6 +11,13 @@ provider "aws" {
   region = "eu-west-2"
 }
 
+provider "aws" {
+  alias = "us"
+  access_key = "${var.aws_terraform_access_key_id}"
+  secret_key = "${var.aws_terraform_secret_access_key}"
+  region = "eu-east-1"
+}
+
 provider "cloudfoundry" {
   api_url = "https://api.run.pivotal.io"
   user = "${data.credhub_user.cloudfoundry_org_owner.username}"
