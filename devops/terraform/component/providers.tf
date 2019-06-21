@@ -20,15 +20,15 @@ provider "aws" {
 
 provider "cloudfoundry" {
   api_url = "https://api.run.pivotal.io"
-  user = "${data.credhub_user.cloudfoundry_org_owner.username}"
-  password = "${data.credhub_user.cloudfoundry_org_owner.password}"
+  user = "${var.cloudfoundry_org_owner_username}"
+  password = "${var.cloudfoundry_org_owner_password}"
   skip_ssl_validation = true
 }
 
 provider "cloudfoundry" {
   alias = "ibm"
   api_url = "https://api.run.pivotal.io"
-  user = "${data.credhub_user.cloudfoundry_ibm_org_owner.username}"
-  password = "${data.credhub_user.cloudfoundry_ibm_org_owner.password}"
+  user = "${var.cloudfoundry_ibm_org_owner_username}"
+  password = "${var.cloudfoundry_ibm_org_owner_password}"
   skip_ssl_validation = true
 }

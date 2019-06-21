@@ -29,3 +29,19 @@ variable "aws_terraform_access_key_id" {
 variable "aws_terraform_secret_access_key" {
   default = ""
 }
+
+variable "cloudfoundry_org_owner_username" {
+  default = ""
+}
+
+variable "cloudfoundry_org_owner_password" {
+  default = ""
+}
+
+variable "cloudfoundry_ibm_org_owner_username" {
+  default = ""
+}
+
+variable "cloudfoundry_ibm_org_owner_password" {
+  default = ""
+}
