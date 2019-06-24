@@ -17,7 +17,6 @@ resources:
     uri: git@github.com:((pipeline-controller/GITHUB_OWNER))/((PRODUCT))-((COMPONENT)).git
     branch: master
     private_key: ((GITHUB_DEPLOY_KEY.private_key))
-    password: ((pipeline-controller/GITHUB_API_TOKEN))
 - name: packaged-build
   type: s3
   source:
