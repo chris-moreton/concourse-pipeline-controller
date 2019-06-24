@@ -91,7 +91,7 @@ def initialise_pipeline(repo):
     filename = "pipeline.yml"
     pipeline_config = "/tmp/" + pipeline_name + "/devops/concourse/" + filename
     merged_config = "/tmp/merged.yml"
-    core_config = "../../external.yml"
+    core_config = "../../external-" + repo["pipeline_type"] + ".yml"
     project_type = get_project_type(repo)
     print("Project Type is " + project_type)
     system_call("sed -i s/PROJECT_TYPE/" + project_type + "/g " + core_config)
@@ -140,10 +140,10 @@ def set_component_and_product(pipeline_name):
     system_call("credhub set -n concourse/main/" + pipeline_name + "/COMPONENT --type value --value " + parts[1])
 
 def clone_repository(repo):
-    os.system("ssh -o \"StrictHostKeyChecking=no\" git@github.com")
+    os.system("ssh -o \"StrictHostKeyChecking=no\" " + repo["git_host"])
     system_call("rm -rf /tmp/" + repo["pipeline_name"])
     clone_dir = "/tmp/" + repo["pipeline_name"]
-    system_call("git clone git@github.com:chris-moreton/" + repo["pipeline_name"] + " " + clone_dir)
+    system_call("git clone " + repo["git_host"] + ":" + repo["git_org"] + "/" + repo["pipeline_name"] + " " + clone_dir)
     return clone_dir
 
 
