@@ -3,19 +3,24 @@ repos:
   git_host: git@github.com
   git_org: chris-moreton
   pipeline_type: standard
+  project_type: gradle
 - pipeline_name: directorzone-frontend
   git_host: git@github.com
   git_org: chris-moreton
   pipeline_type: standard
+  project_type: node
 - pipeline_name: golfingrecord-rhor
   git_host: git@github.com
   git_org: chris-moreton
   pipeline_type: standard
+  project_type: php
 - pipeline_name: golfingrecord-mobile
   git_host: git@github.com
   git_org: chris-moreton
   pipeline_type: standard
+  project_type: php
 - pipeline_name: teps-portal
   git_host: git@bitbucket.org
   git_org: JamesRamsay01
   pipeline_type: minimal
+  project_type: laravel

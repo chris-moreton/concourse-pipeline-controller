@@ -73,18 +73,7 @@ def system_call(call_string):
 
 
 def get_project_type(repo):
-    if os.path.isfile("/tmp/" + repo["pipeline_name"] + "/build.gradle"):
-        return "gradle"
-
-    if os.path.isfile("/tmp/" + repo["pipeline_name"] + "/package.json"):
-        return "node"
-
-    if os.path.isfile("/tmp/" + repo["pipeline_name"] + "/composer.json"):
-        return "php"
-
-    print("Could not determine project type")
-    exit(1)
-
+    return repo["project_type"]
 
 def initialise_pipeline(repo):
     pipeline_name = repo["pipeline_name"]
