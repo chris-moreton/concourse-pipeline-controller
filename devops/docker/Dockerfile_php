@@ -11,3 +11,4 @@ RUN apt-get -y update
 RUN apt-get install -y yarn php
 RUN curl -s https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
+RUN apt-get -y install libpng-dev
