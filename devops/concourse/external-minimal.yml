@@ -1,9 +1,4 @@
 ---
-resource_types:
-- name: s3-bucket
-  type: docker-image
-  source:
-    repository: 18fgsa/s3-resource-simple
 resources:
 - name: pipeline-controller
   type: git
@@ -11,30 +6,3 @@ resources:
     uri: https://github.com/((pipeline-controller/GITHUB_OWNER))/concourse-pipeline-controller.git
     branch: master
     password: ((pipeline-controller/GITHUB_API_TOKEN))
-- name: source-code
-  type: git
-  source:
-    uri: ((GIT_REPO_BASE))/((PRODUCT))-((COMPONENT)).git
-    branch: master
-    private_key: ((GITHUB_DEPLOY_KEY.private_key))
-- name: packaged-build
-  type: s3
-  source:
-    bucket: pipeline-controller-builds
-    region_name: eu-west-2
-    versioned_file: ((PRODUCT))-((COMPONENT)).tar.gz
-    access_key_id: ((pipeline-controller/AWS_ACCESS_KEY_ID))
-    secret_access_key: ((pipeline-controller/AWS_SECRET_ACCESS_KEY))
-jobs:
-- name: build
-  public: false
-  plan:
-  - get: source-code
-    trigger: false
-  - get: pipeline-controller
-    trigger: false
-  - task: build
-    file: pipeline-controller/devops/concourse/tasks/external/build-PROJECT_TYPE.yml
-  - put: packaged-build
-    params:
-      file: build/((PRODUCT))-((COMPONENT)).tar.gz
