@@ -77,6 +77,7 @@ def get_project_type(repo):
 
 def initialise_pipeline(repo):
     pipeline_name = repo["pipeline_name"]
+    project_type = get_project_type(repo)
     filename = "pipeline.yml"
     pipeline_config = "/tmp/" + pipeline_name + "/devops/concourse/" + filename
     merged_config = "/tmp/merged.yml"
@@ -88,7 +89,6 @@ def initialise_pipeline(repo):
             exit(1)
     else:
         core_config = "../../external-" + repo["pipeline_type"] + ".yml"
-        project_type = get_project_type(repo)
         print("Project Type is " + project_type)
         system_call("sed -i s/PROJECT_TYPE/" + project_type + "/g " + core_config)
         if os.path.isfile(pipeline_config):
