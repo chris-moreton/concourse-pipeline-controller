@@ -84,7 +84,7 @@ def initialise_pipeline(repo):
         if os.path.isfile(pipeline_config):
             merged_pipeline_config = pipeline_config
         else:
-            print("No " + filename + " found and no core config for minimal pipeline type.")
+            print(pipeline_config + " not found and no core config for minimal pipeline type.")
             exit(1)
     else:
         core_config = "../../external-" + repo["pipeline_type"] + ".yml"
