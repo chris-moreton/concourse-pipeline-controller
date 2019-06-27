@@ -139,7 +139,7 @@ def clone_repository(repo):
     os.system("ssh -o \"StrictHostKeyChecking=no\" " + repo["git_host"])
     system_call("rm -rf /tmp/" + repo["pipeline_name"])
     clone_dir = "/tmp/" + repo["pipeline_name"]
-    cmd = "git clone " + repo["git_host"] + ":" + repo["git_org"] + "/" + repo["pipeline_name"] + " " + clone_dir
+    cmd = "git clone -b " + repo["branch"] + " --single-branch " + repo["git_host"] + ":" + repo["git_org"] + "/" + repo["pipeline_name"] + " " + clone_dir
     print (cmd)
     system_call(cmd)
     return clone_dir
