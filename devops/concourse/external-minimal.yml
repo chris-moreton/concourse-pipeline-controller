@@ -1,8 +1,0 @@
----
-resources:
-- name: pipeline-controller
-  type: git
-  source:
-    uri: https://github.com/((pipeline-controller/GITHUB_OWNER))/concourse-pipeline-controller.git
-    branch: master
-    password: ((pipeline-controller/GITHUB_API_TOKEN))

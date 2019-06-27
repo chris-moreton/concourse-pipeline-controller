@@ -80,21 +80,28 @@ def initialise_pipeline(repo):
     filename = "pipeline.yml"
     pipeline_config = "/tmp/" + pipeline_name + "/devops/concourse/" + filename
     merged_config = "/tmp/merged.yml"
-    core_config = "../../external-" + repo["pipeline_type"] + ".yml"
-    project_type = get_project_type(repo)
-    print("Project Type is " + project_type)
-    system_call("sed -i s/PROJECT_TYPE/" + project_type + "/g " + core_config)
-    if os.path.isfile(pipeline_config):
-        print("Merging external and custom pipeline jobs")
-        merged = merge_yaml_files(pipeline_config, core_config)
-        print(merged)
-        f = open(merged_config, "w")
-        f.write(merged)
-        f.close()
-        merged_pipeline_config = merged_config
+    if repo["pipeline_type"] == "minimal":
+        if os.path.isfile(pipeline_config):
+            merged_pipeline_config = pipeline_config
+        else:
+            print("No " + filename + " found and no core config for minimal pipeline type.")
+            exit(1)
     else:
-        merged_pipeline_config = core_config
-        print("No " + filename + " found.")
+        core_config = "../../external-" + repo["pipeline_type"] + ".yml"
+        project_type = get_project_type(repo)
+        print("Project Type is " + project_type)
+        system_call("sed -i s/PROJECT_TYPE/" + project_type + "/g " + core_config)
+        if os.path.isfile(pipeline_config):
+            print("Merging external and custom pipeline jobs")
+            merged = merge_yaml_files(pipeline_config, core_config)
+            print(merged)
+            f = open(merged_config, "w")
+            f.write(merged)
+            f.close()
+            merged_pipeline_config = merged_config
+        else:
+            merged_pipeline_config = core_config
+            print("No " + filename + " found.")
 
     print("Updating pipeline " + pipeline_name + "...")
     system_call(
