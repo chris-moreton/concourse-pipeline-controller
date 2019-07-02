@@ -203,7 +203,7 @@ def set_teams():
 
 
 yaml_file = get_repos()
-process_repositories(yaml_file)
 set_teams()
+process_repositories(yaml_file)
 
 save_state(yaml_file)
