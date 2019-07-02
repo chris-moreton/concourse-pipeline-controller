@@ -24,6 +24,15 @@ def get_repos():
     yaml_file = yaml.safe_load(f)
     return yaml_file
 
+
+def get_teams():
+    yml_filename = "teams.yml"
+    system_call("cp ../../../../" + yml_filename + " .")
+    f = open(yml_filename)
+    yaml_file = yaml.safe_load(f)
+    return yaml_file
+
+
 def load_yaml_file(filename):
     f = open(filename)
     return yaml.safe_load(f)
@@ -63,6 +72,7 @@ def save_state(yaml_file):
     print("Saving state")
     with open(tmp_file_location, "rb") as f:
         s3.upload_fileobj(f, os.environ['STATE_BUCKET'], "repositories.yml")
+
 
 def system_call(call_string):
     print("Running command: " + call_string)
@@ -135,6 +145,7 @@ def set_component_and_product(pipeline_name):
     system_call("credhub set -n concourse/main/" + pipeline_name + "/PRODUCT --type value --value " + parts[0])
     system_call("credhub set -n concourse/main/" + pipeline_name + "/COMPONENT --type value --value " + parts[1])
 
+
 def clone_repository(repo):
     os.system("ssh -o \"StrictHostKeyChecking=no\" " + repo["git_host"])
     system_call("rm -rf /tmp/" + repo["pipeline_name"])
@@ -159,22 +170,36 @@ def get_previous_head_revision(repo):
         return ""
 
 
+def process_repositories(yaml_file):
+    for repo in yaml_file["repos"]:
+
+        set_component_and_product(repo["pipeline_name"])
+
+        current_head_revision = get_current_head_revision(repo)
+
+        if current_head_revision == get_previous_head_revision(repo):
+            print("Setting pipeline...")
+            initialise_pipeline(repo)
+        else:
+            initialise_pipeline(repo)
+            print("Triggering build job...")
+            system_call("fly --target netsensia-concourse trigger-job -j " + repo["pipeline_name"] + "/" + "build")
+
+        repo["head_revision"] = current_head_revision
+
+
+def set_teams():
+    teams = get_teams()
+    for team in teams:
+        print("Setting team: " + team["name"])
+        tmp_file_location = "/tmp/config.yml"
+        stream = open(tmp_file_location, "w")
+        yaml.dump(team["config"], stream)
+        system_call("fly -t netsensia-concourse set-team -n " + team["name"] + " --config /tmp/config.yml")
+
+
 yaml_file = get_repos()
-
-for repo in yaml_file["repos"]:
-
-    set_component_and_product(repo["pipeline_name"])
-
-    current_head_revision = get_current_head_revision(repo)
-
-    if current_head_revision == get_previous_head_revision(repo):
-        print("Setting pipeline...")
-        initialise_pipeline(repo)
-    else:
-        initialise_pipeline(repo)
-        print("Triggering build job...")
-        system_call("fly --target netsensia-concourse trigger-job -j " + repo["pipeline_name"] + "/" + "build")
-
-    repo["head_revision"] = current_head_revision
+process_repositories(yaml_file)
+set_teams()
 
 save_state(yaml_file)
