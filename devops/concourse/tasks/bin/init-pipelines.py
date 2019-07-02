@@ -125,9 +125,6 @@ def initialise_pipeline(repo):
         "fly --target netsensia-concourse set-pipeline --non-interactive -c " + merged_pipeline_config + " -p " + pipeline_name
     )
 
-    print("Unpausing pipeline...")
-    system_call("fly --target netsensia-concourse unpause-pipeline -p " + pipeline_name)
-
 
 def get_deploy_key(repo):
     print("Getting deploy key from CredHub...")
