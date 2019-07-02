@@ -1,19 +1,19 @@
 teams:
 - name: teps
   config:
-  - roles:
+    roles:
     - name: pipeline-operator
       github:
         users: ["twobyte,chris-moreton"]
 - name: directorzone
   config:
-  - roles:
+    roles:
     - name: pipeline-operator
       github:
         users: ["twobyte,chris-moreton"]
 - name: golfingrecord
   config:
-  - roles:
+    roles:
     - name: pipeline-operator
       github:
         users: ["chris-moreton"]
