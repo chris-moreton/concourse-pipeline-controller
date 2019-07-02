@@ -5,15 +5,21 @@ teams:
     - name: pipeline-operator
       github:
         users: ["twobyte,chris-moreton"]
+      local:
+        users: ["admin"]
 - name: directorzone
   config:
     roles:
     - name: pipeline-operator
       github:
         users: ["twobyte,chris-moreton"]
+      local:
+        users: ["admin"]
 - name: golfingrecord
   config:
     roles:
     - name: pipeline-operator
       github:
         users: ["chris-moreton"]
+      local:
+        users: ["admin"]
