@@ -23,4 +23,4 @@ run:
       echo "Logging into CredHub..."
       eval "$(control-tower info --iaas aws --env --region eu-west-2 netsensia-concourse)"
       cd devops/concourse/tasks/bin
-      python3 init-pipelines.py
+      python3 init-pipelines.py $CONCOURSE_HOST $CONCOURSE_ADMIN_PASSWORD

@@ -2,6 +2,7 @@ import git
 import yaml
 import boto3
 import os
+import sys
 
 
 def get_state(yaml_file):
@@ -115,10 +116,15 @@ def initialise_pipeline(repo):
             merged_pipeline_config = core_config
             print("No " + filename + " found.")
 
+    team_name = pipeline_name.split("-")[0];
     print("Updating pipeline " + pipeline_name + "...")
+    system_call("fly -t netsensia-concourse login -n " + team_name + " --insecure --concourse-url https://" + sys.argv[
+        1] + " -u admin -p " + sys.argv[2])
+
     system_call(
         "fly --target netsensia-concourse set-pipeline --non-interactive -c " + merged_pipeline_config + " -p " + pipeline_name
     )
+
     print("Unpausing pipeline...")
     system_call("fly --target netsensia-concourse unpause-pipeline -p " + pipeline_name)
 
