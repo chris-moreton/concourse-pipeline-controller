@@ -196,7 +196,7 @@ def set_teams():
         tmp_file_location = "/tmp/config.yml"
         stream = open(tmp_file_location, "w")
         yaml.dump(team["config"], stream)
-        system_call("fly -t netsensia-concourse set-team -n " + team["name"] + " --config /tmp/config.yml")
+        system_call("fly -t netsensia-concourse set-team --non-interactive -n " + team["name"] + " --config /tmp/config.yml")
 
 
 yaml_file = get_repos()
