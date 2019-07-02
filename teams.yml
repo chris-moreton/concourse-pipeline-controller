@@ -4,7 +4,7 @@ teams:
     roles:
     - name: pipeline-operator
       github:
-        users: ["twobyte,chris-moreton"]
+        users: ["twobyte","chris-moreton"]
     - name: owner
       local:
         users: ["admin"]
@@ -13,7 +13,7 @@ teams:
     roles:
     - name: pipeline-operator
       github:
-        users: ["twobyte,chris-moreton"]
+        users: ["twobyte","chris-moreton"]
     - name: owner
       local:
         users: ["admin"]

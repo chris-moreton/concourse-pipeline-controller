@@ -182,39 +182,39 @@ In the example below, the pipeline defines a new data-dump resource while also r
 
 Behind the scenes, the pipeline controller simply merges the core pipeline with your new resources and jobs, and creates an extended pipeline.
 
-```
----
-resources:
-- name: data-dump
-  type: s3
-  source:
-    bucket: pipeline-controller-dumps
-    region_name: eu-west-2
-    versioned_file: ((SQL_DUMP_FILENAME)).tar.gz
-    access_key_id: ((pipeline-controller/AWS_ACCESS_KEY_ID))
-    secret_access_key: ((pipeline-controller/AWS_SECRET_ACCESS_KEY))
-jobs:
-- name: restore-database
-  public: false
-  plan:, e.g.
-    - get: packaged-build
-      passed:
-        - build-infrastructure-prod
-      trigger: false
-    - get: pipeline-controller
-      trigger: false
-    - get: source-code
-      trigger: false
-    - get: data-dump
-      trigger: false
-    - task: load-data
-      file: source-code/devops/concourse/tasks/load-data.yml
-      params:
-        DB_HOST: ((prod/DB_HOST))
-        DB_NAME: ((prod/DB_NAME))
-        DB_USER: ((prod/DB_USER.username))
-        DB_PASS: ((prod/DB_USER.password))
-```
+
+    ---
+    resources:
+    - name: data-dump
+      type: s3
+      source:
+        bucket: pipeline-controller-dumps
+        region_name: eu-west-2
+        versioned_file: ((SQL_DUMP_FILENAME)).tar.gz
+        access_key_id: ((pipeline-controller/AWS_ACCESS_KEY_ID))
+        secret_access_key: ((pipeline-controller/AWS_SECRET_ACCESS_KEY))
+    jobs:
+    - name: restore-database
+      public: false
+      plan:, e.g.
+        - get: packaged-build
+          passed:
+            - build-infrastructure-prod
+          trigger: false
+        - get: pipeline-controller
+          trigger: false
+        - get: source-code
+          trigger: false
+        - get: data-dump
+          trigger: false
+        - task: load-data
+          file: source-code/devops/concourse/tasks/load-data.yml
+          params:
+            DB_HOST: ((prod/DB_HOST))
+            DB_NAME: ((prod/DB_NAME))
+            DB_USER: ((prod/DB_USER.username))
+            DB_PASS: ((prod/DB_USER.password))
+
 
 <a name="AddingServices"/>
 
