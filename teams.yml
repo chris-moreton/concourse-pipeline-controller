@@ -5,6 +5,7 @@ teams:
     - name: pipeline-operator
       github:
         users: ["twobyte,chris-moreton"]
+    - name: owner
       local:
         users: ["admin"]
 - name: directorzone
@@ -13,6 +14,7 @@ teams:
     - name: pipeline-operator
       github:
         users: ["twobyte,chris-moreton"]
+    - name: owner
       local:
         users: ["admin"]
 - name: golfingrecord
@@ -21,5 +23,6 @@ teams:
     - name: pipeline-operator
       github:
         users: ["chris-moreton"]
+    - name: owner
       local:
         users: ["admin"]
