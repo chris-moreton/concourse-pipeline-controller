@@ -30,7 +30,7 @@ def get_teams():
     system_call("cp ../../../../" + yml_filename + " .")
     f = open(yml_filename)
     yaml_file = yaml.safe_load(f)
-    return yaml_file
+    return yaml_file["teams"]
 
 
 def load_yaml_file(filename):
@@ -192,7 +192,7 @@ def process_repositories(yaml_file):
 def set_teams():
     teams = get_teams()
     for team in teams:
-        print("Setting team: " + team)
+        print("Setting team: " + team["name"])
         tmp_file_location = "/tmp/config.yml"
         stream = open(tmp_file_location, "w")
         yaml.dump(team["config"], stream)
