@@ -85,6 +85,7 @@ def system_call(call_string):
 def get_project_type(repo):
     return repo["project_type"]
 
+
 def initialise_pipeline(repo):
     pipeline_name = repo["pipeline_name"]
     project_type = get_project_type(repo)
@@ -191,7 +192,7 @@ def process_repositories(yaml_file):
 def set_teams():
     teams = get_teams()
     for team in teams:
-        print("Setting team: " + team["name"])
+        print("Setting team: " + team)
         tmp_file_location = "/tmp/config.yml"
         stream = open(tmp_file_location, "w")
         yaml.dump(team["config"], stream)
