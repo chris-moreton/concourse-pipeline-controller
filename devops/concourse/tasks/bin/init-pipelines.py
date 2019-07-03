@@ -115,6 +115,7 @@ def initialise_pipeline(repo):
         else:
             merged_pipeline_config = core_config
             print("No " + filename + " found.")
+            print("No " + filename + " found.")
 
     team_name = pipeline_name.split("-")[0];
     print("Updating pipeline " + pipeline_name + "...")
@@ -124,9 +125,13 @@ def initialise_pipeline(repo):
     system_call(
         "fly --target netsensia-concourse set-pipeline --non-interactive -c " + merged_pipeline_config + " -p " + pipeline_name
     )
+    print("Unpausing pipeline...")
+    system_call("fly --target netsensia-concourse unpause-pipeline -p " + pipeline_name)
 
 
 def get_deploy_key(repo):
+
+
     print("Getting deploy key from CredHub...")
 
     if 'PYCHARM_HOSTED' in os.environ.keys() and os.environ['PYCHARM_HOSTED'] == "1":
