@@ -87,6 +87,11 @@ def get_project_type(repo):
     return repo["project_type"]
 
 
+def login_to_team(team_name):
+    system_call("fly -t netsensia-concourse login -n " + team_name + " --insecure --concourse-url https://" + sys.argv[
+        1] + " -u admin -p " + sys.argv[2])
+
+
 def initialise_pipeline(repo):
     pipeline_name = repo["pipeline_name"]
     project_type = get_project_type(repo)
@@ -118,8 +123,7 @@ def initialise_pipeline(repo):
 
     team_name = pipeline_name.split("-")[0];
     print("Updating pipeline " + pipeline_name + "...")
-    system_call("fly -t netsensia-concourse login -n " + team_name + " --insecure --concourse-url https://" + sys.argv[
-        1] + " -u admin -p " + sys.argv[2])
+    login_to_team(team_name)
 
     system_call(
         "fly --target netsensia-concourse set-pipeline --non-interactive -c " + merged_pipeline_config + " -p " + pipeline_name

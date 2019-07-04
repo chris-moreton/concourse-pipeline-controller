@@ -6,5 +6,6 @@ fly --target $CONCOURSE_NAME destroy-pipeline --non-interactive -p golfingrecord
 fly --target $CONCOURSE_NAME destroy-pipeline --non-interactive -p directorzone-api
 fly --target $CONCOURSE_NAME destroy-pipeline --non-interactive -p directorzone-frontend
 fly --target $CONCOURSE_NAME destroy-pipeline --non-interactive -p pipeline-controller
+fly --target $CONCOURSE_NAME destroy-pipeline --non-interactive -p teps-portal
 
 ./init-me.sh
