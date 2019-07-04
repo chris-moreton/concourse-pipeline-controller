@@ -123,11 +123,12 @@ def initialise_pipeline(repo):
             print("No " + filename + " found.")
 
     team_name = pipeline_name.split("-")[0];
+    pipeline_shortname = pipeline_name.split("-")[1];
     print("Updating pipeline " + pipeline_name + "...")
     login_to_team(team_name)
 
     system_call(
-        "fly --target netsensia-concourse set-pipeline --non-interactive -c " + merged_pipeline_config + " -p " + pipeline_name
+        "fly --target netsensia-concourse set-pipeline --non-interactive -c " + merged_pipeline_config + " -p " + pipeline_shortname
     )
     print("Unpausing pipeline...")
     system_call("fly --target netsensia-concourse unpause-pipeline -p " + pipeline_name)
@@ -147,16 +148,17 @@ def get_deploy_key(repo):
 
 
 def prepare_deploy_key(deploy_key_file, repo):
+    parts = repo["pipeline_name"].split("-")
     print("Overwriting deploy key at " + deploy_key_file)
     sed = "sed -e 's/\(KEY-----\)\s/\\1\\n/g; s/\s\(-----END\)/\\n\\1/g' | sed -e '2s/\s\+/\\n/g'"
-    system_call("credhub get -q -n " + "/concourse/main/" + repo["pipeline_name"] + "/GITHUB_DEPLOY_KEY" + " -k private_key | " + sed + " > " + deploy_key_file)
+    system_call("credhub get -q -n " + "/concoursee/" + parts[0] + "/" + parts[1] + "/GITHUB_DEPLOY_KEY" + " -k private_key | " + sed + " > " + deploy_key_file)
     system_call("chmod 600 ~/.ssh/id_rsa")
 
 
 def set_component_and_product(pipeline_name):
     parts = pipeline_name.split("-")
-    system_call("credhub set -n concourse/main/" + pipeline_name + "/PRODUCT --type value --value " + parts[0])
-    system_call("credhub set -n concourse/main/" + pipeline_name + "/COMPONENT --type value --value " + parts[1])
+    system_call("credhub set -n concourse/" + parts[0] + "/" + parts[1] + "/PRODUCT --type value --value " + parts[0])
+    system_call("credhub set -n concourse/" + parts[0] + "/" + parts[1] + "/COMPONENT --type value --value " + parts[1])
 
 
 def clone_repository(repo):
