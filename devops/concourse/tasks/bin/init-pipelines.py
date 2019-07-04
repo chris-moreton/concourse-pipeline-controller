@@ -151,7 +151,7 @@ def prepare_deploy_key(deploy_key_file, repo):
     parts = repo["pipeline_name"].split("-")
     print("Overwriting deploy key at " + deploy_key_file)
     sed = "sed -e 's/\(KEY-----\)\s/\\1\\n/g; s/\s\(-----END\)/\\n\\1/g' | sed -e '2s/\s\+/\\n/g'"
-    system_call("credhub get -q -n " + "/concoursee/" + parts[0] + "/" + parts[1] + "/GITHUB_DEPLOY_KEY" + " -k private_key | " + sed + " > " + deploy_key_file)
+    system_call("credhub get -q -n " + "/concourse/" + parts[0] + "/" + parts[1] + "/GITHUB_DEPLOY_KEY" + " -k private_key | " + sed + " > " + deploy_key_file)
     system_call("chmod 600 ~/.ssh/id_rsa")
 
 
