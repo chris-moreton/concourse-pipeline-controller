@@ -14,24 +14,24 @@ run:
     - -exc
     - |
       cat > backend.config << EOL
-      access_key="((pipeline-controller/AWS_ACCESS_KEY_ID))"
-      secret_key="((pipeline-controller/AWS_SECRET_ACCESS_KEY))"
+      access_key="((AWS_ACCESS_KEY_ID))"
+      secret_key="((AWS_SECRET_ACCESS_KEY))"
       key="((PRODUCT))-((ENVIRONMENT)).tfstate"
-      bucket="((pipeline-controller/STATE_BUCKET))"
+      bucket="((STATE_BUCKET))"
       EOL
       terraform init -backend-config=./backend.config
       terraform plan \
-        -var='credhub_host=((pipeline-controller/CONCOURSE_HOST))' \
-        -var='credhub_client_id=((pipeline-controller/CREDHUB_CLIENT))' \
-        -var='credhub_client_secret=((pipeline-controller/CREDHUB_SECRET))' \
+        -var='credhub_host=((CONCOURSE_HOST))' \
+        -var='credhub_client_id=((CREDHUB_CLIENT))' \
+        -var='credhub_client_secret=((CREDHUB_SECRET))' \
         -var='environment=((ENVIRONMENT))' \
         -var='product=((PRODUCT))' \
         -var='component=((COMPONENT))'
       terraform apply \
         -auto-approve \
-        -var='credhub_host=((pipeline-controller/CONCOURSE_HOST))' \
-        -var='credhub_client_id=((pipeline-controller/CREDHUB_CLIENT))' \
-        -var='credhub_client_secret=((pipeline-controller/CREDHUB_SECRET))' \
+        -var='credhub_host=((CONCOURSE_HOST))' \
+        -var='credhub_client_id=((CREDHUB_CLIENT))' \
+        -var='credhub_client_secret=((CREDHUB_SECRET))' \
         -var='environment=((ENVIRONMENT))' \
         -var='product=((PRODUCT))' \
         -var='component=((COMPONENT))'
@@ -40,51 +40,51 @@ run:
       cd ../component
       cp ../../../../source-code/devops/terraform/custom-* . || true
       cat > backend.config << EOL
-      access_key="((pipeline-controller/AWS_ACCESS_KEY_ID))"
-      secret_key="((pipeline-controller/AWS_SECRET_ACCESS_KEY))"
+      access_key="((AWS_ACCESS_KEY_ID))"
+      secret_key="((AWS_SECRET_ACCESS_KEY))"
       key="((PRODUCT))-((COMPONENT))-((ENVIRONMENT)).tfstate"
-      bucket="((pipeline-controller/STATE_BUCKET))"
+      bucket="((STATE_BUCKET))"
       EOL
       terraform init -backend-config=./backend.config
       terraform import \
-        -var='credhub_host=((pipeline-controller/CONCOURSE_HOST))' \
-        -var='credhub_client_id=((pipeline-controller/CREDHUB_CLIENT))' \
-        -var='credhub_client_secret=((pipeline-controller/CREDHUB_SECRET))' \
-        -var='cloudfoundry_org_owner_username=((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.username))' \
-        -var='cloudfoundry_org_owner_password=((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.password))' \
-        -var='cloudfoundry_ibm_org_owner_username=((pipeline-controller/CLOUD_FOUNDRY_IBM_DEPLOY_USER.username))' \
-        -var='cloudfoundry_ibm_org_owner_password=((pipeline-controller/CLOUD_FOUNDRY_IBM_DEPLOY_USER.password))' \
-        -var='aws_terraform_access_key_id=((pipeline-controller/AWS_ACCESS_KEY_ID))' \
-        -var='aws_terraform_secret_access_key=((pipeline-controller/AWS_SECRET_ACCESS_KEY))' \
+        -var='credhub_host=((CONCOURSE_HOST))' \
+        -var='credhub_client_id=((CREDHUB_CLIENT))' \
+        -var='credhub_client_secret=((CREDHUB_SECRET))' \
+        -var='cloudfoundry_org_owner_username=((CLOUD_FOUNDRY_DEPLOY_USER.username))' \
+        -var='cloudfoundry_org_owner_password=((CLOUD_FOUNDRY_DEPLOY_USER.password))' \
+        -var='cloudfoundry_ibm_org_owner_username=((CLOUD_FOUNDRY_IBM_DEPLOY_USER.username))' \
+        -var='cloudfoundry_ibm_org_owner_password=((CLOUD_FOUNDRY_IBM_DEPLOY_USER.password))' \
+        -var='aws_terraform_access_key_id=((AWS_ACCESS_KEY_ID))' \
+        -var='aws_terraform_secret_access_key=((AWS_SECRET_ACCESS_KEY))' \
         -var='environment=((ENVIRONMENT))' \
         -var='product=((PRODUCT))' \
         cloudfoundry_space.product_space \
         $SPACE_GUID \
         || true
       terraform plan \
-        -var='credhub_host=((pipeline-controller/CONCOURSE_HOST))' \
-        -var='credhub_client_id=((pipeline-controller/CREDHUB_CLIENT))' \
-        -var='credhub_client_secret=((pipeline-controller/CREDHUB_SECRET))' \
-        -var='cloudfoundry_org_owner_username=((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.username))' \
-        -var='cloudfoundry_org_owner_password="((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.password))"' \
-        -var='cloudfoundry_ibm_org_owner_username=((pipeline-controller/CLOUD_FOUNDRY_IBM_DEPLOY_USER.username))' \
-        -var='cloudfoundry_ibm_org_owner_password=((pipeline-controller/CLOUD_FOUNDRY_IBM_DEPLOY_USER.password))' \
-        -var='aws_terraform_access_key_id=((pipeline-controller/AWS_ACCESS_KEY_ID))' \
-        -var='aws_terraform_secret_access_key=((pipeline-controller/AWS_SECRET_ACCESS_KEY))' \
+        -var='credhub_host=((CONCOURSE_HOST))' \
+        -var='credhub_client_id=((CREDHUB_CLIENT))' \
+        -var='credhub_client_secret=((CREDHUB_SECRET))' \
+        -var='cloudfoundry_org_owner_username=((CLOUD_FOUNDRY_DEPLOY_USER.username))' \
+        -var='cloudfoundry_org_owner_password="((CLOUD_FOUNDRY_DEPLOY_USER.password))"' \
+        -var='cloudfoundry_ibm_org_owner_username=((CLOUD_FOUNDRY_IBM_DEPLOY_USER.username))' \
+        -var='cloudfoundry_ibm_org_owner_password=((CLOUD_FOUNDRY_IBM_DEPLOY_USER.password))' \
+        -var='aws_terraform_access_key_id=((AWS_ACCESS_KEY_ID))' \
+        -var='aws_terraform_secret_access_key=((AWS_SECRET_ACCESS_KEY))' \
         -var='environment=((ENVIRONMENT))' \
         -var='product=((PRODUCT))' \
         -var='component=((COMPONENT))'
       terraform apply \
         -auto-approve \
-        -var='credhub_host=((pipeline-controller/CONCOURSE_HOST))' \
-        -var='credhub_client_id=((pipeline-controller/CREDHUB_CLIENT))' \
-        -var='credhub_client_secret=((pipeline-controller/CREDHUB_SECRET))' \
-        -var='cloudfoundry_org_owner_username=((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.username))' \
-        -var='cloudfoundry_org_owner_password="((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.password))"' \
-        -var='cloudfoundry_ibm_org_owner_username=((pipeline-controller/CLOUD_FOUNDRY_IBM_DEPLOY_USER.username))' \
-        -var='cloudfoundry_ibm_org_owner_password=((pipeline-controller/CLOUD_FOUNDRY_IBM_DEPLOY_USER.password))' \
-        -var='aws_terraform_access_key_id=((pipeline-controller/AWS_ACCESS_KEY_ID))' \
-        -var='aws_terraform_secret_access_key=((pipeline-controller/AWS_SECRET_ACCESS_KEY))' \
+        -var='credhub_host=((CONCOURSE_HOST))' \
+        -var='credhub_client_id=((CREDHUB_CLIENT))' \
+        -var='credhub_client_secret=((CREDHUB_SECRET))' \
+        -var='cloudfoundry_org_owner_username=((CLOUD_FOUNDRY_DEPLOY_USER.username))' \
+        -var='cloudfoundry_org_owner_password="((CLOUD_FOUNDRY_DEPLOY_USER.password))"' \
+        -var='cloudfoundry_ibm_org_owner_username=((CLOUD_FOUNDRY_IBM_DEPLOY_USER.username))' \
+        -var='cloudfoundry_ibm_org_owner_password=((CLOUD_FOUNDRY_IBM_DEPLOY_USER.password))' \
+        -var='aws_terraform_access_key_id=((AWS_ACCESS_KEY_ID))' \
+        -var='aws_terraform_secret_access_key=((AWS_SECRET_ACCESS_KEY))' \
         -var='environment=((ENVIRONMENT))' \
         -var='product=((PRODUCT))' \
         -var='component=((COMPONENT))'

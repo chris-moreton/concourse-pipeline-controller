@@ -191,8 +191,8 @@ Behind the scenes, the pipeline controller simply merges the core pipeline with 
         bucket: pipeline-controller-dumps
         region_name: eu-west-2
         versioned_file: ((SQL_DUMP_FILENAME)).tar.gz
-        access_key_id: ((pipeline-controller/AWS_ACCESS_KEY_ID))
-        secret_access_key: ((pipeline-controller/AWS_SECRET_ACCESS_KEY))
+        access_key_id: ((AWS_ACCESS_KEY_ID))
+        secret_access_key: ((AWS_SECRET_ACCESS_KEY))
     jobs:
     - name: restore-database
       public: false

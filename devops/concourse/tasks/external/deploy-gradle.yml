@@ -9,8 +9,8 @@ inputs:
   - name: manifests
   - name: source-code
 params:
-  CF_USER: ((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.username))
-  CF_PASS: ((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.password))
+  CF_USER: ((CLOUD_FOUNDRY_DEPLOY_USER.username))
+  CF_PASS: ((CLOUD_FOUNDRY_DEPLOY_USER.password))
   CF_SPACE: ((PRODUCT))-((ENVIRONMENT))
   CF_APP: ((PRODUCT))-((COMPONENT))-((ENVIRONMENT))
 run:

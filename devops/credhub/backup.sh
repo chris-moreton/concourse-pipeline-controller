@@ -16,7 +16,7 @@ do
       echo "credhub set -n ${CRED} --type user --username \"${USERNAME}\" --password \"${PASSWORD}\""
    elif [[ $OUTPUT == *"type: value"* ]]; then
       VALUE="$(credhub get -q -n ${CRED})"
-      echo "credhub set -n ${CRED} --value \"${VALUE}\""
+      echo "credhub set -n ${CRED} --type value --value \"${VALUE}\""
    fi
 
 done

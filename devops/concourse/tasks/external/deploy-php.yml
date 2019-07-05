@@ -9,8 +9,8 @@ inputs:
   - name: manifests
   - name: source-code
 params:
-  CF_USER: ((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.username))
-  CF_PASS: ((pipeline-controller/CLOUD_FOUNDRY_DEPLOY_USER.password))
+  CF_USER: ((CLOUD_FOUNDRY_DEPLOY_USER.username))
+  CF_PASS: ((CLOUD_FOUNDRY_DEPLOY_USER.password))
   CF_SPACE: ((PRODUCT))-((ENVIRONMENT))
   CF_APP: ((PRODUCT))-((COMPONENT))-((ENVIRONMENT))
 run:
@@ -25,10 +25,10 @@ run:
       cat > .cfignore << EOT
       node_modules/.cache
       EOT
-      export AWS_ACCESS_KEY_ID=((pipeline-controller/AWS_ACCESS_KEY_ID))
-      export AWS_SECRET_ACCESS_KEY=((pipeline-controller/AWS_SECRET_ACCESS_KEY))
+      export AWS_ACCESS_KEY_ID=((AWS_ACCESS_KEY_ID))
+      export AWS_SECRET_ACCESS_KEY=((AWS_SECRET_ACCESS_KEY))
       echo "Logging into Concourse..."
-      fly --target netsensia-concourse login --insecure --concourse-url https://((pipeline-controller/CONCOURSE_HOST)) -u admin -p ((pipeline-controller/CONCOURSE_ADMIN_PASSWORD))
+      fly --target netsensia-concourse login --insecure --concourse-url https://((CONCOURSE_HOST)) -u admin -p ((CONCOURSE_ADMIN_PASSWORD))
       echo "Syncing..."
       fly --target netsensia-concourse sync
       echo "Logging into CredHub..."
