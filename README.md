@@ -17,7 +17,6 @@ By adding your project to [repositories.yml](https://github.com/chris-moreton/co
 The following are assumed:
 
 * Your organisation has a Concourse instance, set up to run the Opinionated Pipeline. The Netsensia Concourse instance is at https://concourse.wonderpath.com.
-* The GitHub repository for your application is within the same organisation for which the Opinionated Pipeline is configured
 
 If this is not the case, you can read about how to set up the Opinionated Pipeline in the wiki under [Creating Your Own Pipeline Controller](https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Creating-Your-Own-Pipeline-Controller).
 
@@ -42,7 +41,7 @@ If your project is not open source, you will need to add a deployment key to you
 It may be easier to get someone who has the necessary tools installed and/or knows the credentials to authenticate against CredHub.
 
 ```
-/concourse/main/<product>-<component>/GITHUB_DEPLOY_KEY
+/concourse/<product>/<component>/GITHUB_DEPLOY_KEY
 ```
 
 ##### Setting Environment Variables
@@ -50,14 +49,14 @@ It may be easier to get someone who has the necessary tools installed and/or kno
 To set environment variables for your application, add them to CredHub at the following locations:
 
 ```
-concourse/main/product-component/aat/env
-concourse/main/product-component/prod/env
+concourse/product/component/aat/env
+concourse/product/component/prod/env
 ```
 
 Example:
 
 ```
-credhub set -n concourse/main/directorzone-api/aat/env/PEXELS_AUTH --type value --value ABCDEFG123456
+credhub set -n concourse/directorzone/api/aat/env/PEXELS_AUTH --type value --value ABCDEFG123456
 ```
 
 ##### Add Your Application
