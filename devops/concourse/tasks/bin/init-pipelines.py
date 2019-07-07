@@ -106,20 +106,20 @@ def initialise_pipeline(repo):
             exit(1)
     else:
         core_config = "../../external-" + repo["pipeline_type"] + ".yml"
+        core_config_copy = "../../external-" + repo["pipeline_type"] + "-copy.yml"
+        system_call("cp " + core_config + " " + core_config_copy)
         print("Project Type is " + project_type)
-        system_call("sed -i s/PROJECT_TYPE/" + project_type + "/g " + core_config)
+        system_call("sed -i s/PROJECT_TYPE/" + project_type + "/g " + core_config_copy)
         if os.path.isfile(pipeline_config):
             print("Merging external and custom pipeline jobs")
-            merged = merge_yaml_files(pipeline_config, core_config)
+            merged = merge_yaml_files(pipeline_config, core_config_copy)
             print(merged)
             f = open(merged_config, "w")
             f.write(merged)
             f.close()
             merged_pipeline_config = merged_config
-            system_call("sed -i s/" + project_type + "/PROJECT_TYPE/g " + core_config)
         else:
-            merged_pipeline_config = core_config
-            print("No " + filename + " found.")
+            merged_pipeline_config = core_config_copy
             print("No " + filename + " found.")
 
     team_name = pipeline_name.split("-")[0];
