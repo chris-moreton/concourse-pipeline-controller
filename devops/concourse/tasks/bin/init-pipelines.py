@@ -200,7 +200,7 @@ def process_repositories(yaml_file):
             print("Triggering build job...")
             team_name = repo["pipeline_name"].split("-")[0];
             pipeline_shortname = repo["pipeline_name"].split("-")[1];
-            system_call("fly --target netsensia-concourse trigger-job -j " + team_name + "/" + pipeline_shortname + "/" + "build")
+            system_call("fly --target netsensia-concourse trigger-job -j " + pipeline_shortname + "/" + "build")
 
         repo["head_revision"] = current_head_revision
 
