@@ -52,11 +52,11 @@ run:
       echo "Logging into CredHub..."
       eval "$(control-tower info --iaas aws --env --region eu-west-2 netsensia-concourse)"
       ENV=((ENVIRONMENT))
-      OUTPUT=`credhub find -n concourse/main/((PRODUCT))-((COMPONENT))/$ENV/env`
+      OUTPUT=`credhub find -n concourse/((PRODUCT))/((COMPONENT))/$ENV/env`
       ENV_VARS=$(echo $OUTPUT | grep -o "((ENVIRONMENT))/\S*")
       while IFS=' ' read -ra VAL; do
             for i in "${VAL[@]}"; do
-                VALUE=`credhub get -q -n concourse/main/((PRODUCT))-((COMPONENT))/$i`
+                VALUE=`credhub get -q -n concourse/((PRODUCT))/((COMPONENT))/$i`
                 ENV_VAR=${i/$ENV\/env\//}
       cat >> manifest.yml << EOT
         $ENV_VAR: $VALUE

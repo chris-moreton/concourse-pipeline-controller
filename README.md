@@ -144,7 +144,7 @@ cf services
 Add your domain name in the following location in your CredHub instance:
 
 ```
-/concourse/main/<product>-<component>/DOMAIN
+/concourse/<product>/<component>/DOMAIN
 ```
 
 You also need to add it to the netsensia-infrastructure repository, see [this file for an example](https://github.com/chris-moreton/netsensia-infrastructure/blob/master/terraform/domain_golfingrecord_com.tf).
@@ -250,11 +250,11 @@ The following variables are available to use:
 You can create a CredHub resource to access values within your project's vault. For example:
 
     data "credhub_value" "my_secret_value" {
-      name = "/concourse/main/${var.product}-${var.component}/${var.environment}/MY_SECRET_VALUE"
+      name = "/concourse/${var.product}/${var.component}/${var.environment}/MY_SECRET_VALUE"
     }
     
     data "credhub_user" "my_secret_user" {
-      name = "/concourse/main/${var.product}-${var.component}/${var.environment}/MY_SECRET_USER"
+      name = "/concourse/${var.product}/${var.component}/${var.environment}/MY_SECRET_USER"
     }
 
 ## Setting Up A Pipeline Controller
