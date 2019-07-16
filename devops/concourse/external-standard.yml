@@ -36,6 +36,8 @@ jobs:
     trigger: false
   - task: build
     file: pipeline-controller/devops/concourse/tasks/external/build-PROJECT_TYPE.yml
+    vars:
+      ENVIRONMENT: aat
   - put: packaged-build
     params:
       file: build/((PRODUCT))-((COMPONENT)).tar.gz
