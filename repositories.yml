@@ -29,3 +29,9 @@ repos:
   pipeline_type: minimal
   project_type: laravel
   branch: super-advisers-june-2019
+- pipeline_name: arrvd-api
+  git_host: git@github.com
+  git_org: arrvd
+  pipeline_type: standard
+  project_type: gradle
+  branch: master
