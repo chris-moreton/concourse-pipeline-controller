@@ -34,5 +34,6 @@ RUN npm install -g n
 RUN cf add-plugin-repo CF-Community https://plugins.cloudfoundry.org
 RUN cf install-plugin blue-green-deploy -f -r CF-Community
 RUN apt install -y openjdk-8-jre-headless
+RUN apt install -y openjdk-8-jdk
 
 
