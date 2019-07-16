@@ -8,13 +8,13 @@ resources:
 - name: pipeline-controller
   type: git
   source:
-    uri: https://github.com/((GITHUB_OWNER))/concourse-pipeline-controller.git
+    uri: https://github.com/((GITHUB_PIPELINE_ACCOUNT))/concourse-pipeline-controller.git
     branch: master
     password: ((GITHUB_API_TOKEN))
 - name: source-code
   type: git
   source:
-    uri: git@github.com:((GITHUB_OWNER))/((PRODUCT))-((COMPONENT)).git
+    uri: git@github.com:((GITHUB_REPO_ACCOUNT))/((PRODUCT))-((COMPONENT)).git
     branch: master
     private_key: ((GITHUB_DEPLOY_KEY.private_key))
     password: ((GITHUB_API_TOKEN))
