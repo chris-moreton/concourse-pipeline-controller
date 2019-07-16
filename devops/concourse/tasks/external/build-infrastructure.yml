@@ -61,7 +61,7 @@ run:
         cloudfoundry_space.product_space \
         $SPACE_GUID \
         || true
-      terraform taint \
+      terraform untaint \
         -var='credhub_host=((CONCOURSE_HOST))' \
         -var='credhub_client_id=((CREDHUB_CLIENT))' \
         -var='credhub_client_secret=((CREDHUB_SECRET))' \
