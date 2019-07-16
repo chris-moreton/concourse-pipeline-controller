@@ -69,6 +69,22 @@ Create a pull request, and when your PR is merged, your project will now be incl
 
 Within a few minutes, a pipeline will be created for your application with the following stages:
 
+##### Update Teams
+
+In teams.yml, you will need to give ownership of your repository to the admin user amongst the rest of your team configuration, e.g.
+
+    - name: directorzone
+      config:
+        roles:
+        - name: pipeline-operator
+          github:
+            users: ["twobyte","Directorzone"]
+        - name: owner
+          local:
+            users: ["admin"]
+          github:
+            users: ["chris-moreton"]
+
 #### Build
 
 This will build and package your application. Your unit tests will be executed in this step.

@@ -37,3 +37,11 @@ teams:
         users: ["admin"]
       github:
         users: ["chris-moreton"]
+- name: arrvd
+  config:
+    roles:
+    - name: owner
+      local:
+        users: ["admin"]
+      github:
+        users: ["chris-moreton","twobyte"]
