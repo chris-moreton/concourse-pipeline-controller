@@ -69,6 +69,13 @@ credhub set -n concourse/directorzone/GITHUB_API_TOKEN --type value --value ****
 credhub set -n concourse/directorzone/GITHUB_OWNER --type value --value chris-moreton
 ```
 
+##### Set AWS Access Keys
+
+
+```
+credhub set -n concourse/directorzone/AWS_ACCESS_KEY_ID --type value --value ****
+credhub set -n concourse/directorzone/AWS_SECRET_ACCESS_KEY --type value --value ****
+```
 
 ##### Add Your Application
 
