@@ -10,7 +10,7 @@ outputs:
   - name: build
 run:
   dir: source-code
-  path: sh
+  path: bash
   args:
     - -exc
     - |
