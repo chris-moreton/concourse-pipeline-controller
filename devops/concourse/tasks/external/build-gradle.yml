@@ -2,8 +2,8 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: openjdk
-    tag: 8-jdk
+    repository: netsensia/pipelinefull
+    tag: 1.0.8
 inputs:
   - name: source-code
 outputs:
@@ -14,6 +14,24 @@ run:
   args:
     - -exc
     - |
+      fly --target netsensia-concourse login --insecure --concourse-url https://((CONCOURSE_HOST)) -u admin -p ((CONCOURSE_ADMIN_PASSWORD))
+      echo "Syncing..."
+      fly --target netsensia-concourse sync
+      echo "Logging into CredHub..."
+      eval "$(control-tower info --iaas aws --env --region eu-west-2 netsensia-concourse)"
+      ENV=((ENVIRONMENT))
+      OUTPUT=`credhub find -n concourse/((PRODUCT))/((COMPONENT))/$ENV/env`
+      ENV_VARS=$(echo $OUTPUT | grep -o "((ENVIRONMENT))/\S*")
+
+      while IFS=' ' read -ra VAL; do
+            for i in "${VAL[@]}"; do
+                VALUE=`credhub get -q -n concourse/((PRODUCT))/((COMPONENT))/$i`
+                ENV_VAR=${i/$ENV\/env\//}
+                echo "Setting $ENV_VAR to $VALUE"
+                export $ENV_VAR=$VALUE
+            done
+      done <<< "$ENV_VARS"
+
       ./gradlew build
       JAR_FILE=((PRODUCT))-((COMPONENT)).jar
       ZIP_FILE=((PRODUCT))-((COMPONENT)).tar.gz
