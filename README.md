@@ -61,6 +61,15 @@ Example:
 credhub set -n concourse/directorzone/api/aat/env/PEXELS_AUTH --type value --value ABCDEFG123456
 ```
 
+##### Set GitHub Owner and Token
+
+
+```
+credhub set -n concourse/directorzone/GITHUB_API_TOKEN --type value --value ****
+credhub set -n concourse/directorzone/GITHUB_OWNER --type value --value chris-moreton
+```
+
+
 ##### Add Your Application
 
 Update [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml) to include your project.
