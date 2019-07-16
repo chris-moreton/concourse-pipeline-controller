@@ -44,6 +44,8 @@ It may be easier to get someone who has the necessary tools installed and/or kno
 /concourse/<product>/<component>/GITHUB_DEPLOY_KEY
 ```
 
+Don't forget to add the deploy key to your repository on your git provider, i.e. GitHub or BitBucket.
+
 ##### Setting Environment Variables
 
 To set environment variables for your application, add them to CredHub at the following locations:
