@@ -21,12 +21,14 @@ run:
         memory: 768M
         disk: 256M
         services:
-        if [ ((services/MYSQL)) eq "1" ]; then
-          - ((COMPONENT))-mysql
-        fi
-        if [ ((services/ELASTIC_SEARCH)) eq "1" ]; then
-          - ((COMPONENT))-elasticsearch
-        fi
+      EOT
+      if [ ((services/MYSQL)) eq "1" ]; then
+        echo "  - ((COMPONENT))-mysql"
+      fi
+      if [ ((services/ELASTIC_SEARCH)) eq "1" ]; then
+        echo "  - ((COMPONENT))-elasticsearch" >> manifest.yml
+      fi
+      cat > manifest.yml << EOT
         env:
           SPRING_PROFILES_ACTIVE: production
       EOT
