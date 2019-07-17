@@ -21,8 +21,12 @@ run:
         memory: 768M
         disk: 256M
         services:
+        if [ ((services/MYSQL)) eq "1" ]; then
           - ((COMPONENT))-mysql
+        fi
+        if [ ((services/ELASTIC_SEARCH)) eq "1" ]; then
           - ((COMPONENT))-elasticsearch
+        fi
         env:
           SPRING_PROFILES_ACTIVE: production
       EOT

@@ -77,6 +77,13 @@ credhub set -n concourse/directorzone/AWS_ACCESS_KEY_ID --type value --value ***
 credhub set -n concourse/directorzone/AWS_SECRET_ACCESS_KEY --type value --value ****
 ```
 
+##### Choose Services Per Component
+
+```
+credhub set -n concourse/directorzone/api/services/MYSQL --type value --value 1
+credhub set -n concourse/directorzone/api/services/ELASTIC_SEARCH --type value --value 0
+```
+
 ##### Add Your Application
 
 Update [repositories.yml](https://github.com/chris-moreton/concourse-pipeline-controller/blob/master/repositories.yml) to include your project.
