@@ -20,13 +20,15 @@ run:
         buildpack: java_buildpack
         memory: 768M
         disk: 256M
-        services:
       EOT
-      if [ ((services/MYSQL)) eq "1" ]; then
-        echo "  - ((COMPONENT))-mysql" >> manifest.yml
-      fi
-      if [ ((services/ELASTIC_SEARCH)) eq "1" ]; then
-        echo "  - ((COMPONENT))-elasticsearch" >> manifest.yml
+      if [ ((services/ENABLE)) eq "1" ]; then
+        echo "  services:" >> manifest.yml
+        if [ ((services/MYSQL)) eq "1" ]; then
+          echo "  - ((COMPONENT))-mysql" >> manifest.yml
+        fi
+        if [ ((services/ELASTIC_SEARCH)) eq "1" ]; then
+          echo "  - ((COMPONENT))-elasticsearch" >> manifest.yml
+        fi
       fi
       cat >> manifest.yml << EOT
         env:
