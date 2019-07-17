@@ -23,12 +23,12 @@ run:
         services:
       EOT
       if [ ((services/MYSQL)) eq "1" ]; then
-        echo "  - ((COMPONENT))-mysql"
+        echo "  - ((COMPONENT))-mysql" >> manifest.yml
       fi
       if [ ((services/ELASTIC_SEARCH)) eq "1" ]; then
         echo "  - ((COMPONENT))-elasticsearch" >> manifest.yml
       fi
-      cat > manifest.yml << EOT
+      cat >> manifest.yml << EOT
         env:
           SPRING_PROFILES_ACTIVE: production
       EOT
