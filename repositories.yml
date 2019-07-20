@@ -35,3 +35,9 @@ repos:
   pipeline_type: standard
   project_type: gradle
   branch: master
+- pipeline_name: directorzone-laravel
+  git_host: git@github.com
+  git_org: chris-moreton
+  pipeline_type: minimal
+  project_type: laravel
+  branch: july-2019

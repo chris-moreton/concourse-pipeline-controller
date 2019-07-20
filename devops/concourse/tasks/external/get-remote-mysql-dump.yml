@@ -1,25 +1,3 @@
-#-------------------------------------------------------------------------------------------------
-# Example usage:
-#-------------------------------------------------------------------------------------------------
-#- name: dump-legacy-data
-#  public: false
-#  plan:
-#    - get: source-code
-#      trigger: false
-#    - get: pipeline-controller
-#      trigger: false
-#    - task: dump-data
-#      file: pipeline-controller/devops/concourse/tasks/external/get-remote-mysql-dump.yml
-#      params:
-#        LEGACY_DB_PASS: ((legacy/DB_USER.password))
-#        LEGACY_DB_USER: ((legacy/DB_USER.username))
-#        LEGACY_DB_NAME: directorzone
-#        SERVER_KEY: ((legacy/SERVER_KEY.private_key))
-#    - put: legacy-dump-file
-#      params:
-#        file: dump-dir/((legacy/SQL_DUMP_FILENAME)).tar.gz
-#-------------------------------------------------------------------------------------------------
-
 platform: linux
 image_resource:
   type: docker-image
