@@ -188,6 +188,8 @@ def get_previous_head_revision(repo):
 def process_repositories(yaml_file):
     for repo in yaml_file["repos"]:
 
+        print("Branch for " + repo["pipeline_name"] + " is " + repo["branch"])
+
         set_component_and_product(repo["pipeline_name"])
 
         current_head_revision = get_current_head_revision(repo)

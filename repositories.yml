@@ -40,4 +40,4 @@ repos:
   git_org: chris-moreton
   pipeline_type: minimal
   project_type: laravel
-  branch: july-2019
+  branch: july-22-2019
