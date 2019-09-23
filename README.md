@@ -79,7 +79,7 @@ credhub set -n concourse/directorzone/AWS_SECRET_ACCESS_KEY --type value --value
 
 ##### Choose Services
 
-Services are enable per component.
+Services are enabled per component.
 
 ```
 credhub set -n concourse/directorzone/api/services/MYSQL --type value --value 1
