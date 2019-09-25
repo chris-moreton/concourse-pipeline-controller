@@ -29,12 +29,6 @@ repos:
   pipeline_type: minimal
   project_type: laravel
   branch: master
-- pipeline_name: arrvd-api
-  git_host: git@github.com
-  git_org: arrvd
-  pipeline_type: standard
-  project_type: gradle
-  branch: master
 - pipeline_name: directorzone-laravel
   git_host: git@github.com
   git_org: chris-moreton
