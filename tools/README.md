@@ -2,15 +2,32 @@
 
 ## Set environment from "Concourse Deployment Environment Variables"
 
+Grab the variables, then source them, e.g.
+
+    source .env
+    
+## Backup Credhub credentials
+
     ./credhub-backup.sh > credhub-restore.sh
+
+## Destroy Concourse
+    
+    control-tower destroy --iaas aws --region eu-west-2 netsensia-concourse
+
+## Deploy Concourse
+
     control-tower deploy --iaas aws --worker-size medium --region eu-west-2 --domain concourse.wonderpath.com --github-auth-client-id ${GITHUB_AUTH_CLIENT_ID} --github-auth-client-secret ${GITHUB_AUTH_CLIENT_SECRET} netsensia-concourse
 
 ## Grab the new Credhub admin password
 
 This will be one of the last lines from the command above.
 
-Update the value in your password manager and in ~/.bashrc
+Update the value in 
 
+    * your password manager
+    * ~/.bashrc
+    * Credhub - CONCOURSE_ADMIN_PASSWORD
+    
 ## Grab the environment
 
     control-tower info --region eu-west-2  --iaas AWS --env netsensia-concourse
@@ -18,6 +35,8 @@ Update the value in your password manager and in ~/.bashrc
 Replace the variables in .bashrc with the new environment, then
 
     source ~/.bashrc
+    
+Replace CREDHUB_CLIENT_SECRET in CredHub for all instances.
 
 ## Restore Credentials
 

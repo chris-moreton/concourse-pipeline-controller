@@ -16,7 +16,7 @@ By adding your project to [repositories.yml](https://github.com/chris-moreton/co
 
 The following are assumed:
 
-* Your organisation has a Concourse instance, set up to run the Opinionated Pipeline. The Netsensia Concourse instance is at https://concourse.wonderpath.com.
+* Your organisation has a Concourse instance, set up to run the Opinionated Pipeline. The Netsensia Concourse instance is at https://concourse.netsensia.com.
 
 If this is not the case, you can read about how to set up the Opinionated Pipeline in the wiki under [Creating Your Own Pipeline Controller](https://github.com/chris-moreton/concourse-pipeline-controller/wiki/Creating-Your-Own-Pipeline-Controller).
 
