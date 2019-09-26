@@ -23,12 +23,6 @@ repos:
   pipeline_type: standard
   project_type: php
   branch: master
-- pipeline_name: teps-portal
-  git_host: git@bitbucket.org
-  git_org: JamesRamsay01
-  pipeline_type: minimal
-  project_type: laravel
-  branch: master
 - pipeline_name: directorzone-laravel
   git_host: git@github.com
   git_org: chris-moreton
