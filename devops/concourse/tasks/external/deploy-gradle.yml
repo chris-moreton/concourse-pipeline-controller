@@ -26,6 +26,21 @@ run:
       cf login -a api.run.pivotal.io -u $CF_USER -p $CF_PASS -s $CF_SPACE
       cp ../manifests/manifest.yml .
       cat manifest.yml
+      echo "Logging into Concourse..."
+      fly --target netsensia-concourse login --insecure --concourse-url https://((CONCOURSE_HOST)) -u admin -p ((CONCOURSE_ADMIN_PASSWORD))
+      echo "Syncing..."
+      fly --target netsensia-concourse sync
+      echo "Logging into CredHub..."
+      eval "$(control-tower info --iaas aws --env --region eu-west-2 netsensia-concourse)"
+      ENV=((ENVIRONMENT))
+      OUTPUT=`credhub find -n concourse/((PRODUCT))/((COMPONENT))/$ENV/test`
+      ENV_VARS=$(echo $OUTPUT | grep -o "((ENVIRONMENT))/\S*")
+      while IFS=' ' read -ra VAL; do
+            i="${VAL[@]}"
+            VALUE=`credhub get -q -n concourse/((PRODUCT))/((COMPONENT))/$i`
+            ENV_VAR=${i/$ENV\/test\//}
+            export $ENV_VAR=$VALUE
+      done <<< "$ENV_VARS"
       SMOKE_TEST=../source-code/smoketest/smoketest.sh
       if test -f $SMOKE_TEST; then
          SMOKE_SWITCH="--smoke-test $SMOKE_TEST"
