@@ -26,6 +26,8 @@ run:
       cf login -a api.run.pivotal.io -u $CF_USER -p $CF_PASS -s $CF_SPACE
       cp ../manifests/manifest.yml .
       cat manifest.yml
+      export AWS_ACCESS_KEY_ID=((AWS_ACCESS_KEY_ID))
+      export AWS_SECRET_ACCESS_KEY=((AWS_SECRET_ACCESS_KEY))
       echo "Logging into Concourse..."
       fly --target netsensia-concourse login --insecure --concourse-url https://((CONCOURSE_HOST)) -u admin -p ((CONCOURSE_ADMIN_PASSWORD))
       echo "Syncing..."
