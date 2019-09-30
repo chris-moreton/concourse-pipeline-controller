@@ -15,5 +15,5 @@ run:
       apt-get update && apt-get -y install openssh-client
       echo $SERVER_KEY | sed -e 's/\(KEY-----\)\s/\1\n/g; s/\s\(-----END\)/\n\1/g' | sed -e '2s/\s\+/\n/g' > server_key
       chmod 600 server_key
-      ssh -o StrictHostKeyChecking=no -i server_key forge@www.director-zone.com "MYSQL_PWD=$LEGACY_DB_PASS mysqldump -u$LEGACY_DB_USER $LEGACY_DB_NAME --ignore-table=directorzone_old.marketplace" > ((legacy/db_dump.sql))
-      tar -zcvf ((legacy/db_dump.sql)).tar.gz ((legacy/db_dump.sql))
+      ssh -o StrictHostKeyChecking=no -i server_key forge@www.director-zone.com "MYSQL_PWD=$LEGACY_DB_PASS mysqldump -u$LEGACY_DB_USER $LEGACY_DB_NAME --ignore-table=directorzone_old.marketplace" > ((legacy/SQL_DUMP_FILENAME))
+      tar -zcvf ((legacy/SQL_DUMP_FILENAME)).tar.gz ((legacy/SQL_DUMP_FILENAME))
