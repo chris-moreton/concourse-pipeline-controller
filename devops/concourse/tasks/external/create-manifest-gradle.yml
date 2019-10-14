@@ -34,6 +34,8 @@ run:
         env:
           SPRING_PROFILES_ACTIVE: production
       EOT
+      SERVICES_ENABLED=((services/ENABLE))
+      echo "Are services enabled? $SERVICES_ENABLED"
       export AWS_ACCESS_KEY_ID=((AWS_ACCESS_KEY_ID))
       export AWS_SECRET_ACCESS_KEY=((AWS_SECRET_ACCESS_KEY))
       echo "Logging into Concourse..."
