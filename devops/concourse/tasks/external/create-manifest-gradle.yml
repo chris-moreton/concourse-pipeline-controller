@@ -21,12 +21,12 @@ run:
         memory: 768M
         disk: 256M
       EOT
-      if [ ((services/ENABLE)) eq "1" ]; then
+      if [ ((services/ENABLE)) == "1" ]; then
         echo "  services:" >> manifest.yml
-        if [ ((services/MYSQL)) eq "1" ]; then
+        if [ ((services/MYSQL)) == "1" ]; then
           echo "  - ((COMPONENT))-mysql" >> manifest.yml
         fi
-        if [ ((services/ELASTIC_SEARCH)) eq "1" ]; then
+        if [ ((services/ELASTIC_SEARCH)) == "1" ]; then
           echo "  - ((COMPONENT))-elasticsearch" >> manifest.yml
         fi
       fi
