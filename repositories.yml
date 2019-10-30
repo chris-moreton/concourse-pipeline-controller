@@ -1,41 +1,48 @@
 repos:
 - pipeline_name: directorzone-api
+  public: false
   git_host: git@github.com
   git_org: chris-moreton
   pipeline_type: standard
   project_type: gradle
   branch: master
 - pipeline_name: directorzone-frontend
+  public: false
   git_host: git@github.com
   git_org: chris-moreton
   pipeline_type: standard
   project_type: node
   branch: master
 - pipeline_name: golfingrecord-rhor
+  public: false
   git_host: git@github.com
   git_org: chris-moreton
   pipeline_type: standard
   project_type: php
   branch: master
 - pipeline_name: golfingrecord-mobile
+  public: false
   git_host: git@github.com
   git_org: chris-moreton
   pipeline_type: standard
   project_type: php
   branch: master
 - pipeline_name: directorzone-laravel
+  public: false
   git_host: git@github.com
   git_org: chris-moreton
   pipeline_type: minimal
   project_type: laravel
   branch: july-22-2019
 - pipeline_name: golfingrecord-api
+  public: false
   git_host: git@github.com
   git_org: chris-moreton
   pipeline_type: standard
   project_type: gradle
   branch: master
 - pipeline_name: nightfighter-frontend
+  public: true
   git_host: git@github.com
   git_org: chris-moreton
   pipeline_type: standard

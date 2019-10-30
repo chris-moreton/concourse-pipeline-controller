@@ -148,6 +148,8 @@ def get_deploy_key(repo):
 
 
 def prepare_deploy_key(deploy_key_file, repo):
+    if repo["public"] == "true":
+        return
     parts = repo["pipeline_name"].split("-")
     print("Overwriting deploy key at " + deploy_key_file)
     sed = "sed -e 's/\(KEY-----\)\s/\\1\\n/g; s/\s\(-----END\)/\\n\\1/g' | sed -e '2s/\s\+/\\n/g'"
