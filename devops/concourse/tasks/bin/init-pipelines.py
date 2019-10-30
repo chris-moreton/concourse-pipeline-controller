@@ -148,8 +148,6 @@ def get_deploy_key(repo):
 
 
 def prepare_deploy_key(deploy_key_file, repo):
-    if repo["public"] == "true":
-        return
     parts = repo["pipeline_name"].split("-")
     print("Overwriting deploy key at " + deploy_key_file)
     sed = "sed -e 's/\(KEY-----\)\s/\\1\\n/g; s/\s\(-----END\)/\\n\\1/g' | sed -e '2s/\s\+/\\n/g'"
@@ -159,7 +157,7 @@ def prepare_deploy_key(deploy_key_file, repo):
 
 def set_component_and_product(pipeline_name):
     parts = pipeline_name.split("-")
-    system_call("credhub set -n concourse/" + parts[0] + "/" + parts[1] + "/PRODUCT --type value --value " + parts[0])
+    system_call("credhub sgpush et -n concourse/" + parts[0] + "/" + parts[1] + "/PRODUCT --type value --value " + parts[0])
     system_call("credhub set -n concourse/" + parts[0] + "/" + parts[1] + "/COMPONENT --type value --value " + parts[1])
 
 
