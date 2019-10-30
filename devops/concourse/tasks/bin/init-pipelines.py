@@ -157,7 +157,7 @@ def prepare_deploy_key(deploy_key_file, repo):
 
 def set_component_and_product(pipeline_name):
     parts = pipeline_name.split("-")
-    system_call("credhub sgpush et -n concourse/" + parts[0] + "/" + parts[1] + "/PRODUCT --type value --value " + parts[0])
+    system_call("credhub set -n concourse/" + parts[0] + "/" + parts[1] + "/PRODUCT --type value --value " + parts[0])
     system_call("credhub set -n concourse/" + parts[0] + "/" + parts[1] + "/COMPONENT --type value --value " + parts[1])
 
 
