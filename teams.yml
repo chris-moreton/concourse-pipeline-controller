@@ -29,6 +29,14 @@ teams:
         users: ["admin"]
       github:
         users: ["chris-moreton"]
+- name: nightfighter
+  config:
+    roles:
+    - name: owner
+      local:
+        users: ["admin"]
+      github:
+        users: ["chris-moreton"]
 - name: pipeline
   config:
     roles:

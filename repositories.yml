@@ -35,3 +35,9 @@ repos:
   pipeline_type: standard
   project_type: gradle
   branch: master
+- pipeline_name: nightfighter-frontend
+  git_host: git@github.com
+  git_org: chris-moreton
+  pipeline_type: standard
+  project_type: minimal
+  branch: master
