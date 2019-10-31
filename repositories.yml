@@ -45,6 +45,6 @@ repos:
   public: true
   git_host: git@github.com
   git_org: chris-moreton
-  pipeline_type: minimal
+  pipeline_type: standard
   project_type: static
   branch: master

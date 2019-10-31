@@ -1,0 +1,19 @@
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: composer
+    tag: latest
+inputs:
+  - name: source-code
+outputs:
+  - name: build
+run:
+  dir: source-code
+  path: sh
+  args:
+    - -exc
+    - |
+      FILENAME=((PRODUCT))-((COMPONENT)).tar.gz
+      tar -zcf $FILENAME . || true
+      cp $FILENAME ../build/$FILENAME

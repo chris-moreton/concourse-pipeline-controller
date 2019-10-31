@@ -1,0 +1,44 @@
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: netsensia/pipelinefull
+    tag: 1.0.8
+outputs:
+  - name: manifests
+run:
+  path: bash
+  dir: manifests
+  args:
+    - -exc
+    - |
+      ROUTE_CF_APPS="((PRODUCT))-((COMPONENT))-((ENVIRONMENT)).cfapps.io"
+      ROUTE_WWW="www.((DOMAIN))"
+      ROUTE_ENV="((ENVIRONMENT)).((DOMAIN))"
+      ROUTE_BARE="((DOMAIN))"
+
+      cat > manifest.yml << EOT
+      ---
+      applications:
+      - name: ((PRODUCT))-((COMPONENT))-((ENVIRONMENT))
+        buildpack: php_buildpack
+        memory: 128M
+        disk: 256M
+      EOT
+
+      if [ "((ENVIRONMENT))" = "prod" ]; then
+        echo "  routes:" >> manifest.yml
+        echo "    - route: $ROUTE_CF_APPS" >> manifest.yml
+        echo "    - route: $ROUTE_WWW" >> manifest.yml
+        echo "    - route: $ROUTE_BARE" >> manifest.yml
+      else
+        echo "  routes:" >> manifest.yml
+        echo "  - route: $ROUTE_CF_APPS" >> manifest.yml
+        echo "  - route: $ROUTE_ENV" >> manifest.yml
+      fi
+
+      cat manifest.yml
+
+      echo "env:" >> manifest.yml
+
+

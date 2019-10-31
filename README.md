@@ -77,6 +77,13 @@ credhub set -n concourse/directorzone/AWS_ACCESS_KEY_ID --type value --value ***
 credhub set -n concourse/directorzone/AWS_SECRET_ACCESS_KEY --type value --value ****
 ```
 
+##### Set Cloud Foundry Credentials
+
+
+```
+credhub set -n concourse/directorzone/CLOUD_FOUNDRY_DEPLOY_USER --type user --username **** --password ****
+```
+
 ##### Choose Services
 
 Services are enabled per component.
@@ -105,7 +112,8 @@ Within a few minutes, a pipeline will be created for your application with the f
 In teams.yml, you will need to give ownership of your repository to the admin user amongst the rest of your team configuration, e.g.
 
     - name: directorzone
-      config:
+      config:      private_key: ((GITHUB_DEPLOY_KEY.private_key))
+
         roles:
         - name: pipeline-operator
           github:
@@ -289,7 +297,8 @@ Within this directory, add Terraform files prefixed with "custom-", e.g.
 
 The following variables are available to use:
 
-    ${var.product}
+    ${var.product}      private_key: ((GITHUB_DEPLOY_KEY.private_key))
+
     ${var.component}
     ${var.environment}
     ${cloudfoundry_space.product_space.id}
