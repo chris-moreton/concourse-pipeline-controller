@@ -39,6 +39,4 @@ run:
 
       cat manifest.yml
 
-      echo "env:" >> manifest.yml
-
 
