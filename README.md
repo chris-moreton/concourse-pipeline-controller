@@ -61,6 +61,15 @@ Example:
 credhub set -n concourse/directorzone/api/aat/env/PEXELS_AUTH --type value --value ABCDEFG123456
 ```
 
+###### Setting Environment Variables for Functional Tests
+
+If you need environment variables available for functional tests running in the pipeline, you should set them like this:
+
+```
+concourse/product/component/aat/test
+concourse/product/component/prod/test
+```
+
 ##### Set GitHub Owner and Token
 
 
