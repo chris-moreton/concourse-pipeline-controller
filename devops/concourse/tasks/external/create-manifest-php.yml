@@ -24,9 +24,22 @@ run:
         buildpack: php_buildpack
         memory: 256M
         disk: 256M
-        services:
-          - ((COMPONENT))-mysql
       EOT
+      if [ ((services/ENABLE)) == "1" ]; then
+        echo "  services:" >> manifest.yml
+        if [ ((services/MYSQL)) == "1" ]; then
+          echo "  - ((COMPONENT))-mysql" >> manifest.yml
+        fi
+        if [ ((services/ELASTIC_SEARCH)) == "1" ]; then
+          echo "  - ((COMPONENT))-elasticsearch" >> manifest.yml
+        fi
+      fi
+      cat >> manifest.yml << EOT
+        env:
+          SPRING_PROFILES_ACTIVE: production
+      EOT
+      SERVICES_ENABLED=((services/ENABLE))
+      echo "Are services enabled? $SERVICES_ENABLED"
 
       if [ "((ENVIRONMENT))" = "prod" ]; then
         echo "  routes:" >> manifest.yml
