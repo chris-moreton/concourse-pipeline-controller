@@ -105,8 +105,8 @@ jobs:
   public: false
   plan:
     - get: packaged-build
-      passed:
-        - functional-test-aat
+#      passed:
+#        - functional-test-aat
       trigger: true
     - get: pipeline-controller
       trigger: false
