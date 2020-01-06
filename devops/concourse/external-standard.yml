@@ -41,7 +41,7 @@ jobs:
   - put: packaged-build
     params:
       file: build/((PRODUCT))-((COMPONENT)).tar.gz
-- name: build-infrastructure-aat
+- name: destroy-infrastructure-aat
   public: false
   plan:
     - get: source-code
@@ -51,43 +51,56 @@ jobs:
     - get: pipeline-controller
       trigger: false
     - task: call-terraform
-      file: pipeline-controller/devops/concourse/tasks/external/build-infrastructure.yml
+      file: pipeline-controller/devops/concourse/tasks/external/destroy-infrastructure.yml
       vars:
         ENVIRONMENT: aat
-- name: deploy-aat
-  public: false
-  plan:
-    - get: source-code
-      passed:
-        - build-infrastructure-aat
-      trigger: true
-    - get: pipeline-controller
-      trigger: false
-    - get: packaged-build
-      trigger: false
-    - task: create-manifests
-      file: pipeline-controller/devops/concourse/tasks/external/create-manifest-PROJECT_TYPE.yml
-      vars:
-        ENVIRONMENT: aat
-    - task: deploy
-      file: pipeline-controller/devops/concourse/tasks/external/deploy-PROJECT_TYPE.yml
-      vars:
-        ENVIRONMENT: aat
-- name: functional-test-aat
-  public: false
-  plan:
-    - get: source-code
-      passed:
-        - deploy-aat
-      trigger: true
-    - get: pipeline-controller
-      trigger: false
-    - get: packaged-build
-      trigger: false
-    - task: functional-test
-      file: pipeline-controller/devops/concourse/tasks/external/functional-test.yml
-      vars:
-        ENVIRONMENT: aat
+#- name: build-infrastructure-aat
+#  public: false
+#  plan:
+#    - get: source-code
+#      passed:
+#        - build
+#      trigger: true
+#    - get: pipeline-controller
+#      trigger: false
+#    - task: call-terraform
+#      file: pipeline-controller/devops/concourse/tasks/external/build-infrastructure.yml
+#      vars:
+#        ENVIRONMENT: aat
+#- name: deploy-aat
+#  public: false
+#  plan:
+#    - get: source-code
+#      passed:
+#        - build-infrastructure-aat
+#      trigger: true
+#    - get: pipeline-controller
+#      trigger: false
+#    - get: packaged-build
+#      trigger: false
+#    - task: create-manifests
+#      file: pipeline-controller/devops/concourse/tasks/external/create-manifest-PROJECT_TYPE.yml
+#      vars:
+#        ENVIRONMENT: aat
+#    - task: deploy
+#      file: pipeline-controller/devops/concourse/tasks/external/deploy-PROJECT_TYPE.yml
+#      vars:
+#        ENVIRONMENT: aat
+#- name: functional-test-aat
+#  public: false
+#  plan:
+#    - get: source-code
+#      passed:
+#        - deploy-aat
+#      trigger: true
+#    - get: pipeline-controller
+#      trigger: false
+#    - get: packaged-build
+#      trigger: false
+#    - task: functional-test
+#      file: pipeline-controller/devops/concourse/tasks/external/functional-test.yml
+#      vars:
+#        ENVIRONMENT: aat
 - name: build-infrastructure-prod
   public: false
   plan:

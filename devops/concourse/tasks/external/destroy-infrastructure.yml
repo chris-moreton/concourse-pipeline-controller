@@ -1,0 +1,90 @@
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: netsensia/pipelinefull
+    version: 1.0.7
+inputs:
+  - name: pipeline-controller
+  - name: source-code
+run:
+  path: sh
+  dir: pipeline-controller/devops/terraform/product
+  args:
+    - -exc
+    - |
+      cat > backend.config << EOL
+      access_key="((AWS_ACCESS_KEY_ID))"
+      secret_key="((AWS_SECRET_ACCESS_KEY))"
+      key="((PRODUCT))-((ENVIRONMENT)).tfstate"
+      bucket="((STATE_BUCKET))"
+      EOL
+      terraform init -backend-config=./backend.config
+      terraform plan \
+        -var='credhub_host=((CONCOURSE_HOST))' \
+        -var='credhub_client_id=((CREDHUB_CLIENT))' \
+        -var='credhub_client_secret=((CREDHUB_SECRET))' \
+        -var='environment=((ENVIRONMENT))' \
+        -var='product=((PRODUCT))' \
+        -var='component=((COMPONENT))'
+      terraform apply \
+        -auto-approve \
+        -var='credhub_host=((CONCOURSE_HOST))' \
+        -var='credhub_client_id=((CREDHUB_CLIENT))' \
+        -var='credhub_client_secret=((CREDHUB_SECRET))' \
+        -var='environment=((ENVIRONMENT))' \
+        -var='product=((PRODUCT))' \
+        -var='component=((COMPONENT))'
+      SPACE_GUID=`terraform output cf_space_guid`
+      echo $SPACE_GUID
+      cd ../component
+      cp ../../../../source-code/devops/terraform/custom-* . || true
+      cat > backend.config << EOL
+      access_key="((AWS_ACCESS_KEY_ID))"
+      secret_key="((AWS_SECRET_ACCESS_KEY))"
+      key="((PRODUCT))-((COMPONENT))-((ENVIRONMENT)).tfstate"
+      bucket="((STATE_BUCKET))"
+      EOL
+      terraform init -backend-config=./backend.config
+      terraform import \
+        -var='credhub_host=((CONCOURSE_HOST))' \
+        -var='credhub_client_id=((CREDHUB_CLIENT))' \
+        -var='credhub_client_secret=((CREDHUB_SECRET))' \
+        -var='cloudfoundry_org_owner_username=((CLOUD_FOUNDRY_DEPLOY_USER.username))' \
+        -var='cloudfoundry_org_owner_password=((CLOUD_FOUNDRY_DEPLOY_USER.password))' \
+        -var='cloudfoundry_ibm_org_owner_username=((CLOUD_FOUNDRY_IBM_DEPLOY_USER.username))' \
+        -var='cloudfoundry_ibm_org_owner_password=((CLOUD_FOUNDRY_IBM_DEPLOY_USER.password))' \
+        -var='aws_terraform_access_key_id=((AWS_ACCESS_KEY_ID))' \
+        -var='aws_terraform_secret_access_key=((AWS_SECRET_ACCESS_KEY))' \
+        -var='environment=((ENVIRONMENT))' \
+        -var='product=((PRODUCT))' \
+        cloudfoundry_space.product_space \
+        $SPACE_GUID \
+        || true
+      terraform plan -destroy \
+        -var='credhub_host=((CONCOURSE_HOST))' \
+        -var='credhub_client_id=((CREDHUB_CLIENT))' \
+        -var='credhub_client_secret=((CREDHUB_SECRET))' \
+        -var='cloudfoundry_org_owner_username=((CLOUD_FOUNDRY_DEPLOY_USER.username))' \
+        -var='cloudfoundry_org_owner_password="((CLOUD_FOUNDRY_DEPLOY_USER.password))"' \
+        -var='cloudfoundry_ibm_org_owner_username=((CLOUD_FOUNDRY_IBM_DEPLOY_USER.username))' \
+        -var='cloudfoundry_ibm_org_owner_password=((CLOUD_FOUNDRY_IBM_DEPLOY_USER.password))' \
+        -var='aws_terraform_access_key_id=((AWS_ACCESS_KEY_ID))' \
+        -var='aws_terraform_secret_access_key=((AWS_SECRET_ACCESS_KEY))' \
+        -var='environment=((ENVIRONMENT))' \
+        -var='product=((PRODUCT))' \
+        -var='component=((COMPONENT))'
+      terraform destroy \
+        -auto-approve \
+        -var='credhub_host=((CONCOURSE_HOST))' \
+        -var='credhub_client_id=((CREDHUB_CLIENT))' \
+        -var='credhub_client_secret=((CREDHUB_SECRET))' \
+        -var='cloudfoundry_org_owner_username=((CLOUD_FOUNDRY_DEPLOY_USER.username))' \
+        -var='cloudfoundry_org_owner_password="((CLOUD_FOUNDRY_DEPLOY_USER.password))"' \
+        -var='cloudfoundry_ibm_org_owner_username=((CLOUD_FOUNDRY_IBM_DEPLOY_USER.username))' \
+        -var='cloudfoundry_ibm_org_owner_password=((CLOUD_FOUNDRY_IBM_DEPLOY_USER.password))' \
+        -var='aws_terraform_access_key_id=((AWS_ACCESS_KEY_ID))' \
+        -var='aws_terraform_secret_access_key=((AWS_SECRET_ACCESS_KEY))' \
+        -var='environment=((ENVIRONMENT))' \
+        -var='product=((PRODUCT))' \
+        -var='component=((COMPONENT))'
