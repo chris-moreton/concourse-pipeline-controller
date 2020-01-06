@@ -41,19 +41,19 @@ jobs:
   - put: packaged-build
     params:
       file: build/((PRODUCT))-((COMPONENT)).tar.gz
-- name: destroy-infrastructure-aat
-  public: false
-  plan:
-    - get: source-code
-      passed:
-        - build
-      trigger: true
-    - get: pipeline-controller
-      trigger: false
-    - task: call-terraform
-      file: pipeline-controller/devops/concourse/tasks/external/destroy-infrastructure.yml
-      vars:
-        ENVIRONMENT: aat
+#- name: destroy-infrastructure-aat
+#  public: false
+#  plan:
+#    - get: source-code
+#      passed:
+#        - build
+#      trigger: true
+#    - get: pipeline-controller
+#      trigger: false
+#    - task: call-terraform
+#      file: pipeline-controller/devops/concourse/tasks/external/destroy-infrastructure.yml
+#      vars:
+#        ENVIRONMENT: aat
 #- name: build-infrastructure-aat
 #  public: false
 #  plan:
