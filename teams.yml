@@ -1,15 +1,4 @@
 teams:
-- name: teps
-  config:
-    roles:
-    - name: pipeline-operator
-      github:
-        users: ["twobyte"]
-    - name: owner
-      local:
-        users: ["admin"]
-      github:
-        users: ["chris-moreton"]
 - name: directorzone
   config:
     roles:
