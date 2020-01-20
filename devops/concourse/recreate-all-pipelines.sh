@@ -11,12 +11,13 @@ fly -t netsensia-concourse login -n directorzone --concourse-url $CONCOURSE_SERV
 fly --target $CONCOURSE_NAME destroy-pipeline --non-interactive -p api
 fly --target $CONCOURSE_NAME destroy-pipeline --non-interactive -p frontend
 fly --target $CONCOURSE_NAME destroy-pipeline --non-interactive -p laravel
+fly --target $CONCOURSE_NAME destroy-pipeline --non-interactive -p controller
 
 fly -t netsensia-concourse login -n pipeline --concourse-url $CONCOURSE_SERVER -u admin -p $CONCOURSE_ADMIN_PASSWORD
 fly --target $CONCOURSE_NAME destroy-pipeline --non-interactive -p controller
 
-fly -t netsensia-concourse login -n teps --concourse-url $CONCOURSE_SERVER -u admin -p $CONCOURSE_ADMIN_PASSWORD
-fly --target $CONCOURSE_NAME destroy-pipeline --non-interactive -p portal
+fly -t netsensia-concourse login -n rivalchess --concourse-url $CONCOURSE_SERVER -u admin -p $CONCOURSE_ADMIN_PASSWORD
+fly --target $CONCOURSE_NAME destroy-pipeline --non-interactive -p engine
 
 fly -t netsensia-concourse login -n arrvd --concourse-url $CONCOURSE_SERVER -u admin -p $CONCOURSE_ADMIN_PASSWORD
 fly --target $CONCOURSE_NAME destroy-pipeline --non-interactive -p api

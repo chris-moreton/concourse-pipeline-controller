@@ -130,8 +130,6 @@ def initialise_pipeline(repo):
     system_call(
         "fly --target netsensia-concourse set-pipeline --non-interactive -c " + merged_pipeline_config + " -p " + pipeline_shortname
     )
-    print("Unpausing pipeline...")
-    system_call("fly --target netsensia-concourse unpause-pipeline -p " + pipeline_shortname)
 
 
 def get_deploy_key(repo):
