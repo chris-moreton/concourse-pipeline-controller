@@ -55,3 +55,10 @@ repos:
   pipeline_type: minimal
   project_type: java
   branch: master
+- pipeline_name: rivalchess-model
+  public: true
+  git_host: git@github.com
+  git_org: chris-moreton
+  pipeline_type: minimal
+  project_type: java
+  branch: master
